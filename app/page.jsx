@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import QRCode from "qrcode";
 import {
   FileText,
   Image as ImageIcon,
@@ -212,8 +213,7 @@ const TOOLS = [
     desc: "Shrink photos up to 80% with barely any quality loss.",
     icon: ImageIcon,
     category: "media-studio",
-    kind: "simulated",
-    steps: ["Decoding pixels…", "Re-encoding at target quality…", "Stripping metadata…"],
+    kind: "instant",
   },
   {
     id: "img-cropper",
@@ -248,8 +248,7 @@ const TOOLS = [
     desc: "Generate a scannable QR code for a link, text or contact.",
     icon: QrCode,
     category: "media-studio",
-    kind: "simulated",
-    steps: ["Encoding payload…", "Rendering matrix…", "Adding quiet zone…"],
+    kind: "instant",
   },
   {
     id: "bg-remover",
@@ -998,6 +997,323 @@ function TimesheetCalculatorTool({ onClose }) {
 }
 
 /* -------------------------------------------------------------------------- */
+/*  QR Code Generator — fully real, rendered client-side via the qrcode lib   */
+/* -------------------------------------------------------------------------- */
+
+function QrCodeGeneratorTool({ onClose }) {
+  const [mode, setMode] = useState("link"); // link | text | wifi
+  const [link, setLink] = useState("https://");
+  const [text, setText] = useState("Hello from OmniTools!");
+  const [wifi, setWifi] = useState({ ssid: "", password: "", encryption: "WPA" });
+  const [dataUrl, setDataUrl] = useState(null);
+  const [error, setError] = useState(null);
+
+  const payload = useMemo(() => {
+    if (mode === "link") return link.trim();
+    if (mode === "text") return text;
+    const { ssid, password, encryption } = wifi;
+    return `WIFI:T:${encryption};S:${ssid};P:${password};;`;
+  }, [mode, link, text, wifi]);
+
+  useEffect(() => {
+    if (!payload) {
+      setDataUrl(null);
+      return;
+    }
+    let cancelled = false;
+    QRCode.toDataURL(payload, { width: 320, margin: 1, color: { dark: "#0f172a", light: "#ffffff" } })
+      .then((url) => {
+        if (!cancelled) {
+          setDataUrl(url);
+          setError(null);
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err.message || "Could not generate this QR code.");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [payload]);
+
+  const download = () => {
+    if (!dataUrl) return;
+    const a = document.createElement("a");
+    a.href = dataUrl;
+    a.download = "qr-code.png";
+    a.click();
+  };
+
+  return (
+    <InstantToolShell
+      title="QR Code Generator"
+      subtitle="Generated locally — nothing you enter is sent anywhere"
+      icon={QrCode}
+      onClose={onClose}
+    >
+      <div className="mb-4 flex gap-2">
+        {[
+          ["link", "Link"],
+          ["text", "Text"],
+          ["wifi", "Wi-Fi"],
+        ].map(([m, label]) => (
+          <button
+            key={m}
+            onClick={() => setMode(m)}
+            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition ${
+              mode === m ? "bg-rose-400 text-slate-950" : "border border-slate-700 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-[1fr_180px]">
+        <div>
+          {mode === "link" && (
+            <div>
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">URL</label>
+              <input className="input" value={link} onChange={(e) => setLink(e.target.value)} placeholder="https://example.com" />
+            </div>
+          )}
+          {mode === "text" && (
+            <div>
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Text</label>
+              <textarea className="input" rows={4} value={text} onChange={(e) => setText(e.target.value)} />
+            </div>
+          )}
+          {mode === "wifi" && (
+            <div className="space-y-3">
+              <div>
+                <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Network name (SSID)</label>
+                <input className="input" value={wifi.ssid} onChange={(e) => setWifi({ ...wifi, ssid: e.target.value })} />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Password</label>
+                <input className="input" value={wifi.password} onChange={(e) => setWifi({ ...wifi, password: e.target.value })} />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Security</label>
+                <select className="input" value={wifi.encryption} onChange={(e) => setWifi({ ...wifi, encryption: e.target.value })}>
+                  <option value="WPA">WPA/WPA2</option>
+                  <option value="WEP">WEP</option>
+                  <option value="nopass">None</option>
+                </select>
+              </div>
+            </div>
+          )}
+
+          {error && <p className="mt-3 text-xs text-red-400">{error}</p>}
+
+          <button
+            onClick={download}
+            disabled={!dataUrl}
+            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-rose-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-rose-300 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <FileOutput className="h-4 w-4" />
+            Download PNG
+          </button>
+        </div>
+
+        <div className="flex items-center justify-center rounded-xl border border-slate-800 bg-white p-3">
+          {dataUrl ? (
+            <img src={dataUrl} alt="Generated QR code" className="h-full w-full object-contain" />
+          ) : (
+            <div className="flex h-40 w-40 items-center justify-center text-xs text-slate-400">Enter details to preview</div>
+          )}
+        </div>
+      </div>
+    </InstantToolShell>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Image Compressor — fully real, re-encoded via the native Canvas API       */
+/* -------------------------------------------------------------------------- */
+
+function formatBytes(bytes) {
+  if (!bytes) return "0 KB";
+  const kb = bytes / 1024;
+  if (kb < 1024) return `${kb.toFixed(1)} KB`;
+  return `${(kb / 1024).toFixed(2)} MB`;
+}
+
+function ImageCompressorTool({ onClose }) {
+  const [file, setFile] = useState(null);
+  const [originalUrl, setOriginalUrl] = useState(null);
+  const [dims, setDims] = useState({ w: 0, h: 0 });
+  const [quality, setQuality] = useState(0.7);
+  const [format, setFormat] = useState("image/jpeg");
+  const [maxWidth, setMaxWidth] = useState(1920);
+  const [compressedUrl, setCompressedUrl] = useState(null);
+  const [compressedSize, setCompressedSize] = useState(0);
+  const [busy, setBusy] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const onPickFile = (f) => {
+    if (!f || !f.type.startsWith("image/")) return;
+    setFile(f);
+    const url = URL.createObjectURL(f);
+    setOriginalUrl(url);
+    setCompressedUrl(null);
+    const img = new Image();
+    img.onload = () => setDims({ w: img.naturalWidth, h: img.naturalHeight });
+    img.src = url;
+  };
+
+  useEffect(() => {
+    if (!file || !originalUrl) return;
+    setBusy(true);
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, maxWidth / img.naturalWidth);
+      const w = Math.round(img.naturalWidth * scale);
+      const h = Math.round(img.naturalHeight * scale);
+      const canvas = document.createElement("canvas");
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, w, h);
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            setBusy(false);
+            return;
+          }
+          setCompressedUrl((prev) => {
+            if (prev) URL.revokeObjectURL(prev);
+            return URL.createObjectURL(blob);
+          });
+          setCompressedSize(blob.size);
+          setBusy(false);
+        },
+        format,
+        format === "image/png" ? undefined : quality
+      );
+    };
+    img.src = originalUrl;
+  }, [file, originalUrl, quality, format, maxWidth]);
+
+  const download = () => {
+    if (!compressedUrl) return;
+    const ext = format === "image/png" ? "png" : format === "image/webp" ? "webp" : "jpg";
+    const a = document.createElement("a");
+    a.href = compressedUrl;
+    a.download = `compressed.${ext}`;
+    a.click();
+  };
+
+  const savings = file && compressedSize ? Math.max(0, 100 - (compressedSize / file.size) * 100) : 0;
+
+  return (
+    <InstantToolShell
+      title="Image Compressor"
+      subtitle="Re-encoded entirely on your device — nothing is uploaded"
+      icon={ImageIcon}
+      onClose={onClose}
+    >
+      {!file ? (
+        <div
+          onClick={() => fileInputRef.current?.click()}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => {
+            e.preventDefault();
+            onPickFile(e.dataTransfer.files?.[0]);
+          }}
+          className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-700 bg-slate-950/40 px-6 py-14 text-center transition hover:border-rose-400/40"
+        >
+          <UploadCloud className="mb-3 h-9 w-9 text-slate-600" />
+          <p className="text-sm font-medium text-slate-300">Drag & drop an image, or click to choose one</p>
+          <p className="mt-1 text-xs text-slate-500">JPG, PNG or WebP — processed locally</p>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => onPickFile(e.target.files?.[0])}
+          />
+        </div>
+      ) : (
+        <div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <p className="mb-1 text-[11px] uppercase tracking-wider text-slate-500">Original</p>
+              <div className="overflow-hidden rounded-xl border border-slate-800 bg-white">
+                <img src={originalUrl} alt="Original" className="max-h-48 w-full object-contain" />
+              </div>
+              <p className="mt-1 font-mono text-xs text-slate-400">
+                {formatBytes(file.size)} · {dims.w}×{dims.h}
+              </p>
+            </div>
+            <div>
+              <p className="mb-1 text-[11px] uppercase tracking-wider text-slate-500">Compressed</p>
+              <div className="flex h-48 items-center justify-center overflow-hidden rounded-xl border border-slate-800 bg-white">
+                {compressedUrl ? (
+                  <img src={compressedUrl} alt="Compressed" className="max-h-48 w-full object-contain" />
+                ) : (
+                  <Loader2 className="h-6 w-6 animate-spin text-rose-400" />
+                )}
+              </div>
+              <p className="mt-1 font-mono text-xs text-rose-400">
+                {compressedSize ? `${formatBytes(compressedSize)} · ${savings.toFixed(0)}% smaller` : "…"}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">
+                Quality — {Math.round(quality * 100)}%
+              </label>
+              <input
+                type="range"
+                min="0.2"
+                max="1"
+                step="0.05"
+                value={quality}
+                disabled={format === "image/png"}
+                onChange={(e) => setQuality(Number(e.target.value))}
+                className="w-full accent-rose-400 disabled:opacity-30"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Format</label>
+              <select className="input" value={format} onChange={(e) => setFormat(e.target.value)}>
+                <option value="image/jpeg">JPG</option>
+                <option value="image/webp">WebP</option>
+                <option value="image/png">PNG (lossless)</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <button
+              onClick={download}
+              disabled={!compressedUrl || busy}
+              className="inline-flex items-center gap-2 rounded-lg bg-rose-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-rose-300 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <FileOutput className="h-4 w-4" />
+              Download
+            </button>
+            <button
+              onClick={() => {
+                setFile(null);
+                setOriginalUrl(null);
+                setCompressedUrl(null);
+              }}
+              className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-800"
+            >
+              Choose another image
+            </button>
+          </div>
+        </div>
+      )}
+    </InstantToolShell>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /*  Invoice Generator — fully operational, client-side                        */
 /* -------------------------------------------------------------------------- */
 
@@ -1600,6 +1916,12 @@ export default function Page() {
       )}
       {activeTool?.kind === "instant" && activeTool.id === "timesheet-calculator" && (
         <TimesheetCalculatorTool onClose={closeTool} />
+      )}
+      {activeTool?.kind === "instant" && activeTool.id === "qr-generator" && (
+        <QrCodeGeneratorTool onClose={closeTool} />
+      )}
+      {activeTool?.kind === "instant" && activeTool.id === "img-compressor" && (
+        <ImageCompressorTool onClose={closeTool} />
       )}
       {activeTool?.kind === "simulated" && <SimulatedToolRunner tool={activeTool} onClose={closeTool} />}
     </div>
