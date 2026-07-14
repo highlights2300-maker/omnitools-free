@@ -33,6 +33,22 @@ import {
   Crop,
   FileOutput,
   BadgeCheck,
+  Shrink,
+  Droplet,
+  KeyRound,
+  FileJson,
+  ImagePlus,
+  LayoutGrid,
+  Repeat,
+  Clapperboard,
+  ClipboardList,
+  FileCheck2,
+  Ruler,
+  HandCoins,
+  Percent,
+  Cake,
+  Clock3,
+  Calculator,
 } from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
@@ -58,6 +74,12 @@ const CATEGORIES = [
     tagline: "Invoices, quotes and templates for running your own show.",
     accent: "emerald",
   },
+  {
+    id: "quick-calculators",
+    name: "Quick Calculators",
+    tagline: "Everyday math — instant answers, computed right on your device.",
+    accent: "rose",
+  },
 ];
 
 const ACCENT_MAP = {
@@ -81,6 +103,13 @@ const ACCENT_MAP = {
     bg: "bg-emerald-400/10",
     border: "border-emerald-400/20",
     dot: "bg-emerald-400",
+  },
+  rose: {
+    ring: "ring-rose-400/30",
+    text: "text-rose-400",
+    bg: "bg-rose-400/10",
+    border: "border-rose-400/20",
+    dot: "bg-rose-400",
   },
 };
 
@@ -139,6 +168,42 @@ const TOOLS = [
     kind: "simulated",
     steps: ["Collecting files…", "Deflating contents…", "Sealing archive…"],
   },
+  {
+    id: "pdf-compressor",
+    name: "PDF Compressor",
+    desc: "Shrink PDF file size for email, with no daily task cap.",
+    icon: Shrink,
+    category: "document-desk",
+    kind: "simulated",
+    steps: ["Analyzing document…", "Re-compressing images…", "Rebuilding PDF…"],
+  },
+  {
+    id: "pdf-watermark",
+    name: "PDF Watermarker",
+    desc: "Stamp a text or logo watermark across every page.",
+    icon: Droplet,
+    category: "document-desk",
+    kind: "simulated",
+    steps: ["Loading pages…", "Placing watermark…", "Flattening layers…"],
+  },
+  {
+    id: "pdf-unlock",
+    name: "PDF Password Remover",
+    desc: "Remove a password from a PDF you own the rights to.",
+    icon: KeyRound,
+    category: "document-desk",
+    kind: "simulated",
+    steps: ["Verifying access…", "Decrypting pages…", "Saving unlocked copy…"],
+  },
+  {
+    id: "csv-json-converter",
+    name: "CSV ⇄ JSON Converter",
+    desc: "Convert spreadsheet data to JSON, or JSON back to CSV.",
+    icon: FileJson,
+    category: "document-desk",
+    kind: "simulated",
+    steps: ["Parsing input…", "Mapping fields…", "Writing output file…"],
+  },
 
   // Media Studio
   {
@@ -195,6 +260,42 @@ const TOOLS = [
     kind: "simulated",
     steps: ["Segmenting subject…", "Refining edges…", "Compositing transparent PNG…"],
   },
+  {
+    id: "meme-generator",
+    name: "Meme Generator",
+    desc: "Drop top & bottom captions on any image in seconds.",
+    icon: ImagePlus,
+    category: "media-studio",
+    kind: "simulated",
+    steps: ["Loading image…", "Placing caption text…", "Flattening output…"],
+  },
+  {
+    id: "photo-collage",
+    name: "Photo Collage Maker",
+    desc: "Arrange several photos into one shareable grid layout.",
+    icon: LayoutGrid,
+    category: "media-studio",
+    kind: "simulated",
+    steps: ["Loading photos…", "Arranging grid…", "Rendering collage…"],
+  },
+  {
+    id: "img-format-converter",
+    name: "Image Format Converter",
+    desc: "Convert between JPG, PNG, WebP and more, instantly.",
+    icon: Repeat,
+    category: "media-studio",
+    kind: "simulated",
+    steps: ["Decoding source…", "Re-encoding format…", "Optimizing output…"],
+  },
+  {
+    id: "gif-maker",
+    name: "GIF Maker",
+    desc: "Turn a short clip or image sequence into a looping GIF.",
+    icon: Clapperboard,
+    category: "media-studio",
+    kind: "simulated",
+    steps: ["Reading frames…", "Building palette…", "Encoding GIF…"],
+  },
 
   // Business Kits
   {
@@ -231,6 +332,66 @@ const TOOLS = [
     category: "business-kits",
     kind: "simulated",
     steps: ["Loading clauses…", "Merging your details…", "Finalizing document…"],
+  },
+  {
+    id: "receipt-generator",
+    name: "Receipt Generator",
+    desc: "Create a simple, printable payment receipt for a client.",
+    icon: FileCheck2,
+    category: "business-kits",
+    kind: "simulated",
+    steps: ["Loading template…", "Filling receipt details…", "Formatting for print…"],
+  },
+  {
+    id: "proposal-builder",
+    name: "Proposal Builder",
+    desc: "Draft a clean project proposal to send to a prospect.",
+    icon: ClipboardList,
+    category: "business-kits",
+    kind: "simulated",
+    steps: ["Loading template…", "Structuring sections…", "Formatting document…"],
+  },
+
+  // Quick Calculators — fully real, instant, computed client-side
+  {
+    id: "unit-converter",
+    name: "Unit Converter",
+    desc: "Convert length, weight & temperature — instant, exact.",
+    icon: Ruler,
+    category: "quick-calculators",
+    kind: "instant",
+  },
+  {
+    id: "tip-calculator",
+    name: "Tip Calculator",
+    desc: "Split a bill and work out the tip in a couple of taps.",
+    icon: HandCoins,
+    category: "quick-calculators",
+    kind: "instant",
+  },
+  {
+    id: "percentage-calculator",
+    name: "Percentage & Markup Calculator",
+    desc: "Work out percentages, discounts and price markups fast.",
+    icon: Percent,
+    category: "quick-calculators",
+    kind: "instant",
+  },
+  {
+    id: "age-calculator",
+    name: "Age Calculator",
+    desc: "Find the exact age or duration between two dates.",
+    icon: Cake,
+    category: "quick-calculators",
+    kind: "instant",
+  },
+  {
+    id: "timesheet-calculator",
+    name: "Timesheet Calculator",
+    desc: "Add up hours worked and pay for the week, instantly.",
+    icon: Clock3,
+    category: "quick-calculators",
+    kind: "instant",
   },
 ];
 
@@ -508,6 +669,331 @@ function WordCounterTool({ onClose }) {
         </div>
       </div>
     </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Quick Calculators — fully real, computed instantly on the client          */
+/* -------------------------------------------------------------------------- */
+
+function InstantToolShell({ title, subtitle, icon: Icon, onClose, children }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-slate-950/90 px-4 py-10 backdrop-blur-sm">
+      <div className="w-full max-w-2xl rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+        <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800 text-rose-400">
+              <Icon className="h-4 w-4" />
+            </div>
+            <div>
+              <h2 className="text-sm font-semibold text-slate-100">{title}</h2>
+              <p className="text-xs text-slate-500">{subtitle}</p>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="rounded-lg p-2 text-slate-500 transition hover:bg-slate-800 hover:text-slate-200"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+        <div className="p-6">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+function StatBox({ label, value }) {
+  return (
+    <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3 text-center">
+      <div className="font-mono text-xl font-semibold text-rose-400">{value}</div>
+      <div className="mt-1 text-[11px] uppercase tracking-wider text-slate-500">{label}</div>
+    </div>
+  );
+}
+
+const LENGTH_UNITS = { mm: 0.001, cm: 0.01, m: 1, km: 1000, in: 0.0254, ft: 0.3048, yd: 0.9144, mi: 1609.34 };
+const WEIGHT_UNITS = { mg: 0.000001, g: 0.001, kg: 1, oz: 0.0283495, lb: 0.453592 };
+
+function UnitConverterTool({ onClose }) {
+  const [type, setType] = useState("length");
+  const [from, setFrom] = useState("m");
+  const [to, setTo] = useState("ft");
+  const [value, setValue] = useState("1");
+
+  const units = type === "length" ? LENGTH_UNITS : type === "weight" ? WEIGHT_UNITS : null;
+
+  const convert = () => {
+    const v = Number(value) || 0;
+    if (type === "temperature") {
+      if (from === to) return v;
+      let celsius = from === "C" ? v : from === "F" ? ((v - 32) * 5) / 9 : v - 273.15;
+      if (to === "C") return celsius;
+      if (to === "F") return (celsius * 9) / 5 + 32;
+      return celsius + 273.15;
+    }
+    const base = v * units[from];
+    return base / units[to];
+  };
+
+  const result = convert();
+  const unitList = type === "temperature" ? ["C", "F", "K"] : Object.keys(units);
+
+  const changeType = (t) => {
+    setType(t);
+    if (t === "temperature") {
+      setFrom("C");
+      setTo("F");
+    } else {
+      const u = t === "length" ? LENGTH_UNITS : WEIGHT_UNITS;
+      const keys = Object.keys(u);
+      setFrom(keys[0]);
+      setTo(keys[1]);
+    }
+  };
+
+  return (
+    <InstantToolShell title="Unit Converter" subtitle="Instant, exact — computed on your device" icon={Ruler} onClose={onClose}>
+      <div className="mb-4 flex gap-2">
+        {["length", "weight", "temperature"].map((t) => (
+          <button
+            key={t}
+            onClick={() => changeType(t)}
+            className={`rounded-lg px-3 py-1.5 text-xs font-medium capitalize transition ${
+              type === t ? "bg-rose-400 text-slate-950" : "border border-slate-700 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto_1fr]">
+        <div>
+          <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">From</label>
+          <div className="flex gap-2">
+            <input type="number" className="input" value={value} onChange={(e) => setValue(e.target.value)} />
+            <select className="input w-24" value={from} onChange={(e) => setFrom(e.target.value)}>
+              {unitList.map((u) => (
+                <option key={u} value={u}>
+                  {u}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="hidden items-end justify-center pb-2.5 text-slate-600 sm:flex">→</div>
+        <div>
+          <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">To</label>
+          <div className="flex gap-2">
+            <div className="input flex items-center font-mono text-rose-400">{result.toLocaleString(undefined, { maximumFractionDigits: 4 })}</div>
+            <select className="input w-24" value={to} onChange={(e) => setTo(e.target.value)}>
+              {unitList.map((u) => (
+                <option key={u} value={u}>
+                  {u}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+    </InstantToolShell>
+  );
+}
+
+function TipCalculatorTool({ onClose }) {
+  const [bill, setBill] = useState("50");
+  const [tipPct, setTipPct] = useState(15);
+  const [people, setPeople] = useState(1);
+
+  const billNum = Number(bill) || 0;
+  const tipAmount = billNum * (tipPct / 100);
+  const total = billNum + tipAmount;
+  const perPerson = total / Math.max(1, Number(people) || 1);
+
+  return (
+    <InstantToolShell title="Tip Calculator" subtitle="Split a bill and work out the tip" icon={HandCoins} onClose={onClose}>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Bill amount</label>
+          <input type="number" className="input" value={bill} onChange={(e) => setBill(e.target.value)} />
+        </div>
+        <div>
+          <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Number of people</label>
+          <input type="number" min="1" className="input" value={people} onChange={(e) => setPeople(e.target.value)} />
+        </div>
+      </div>
+      <div className="mt-4">
+        <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">
+          Tip percentage — {tipPct}%
+        </label>
+        <input
+          type="range"
+          min="0"
+          max="30"
+          value={tipPct}
+          onChange={(e) => setTipPct(Number(e.target.value))}
+          className="w-full accent-rose-400"
+        />
+      </div>
+      <div className="mt-5 grid grid-cols-3 gap-3">
+        <StatBox label="Tip" value={`$${tipAmount.toFixed(2)}`} />
+        <StatBox label="Total" value={`$${total.toFixed(2)}`} />
+        <StatBox label="Per person" value={`$${perPerson.toFixed(2)}`} />
+      </div>
+    </InstantToolShell>
+  );
+}
+
+function PercentageCalculatorTool({ onClose }) {
+  const [x, setX] = useState("20");
+  const [y, setY] = useState("150");
+  const [cost, setCost] = useState("100");
+  const [markupPct, setMarkupPct] = useState("30");
+
+  const percentOfValue = (Number(x) / 100) * Number(y || 0);
+  const whatPercent = Number(y) ? (Number(x) / Number(y)) * 100 : 0;
+  const markupPrice = Number(cost || 0) * (1 + Number(markupPct || 0) / 100);
+
+  return (
+    <InstantToolShell title="Percentage & Markup Calculator" subtitle="Discounts, splits and pricing — instant" icon={Percent} onClose={onClose}>
+      <div className="space-y-5">
+        <section className="rounded-xl border border-slate-800 bg-slate-950/40 p-4">
+          <p className="mb-2 text-xs font-medium text-slate-300">What is X% of Y?</p>
+          <div className="flex flex-wrap items-center gap-2 text-sm">
+            <input type="number" className="input w-24" value={x} onChange={(e) => setX(e.target.value)} />
+            <span className="text-slate-500">% of</span>
+            <input type="number" className="input w-28" value={y} onChange={(e) => setY(e.target.value)} />
+            <span className="text-slate-500">=</span>
+            <span className="font-mono text-rose-400">{percentOfValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>
+          </div>
+        </section>
+        <section className="rounded-xl border border-slate-800 bg-slate-950/40 p-4">
+          <p className="mb-1 text-xs font-medium text-slate-300">X is what % of Y?</p>
+          <p className="font-mono text-rose-400">{whatPercent.toLocaleString(undefined, { maximumFractionDigits: 2 })}%</p>
+        </section>
+        <section className="rounded-xl border border-slate-800 bg-slate-950/40 p-4">
+          <p className="mb-2 text-xs font-medium text-slate-300">Markup: cost + margin → sale price</p>
+          <div className="flex flex-wrap items-center gap-2 text-sm">
+            <span className="text-slate-500">Cost</span>
+            <input type="number" className="input w-24" value={cost} onChange={(e) => setCost(e.target.value)} />
+            <span className="text-slate-500">+ markup</span>
+            <input type="number" className="input w-20" value={markupPct} onChange={(e) => setMarkupPct(e.target.value)} />
+            <span className="text-slate-500">% =</span>
+            <span className="font-mono text-rose-400">${markupPrice.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>
+          </div>
+        </section>
+      </div>
+    </InstantToolShell>
+  );
+}
+
+function AgeCalculatorTool({ onClose }) {
+  const [birth, setBirth] = useState("2000-01-01");
+  const [until, setUntil] = useState(new Date().toISOString().slice(0, 10));
+
+  const start = new Date(birth);
+  const end = new Date(until);
+  let years = 0,
+    months = 0,
+    days = 0;
+
+  if (!isNaN(start) && !isNaN(end) && end >= start) {
+    years = end.getFullYear() - start.getFullYear();
+    months = end.getMonth() - start.getMonth();
+    days = end.getDate() - start.getDate();
+    if (days < 0) {
+      months -= 1;
+      const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0);
+      days += prevMonth.getDate();
+    }
+    if (months < 0) {
+      years -= 1;
+      months += 12;
+    }
+  }
+
+  const totalDays = !isNaN(start) && !isNaN(end) ? Math.max(0, Math.round((end - start) / 86400000)) : 0;
+
+  return (
+    <InstantToolShell title="Age Calculator" subtitle="Exact age or duration between two dates" icon={Cake} onClose={onClose}>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">From date</label>
+          <input type="date" className="input" value={birth} onChange={(e) => setBirth(e.target.value)} />
+        </div>
+        <div>
+          <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">To date</label>
+          <input type="date" className="input" value={until} onChange={(e) => setUntil(e.target.value)} />
+        </div>
+      </div>
+      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <StatBox label="Years" value={years} />
+        <StatBox label="Months" value={months} />
+        <StatBox label="Days" value={days} />
+        <StatBox label="Total days" value={totalDays.toLocaleString()} />
+      </div>
+    </InstantToolShell>
+  );
+}
+
+let timesheetRowId = 2;
+
+function TimesheetCalculatorTool({ onClose }) {
+  const [rate, setRate] = useState("20");
+  const [rows, setRows] = useState([
+    { id: "1", day: "Monday", hours: "8" },
+    { id: "2", day: "Tuesday", hours: "8" },
+  ]);
+
+  const updateRow = (id, field, val) => {
+    setRows((prev) => prev.map((r) => (r.id === id ? { ...r, [field]: val } : r)));
+  };
+  const addRow = () => {
+    timesheetRowId += 1;
+    setRows((prev) => [...prev, { id: String(timesheetRowId), day: "", hours: "0" }]);
+  };
+  const removeRow = (id) => setRows((prev) => (prev.length > 1 ? prev.filter((r) => r.id !== id) : prev));
+
+  const totalHours = rows.reduce((sum, r) => sum + (Number(r.hours) || 0), 0);
+  const totalPay = totalHours * (Number(rate) || 0);
+
+  return (
+    <InstantToolShell title="Timesheet Calculator" subtitle="Add up hours and pay for the week" icon={Clock3} onClose={onClose}>
+      <div className="mb-4 flex items-center gap-2">
+        <label className="text-xs text-slate-500">Hourly rate</label>
+        <input type="number" className="input w-24" value={rate} onChange={(e) => setRate(e.target.value)} />
+      </div>
+      <div className="space-y-2">
+        {rows.map((r) => (
+          <div key={r.id} className="grid grid-cols-[1fr_90px_28px] items-center gap-2">
+            <input className="input" placeholder="Day" value={r.day} onChange={(e) => updateRow(r.id, "day", e.target.value)} />
+            <input
+              type="number"
+              className="input text-right font-mono"
+              value={r.hours}
+              onChange={(e) => updateRow(r.id, "hours", e.target.value)}
+            />
+            <button
+              onClick={() => removeRow(r.id)}
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-600 transition hover:bg-red-500/10 hover:text-red-400"
+            >
+              <Trash2 className="h-4 w-4" />
+            </button>
+          </div>
+        ))}
+      </div>
+      <button
+        onClick={addRow}
+        className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-slate-700 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-slate-800"
+      >
+        <Plus className="h-3.5 w-3.5" />
+        Add day
+      </button>
+      <div className="mt-5 grid grid-cols-2 gap-3">
+        <StatBox label="Total hours" value={totalHours} />
+        <StatBox label="Total pay" value={`$${totalPay.toFixed(2)}`} />
+      </div>
+    </InstantToolShell>
   );
 }
 
@@ -1069,8 +1555,8 @@ export default function Page() {
                   </div>
                 </section>
 
-                {/* Mid-content ad between the 1st and 2nd category */}
-                {idx === 0 && (
+                {/* Mid-content ads, spaced between categories */}
+                {(idx === 0 || idx === 2) && (
                   <div className="my-8">
                     <AdSlot variant="banner" />
                   </div>
@@ -1099,6 +1585,21 @@ export default function Page() {
       {activeTool?.kind === "invoice" && <InvoiceGenerator onClose={closeTool} />}
       {activeTool?.kind === "instant" && activeTool.id === "word-counter" && (
         <WordCounterTool onClose={closeTool} />
+      )}
+      {activeTool?.kind === "instant" && activeTool.id === "unit-converter" && (
+        <UnitConverterTool onClose={closeTool} />
+      )}
+      {activeTool?.kind === "instant" && activeTool.id === "tip-calculator" && (
+        <TipCalculatorTool onClose={closeTool} />
+      )}
+      {activeTool?.kind === "instant" && activeTool.id === "percentage-calculator" && (
+        <PercentageCalculatorTool onClose={closeTool} />
+      )}
+      {activeTool?.kind === "instant" && activeTool.id === "age-calculator" && (
+        <AgeCalculatorTool onClose={closeTool} />
+      )}
+      {activeTool?.kind === "instant" && activeTool.id === "timesheet-calculator" && (
+        <TimesheetCalculatorTool onClose={closeTool} />
       )}
       {activeTool?.kind === "simulated" && <SimulatedToolRunner tool={activeTool} onClose={closeTool} />}
     </div>
