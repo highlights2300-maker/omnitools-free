@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import QRCode from "qrcode";
+import { PDFDocument } from "pdf-lib";
+import JSZip from "jszip";
 import {
   FileText,
   Image as ImageIcon,
@@ -50,6 +52,9 @@ import {
   Cake,
   Clock3,
   Calculator,
+  ChevronUp,
+  ChevronDown,
+  FileStack,
 } from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
@@ -122,8 +127,7 @@ const TOOLS = [
     desc: "Combine multiple PDFs into a single file, in order.",
     icon: Layers,
     category: "document-desk",
-    kind: "simulated",
-    steps: ["Reading pages…", "Stitching documents…", "Rebuilding index…", "Packing final PDF…"],
+    kind: "instant",
   },
   {
     id: "pdf-split",
@@ -131,8 +135,7 @@ const TOOLS = [
     desc: "Break a large PDF into separate single-page files.",
     icon: Scissors,
     category: "document-desk",
-    kind: "simulated",
-    steps: ["Indexing pages…", "Slicing document…", "Compressing output…"],
+    kind: "instant",
   },
   {
     id: "img-to-pdf",
@@ -1314,6 +1317,305 @@ function ImageCompressorTool({ onClose }) {
 }
 
 /* -------------------------------------------------------------------------- */
+/*  PDF Merger — fully real, combined client-side via pdf-lib                 */
+/* -------------------------------------------------------------------------- */
+
+function PdfMergerTool({ onClose }) {
+  const [files, setFiles] = useState([]); // { id, file }
+  const [busy, setBusy] = useState(false);
+  const [resultUrl, setResultUrl] = useState(null);
+  const [error, setError] = useState(null);
+  const fileInputRef = useRef(null);
+  const idCounter = useRef(0);
+
+  const addFiles = (fileList) => {
+    const picked = Array.from(fileList || []).filter((f) => f.type === "application/pdf");
+    if (!picked.length) return;
+    setResultUrl(null);
+    setError(null);
+    setFiles((prev) => [
+      ...prev,
+      ...picked.map((file) => {
+        idCounter.current += 1;
+        return { id: `f${idCounter.current}`, file };
+      }),
+    ]);
+  };
+
+  const removeFile = (id) => setFiles((prev) => prev.filter((f) => f.id !== id));
+
+  const move = (index, dir) => {
+    setFiles((prev) => {
+      const next = [...prev];
+      const target = index + dir;
+      if (target < 0 || target >= next.length) return prev;
+      [next[index], next[target]] = [next[target], next[index]];
+      return next;
+    });
+  };
+
+  const merge = async () => {
+    if (files.length < 2) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const merged = await PDFDocument.create();
+      for (const { file } of files) {
+        const bytes = await file.arrayBuffer();
+        const src = await PDFDocument.load(bytes);
+        const pages = await merged.copyPages(src, src.getPageIndices());
+        pages.forEach((p) => merged.addPage(p));
+      }
+      const mergedBytes = await merged.save();
+      const blob = new Blob([mergedBytes], { type: "application/pdf" });
+      setResultUrl((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return URL.createObjectURL(blob);
+      });
+    } catch (e) {
+      setError("Couldn't merge those files — make sure each one is a valid, unencrypted PDF.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const download = () => {
+    if (!resultUrl) return;
+    const a = document.createElement("a");
+    a.href = resultUrl;
+    a.download = "merged.pdf";
+    a.click();
+  };
+
+  return (
+    <InstantToolShell
+      title="PDF Merger"
+      subtitle="Combined entirely on your device — files are never uploaded"
+      icon={Layers}
+      onClose={onClose}
+    >
+      <div
+        onClick={() => fileInputRef.current?.click()}
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => {
+          e.preventDefault();
+          addFiles(e.dataTransfer.files);
+        }}
+        className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-700 bg-slate-950/40 px-6 py-8 text-center transition hover:border-rose-400/40"
+      >
+        <FileStack className="mb-2 h-8 w-8 text-slate-600" />
+        <p className="text-sm font-medium text-slate-300">Drag & drop PDFs here, or click to add files</p>
+        <p className="mt-1 text-xs text-slate-500">Add two or more — reorder them below before merging</p>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="application/pdf"
+          multiple
+          className="hidden"
+          onChange={(e) => addFiles(e.target.files)}
+        />
+      </div>
+
+      {files.length > 0 && (
+        <div className="mt-4 space-y-2">
+          {files.map((f, i) => (
+            <div key={f.id} className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-950/40 px-3 py-2">
+              <span className="flex h-6 w-6 items-center justify-center rounded-md bg-slate-800 font-mono text-[11px] text-slate-400">
+                {i + 1}
+              </span>
+              <span className="flex-1 truncate text-sm text-slate-200">{f.file.name}</span>
+              <span className="font-mono text-[11px] text-slate-500">{formatBytes(f.file.size)}</span>
+              <button
+                onClick={() => move(i, -1)}
+                disabled={i === 0}
+                className="rounded p-1 text-slate-500 hover:bg-slate-800 hover:text-slate-200 disabled:opacity-20"
+              >
+                <ChevronUp className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => move(i, 1)}
+                disabled={i === files.length - 1}
+                className="rounded p-1 text-slate-500 hover:bg-slate-800 hover:text-slate-200 disabled:opacity-20"
+              >
+                <ChevronDown className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => removeFile(f.id)}
+                className="rounded p-1 text-slate-500 hover:bg-red-500/10 hover:text-red-400"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {error && <p className="mt-3 text-xs text-red-400">{error}</p>}
+
+      <div className="mt-5 flex flex-wrap items-center gap-3">
+        <button
+          onClick={merge}
+          disabled={files.length < 2 || busy}
+          className="inline-flex items-center gap-2 rounded-lg bg-rose-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-rose-300 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Layers className="h-4 w-4" />}
+          {busy ? "Merging…" : `Merge ${files.length || ""} PDFs`}
+        </button>
+        {resultUrl && (
+          <button
+            onClick={download}
+            className="inline-flex items-center gap-2 rounded-lg border border-rose-400/40 px-4 py-2 text-sm font-semibold text-rose-400 transition hover:bg-rose-400/10"
+          >
+            <FileOutput className="h-4 w-4" />
+            Download merged.pdf
+          </button>
+        )}
+      </div>
+    </InstantToolShell>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  PDF Splitter — fully real, split via pdf-lib and zipped via jszip         */
+/* -------------------------------------------------------------------------- */
+
+function PdfSplitterTool({ onClose }) {
+  const [file, setFile] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  const [busy, setBusy] = useState(false);
+  const [resultUrl, setResultUrl] = useState(null);
+  const [error, setError] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const onPickFile = async (f) => {
+    if (!f || f.type !== "application/pdf") return;
+    setError(null);
+    setResultUrl(null);
+    setFile(f);
+    try {
+      const bytes = await f.arrayBuffer();
+      const doc = await PDFDocument.load(bytes);
+      setPageCount(doc.getPageCount());
+    } catch (e) {
+      setError("Couldn't read that PDF — make sure it isn't password-protected.");
+      setPageCount(0);
+    }
+  };
+
+  const split = async () => {
+    if (!file || pageCount < 2) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const bytes = await file.arrayBuffer();
+      const src = await PDFDocument.load(bytes);
+      const zip = new JSZip();
+      const baseName = file.name.replace(/\.pdf$/i, "");
+      for (let i = 0; i < src.getPageCount(); i++) {
+        const single = await PDFDocument.create();
+        const [page] = await single.copyPages(src, [i]);
+        single.addPage(page);
+        const pdfBytes = await single.save();
+        zip.file(`${baseName}-page-${i + 1}.pdf`, pdfBytes);
+      }
+      const zipBlob = await zip.generateAsync({ type: "blob" });
+      setResultUrl((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return URL.createObjectURL(zipBlob);
+      });
+    } catch (e) {
+      setError("Something went wrong splitting that PDF. Try a different file.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const download = () => {
+    if (!resultUrl) return;
+    const a = document.createElement("a");
+    a.href = resultUrl;
+    a.download = "split-pages.zip";
+    a.click();
+  };
+
+  return (
+    <InstantToolShell
+      title="PDF Splitter"
+      subtitle="Split entirely on your device — nothing is uploaded"
+      icon={Scissors}
+      onClose={onClose}
+    >
+      {!file ? (
+        <div
+          onClick={() => fileInputRef.current?.click()}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => {
+            e.preventDefault();
+            onPickFile(e.dataTransfer.files?.[0]);
+          }}
+          className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-700 bg-slate-950/40 px-6 py-14 text-center transition hover:border-rose-400/40"
+        >
+          <Scissors className="mb-3 h-9 w-9 text-slate-600" />
+          <p className="text-sm font-medium text-slate-300">Drag & drop a PDF, or click to choose one</p>
+          <p className="mt-1 text-xs text-slate-500">Every page becomes its own PDF, packed into a ZIP</p>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="application/pdf"
+            className="hidden"
+            onChange={(e) => onPickFile(e.target.files?.[0])}
+          />
+        </div>
+      ) : (
+        <div>
+          <div className="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-950/40 px-4 py-3">
+            <FileText className="h-8 w-8 text-rose-400" />
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium text-slate-200">{file.name}</p>
+              <p className="font-mono text-xs text-slate-500">
+                {formatBytes(file.size)} {pageCount ? `· ${pageCount} pages` : ""}
+              </p>
+            </div>
+          </div>
+
+          {error && <p className="mt-3 text-xs text-red-400">{error}</p>}
+
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <button
+              onClick={split}
+              disabled={pageCount < 2 || busy}
+              className="inline-flex items-center gap-2 rounded-lg bg-rose-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-rose-300 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Scissors className="h-4 w-4" />}
+              {busy ? "Splitting…" : `Split into ${pageCount || "…"} PDFs`}
+            </button>
+            {resultUrl && (
+              <button
+                onClick={download}
+                className="inline-flex items-center gap-2 rounded-lg border border-rose-400/40 px-4 py-2 text-sm font-semibold text-rose-400 transition hover:bg-rose-400/10"
+              >
+                <FileOutput className="h-4 w-4" />
+                Download split-pages.zip
+              </button>
+            )}
+            <button
+              onClick={() => {
+                setFile(null);
+                setResultUrl(null);
+                setPageCount(0);
+              }}
+              className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-800"
+            >
+              Choose another PDF
+            </button>
+          </div>
+        </div>
+      )}
+    </InstantToolShell>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /*  Invoice Generator — fully operational, client-side                        */
 /* -------------------------------------------------------------------------- */
 
@@ -1922,6 +2224,12 @@ export default function Page() {
       )}
       {activeTool?.kind === "instant" && activeTool.id === "img-compressor" && (
         <ImageCompressorTool onClose={closeTool} />
+      )}
+      {activeTool?.kind === "instant" && activeTool.id === "pdf-merge" && (
+        <PdfMergerTool onClose={closeTool} />
+      )}
+      {activeTool?.kind === "instant" && activeTool.id === "pdf-split" && (
+        <PdfSplitterTool onClose={closeTool} />
       )}
       {activeTool?.kind === "simulated" && <SimulatedToolRunner tool={activeTool} onClose={closeTool} />}
     </div>
