@@ -169,8 +169,7 @@ const TOOLS = [
     desc: "Zip up several files into one lightweight archive.",
     icon: Archive,
     category: "document-desk",
-    kind: "simulated",
-    steps: ["Collecting files…", "Deflating contents…", "Sealing archive…"],
+    kind: "instant",
   },
   {
     id: "pdf-compressor",
@@ -2299,6 +2298,132 @@ function ImageFormatConverterTool({ onClose }) {
 }
 
 /* -------------------------------------------------------------------------- */
+/*  File Archiver — fully real, zipped via jszip                              */
+/* -------------------------------------------------------------------------- */
+
+function FileArchiverTool({ onClose }) {
+  const [files, setFiles] = useState([]); // { id, file }
+  const [zipName, setZipName] = useState("archive");
+  const [busy, setBusy] = useState(false);
+  const [resultUrl, setResultUrl] = useState(null);
+  const [resultSize, setResultSize] = useState(0);
+  const fileInputRef = useRef(null);
+  const idCounter = useRef(0);
+
+  const addFiles = (fileList) => {
+    const picked = Array.from(fileList || []);
+    if (!picked.length) return;
+    setResultUrl(null);
+    setFiles((prev) => [
+      ...prev,
+      ...picked.map((file) => {
+        idCounter.current += 1;
+        return { id: `f${idCounter.current}`, file };
+      }),
+    ]);
+  };
+
+  const removeFile = (id) => setFiles((prev) => prev.filter((f) => f.id !== id));
+
+  const totalSize = files.reduce((sum, f) => sum + f.file.size, 0);
+
+  const zipIt = async () => {
+    if (!files.length) return;
+    setBusy(true);
+    try {
+      const zip = new JSZip();
+      files.forEach(({ file }) => zip.file(file.name, file));
+      const blob = await zip.generateAsync({ type: "blob" });
+      setResultUrl((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return URL.createObjectURL(blob);
+      });
+      setResultSize(blob.size);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const download = () => {
+    if (!resultUrl) return;
+    const a = document.createElement("a");
+    a.href = resultUrl;
+    a.download = `${zipName || "archive"}.zip`;
+    a.click();
+  };
+
+  return (
+    <InstantToolShell
+      title="File Archiver"
+      subtitle="Zipped entirely on your device — nothing is uploaded"
+      icon={Archive}
+      onClose={onClose}
+    >
+      <div
+        onClick={() => fileInputRef.current?.click()}
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => {
+          e.preventDefault();
+          addFiles(e.dataTransfer.files);
+        }}
+        className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-700 bg-slate-950/40 px-6 py-8 text-center transition hover:border-rose-400/40"
+      >
+        <Archive className="mb-2 h-8 w-8 text-slate-600" />
+        <p className="text-sm font-medium text-slate-300">Drag & drop any files here, or click to add</p>
+        <p className="mt-1 text-xs text-slate-500">Any file type — they'll be packed into one ZIP</p>
+        <input ref={fileInputRef} type="file" multiple className="hidden" onChange={(e) => addFiles(e.target.files)} />
+      </div>
+
+      {files.length > 0 && (
+        <div className="mt-4 space-y-2">
+          {files.map((f) => (
+            <div key={f.id} className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-950/40 px-3 py-2">
+              <span className="flex-1 truncate text-sm text-slate-200">{f.file.name}</span>
+              <span className="font-mono text-[11px] text-slate-500">{formatBytes(f.file.size)}</span>
+              <button
+                onClick={() => removeFile(f.id)}
+                className="rounded p-1 text-slate-500 hover:bg-red-500/10 hover:text-red-400"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </div>
+          ))}
+          <p className="pt-1 text-[11px] text-slate-500">
+            {files.length} file{files.length > 1 ? "s" : ""} · {formatBytes(totalSize)} total
+          </p>
+        </div>
+      )}
+
+      <div className="mt-4 flex items-center gap-2">
+        <label className="text-xs text-slate-500">Archive name</label>
+        <input className="input w-40" value={zipName} onChange={(e) => setZipName(e.target.value)} />
+        <span className="text-xs text-slate-500">.zip</span>
+      </div>
+
+      <div className="mt-5 flex flex-wrap items-center gap-3">
+        <button
+          onClick={zipIt}
+          disabled={!files.length || busy}
+          className="inline-flex items-center gap-2 rounded-lg bg-rose-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-rose-300 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Archive className="h-4 w-4" />}
+          {busy ? "Zipping…" : `Zip ${files.length || ""} files`}
+        </button>
+        {resultUrl && (
+          <button
+            onClick={download}
+            className="inline-flex items-center gap-2 rounded-lg border border-rose-400/40 px-4 py-2 text-sm font-semibold text-rose-400 transition hover:bg-rose-400/10"
+          >
+            <FileOutput className="h-4 w-4" />
+            Download {zipName || "archive"}.zip · {formatBytes(resultSize)}
+          </button>
+        )}
+      </div>
+    </InstantToolShell>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /*  Invoice Generator — fully operational, client-side                        */
 /* -------------------------------------------------------------------------- */
 
@@ -2925,6 +3050,9 @@ export default function Page() {
       )}
       {activeTool?.kind === "instant" && activeTool.id === "img-format-converter" && (
         <ImageFormatConverterTool onClose={closeTool} />
+      )}
+      {activeTool?.kind === "instant" && activeTool.id === "file-archiver" && (
+        <FileArchiverTool onClose={closeTool} />
       )}
       {activeTool?.kind === "simulated" && <SimulatedToolRunner tool={activeTool} onClose={closeTool} />}
     </div>
