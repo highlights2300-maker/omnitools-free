@@ -258,8 +258,7 @@ const TOOLS = [
     desc: "Lift subjects off their background with one click.",
     icon: Wand2,
     category: "media-studio",
-    kind: "simulated",
-    steps: ["Segmenting subject…", "Refining edges…", "Compositing transparent PNG…"],
+    kind: "instant",
   },
   {
     id: "meme-generator",
@@ -1835,6 +1834,164 @@ function ImageCropperTool({ onClose }) {
 }
 
 /* -------------------------------------------------------------------------- */
+/*  Background Remover — fully real, runs an on-device ML model               */
+/* -------------------------------------------------------------------------- */
+
+function BackgroundRemoverTool({ onClose }) {
+  const [file, setFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [resultUrl, setResultUrl] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [statusText, setStatusText] = useState("");
+  const [error, setError] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const onPickFile = (f) => {
+    if (!f || !f.type.startsWith("image/")) return;
+    setFile(f);
+    setImageUrl(URL.createObjectURL(f));
+    setResultUrl(null);
+    setError(null);
+  };
+
+  const run = async () => {
+    if (!file) return;
+    setBusy(true);
+    setError(null);
+    setStatusText("Loading on-device model…");
+    try {
+      const { default: removeBackground } = await import("@imgly/background-removal");
+      const blob = await removeBackground(file, {
+        progress: (key, current, total) => {
+          if (key.startsWith("fetch")) {
+            setStatusText(`Downloading model — ${Math.round((current / total) * 100)}%`);
+          } else {
+            setStatusText(`Processing image — ${Math.round((current / total) * 100)}%`);
+          }
+        },
+      });
+      setResultUrl((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return URL.createObjectURL(blob);
+      });
+    } catch (e) {
+      setError("Couldn't process that image. Try a smaller file or a different photo.");
+    } finally {
+      setBusy(false);
+      setStatusText("");
+    }
+  };
+
+  const download = () => {
+    if (!resultUrl) return;
+    const a = document.createElement("a");
+    a.href = resultUrl;
+    a.download = "background-removed.png";
+    a.click();
+  };
+
+  const checkerBg = {
+    backgroundImage:
+      "repeating-conic-gradient(#e2e8f0 0% 25%, #f8fafc 0% 50%) 50% / 20px 20px",
+  };
+
+  return (
+    <InstantToolShell
+      title="Background Remover"
+      subtitle="Segmentation model runs locally in your browser"
+      icon={Wand2}
+      onClose={onClose}
+    >
+      {!file ? (
+        <div
+          onClick={() => fileInputRef.current?.click()}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => {
+            e.preventDefault();
+            onPickFile(e.dataTransfer.files?.[0]);
+          }}
+          className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-700 bg-slate-950/40 px-6 py-14 text-center transition hover:border-rose-400/40"
+        >
+          <Wand2 className="mb-3 h-9 w-9 text-slate-600" />
+          <p className="text-sm font-medium text-slate-300">Drag & drop a photo, or click to choose one</p>
+          <p className="mt-1 text-xs text-slate-500">
+            First use downloads a small AI model, cached in your browser after that
+          </p>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => onPickFile(e.target.files?.[0])}
+          />
+        </div>
+      ) : (
+        <div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <p className="mb-1 text-[11px] uppercase tracking-wider text-slate-500">Original</p>
+              <div className="flex h-48 items-center justify-center overflow-hidden rounded-xl border border-slate-800 bg-white">
+                <img src={imageUrl} alt="Original" className="max-h-48 w-full object-contain" />
+              </div>
+            </div>
+            <div>
+              <p className="mb-1 text-[11px] uppercase tracking-wider text-slate-500">Background removed</p>
+              <div
+                className="flex h-48 items-center justify-center overflow-hidden rounded-xl border border-slate-800"
+                style={checkerBg}
+              >
+                {busy ? (
+                  <div className="flex flex-col items-center gap-2 px-4 text-center">
+                    <Loader2 className="h-6 w-6 animate-spin text-rose-500" />
+                    <p className="text-[11px] text-slate-600">{statusText}</p>
+                  </div>
+                ) : resultUrl ? (
+                  <img src={resultUrl} alt="Background removed" className="max-h-48 w-full object-contain" />
+                ) : (
+                  <p className="px-4 text-center text-xs text-slate-500">Click "Remove background" to start</p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {error && <p className="mt-3 text-xs text-red-400">{error}</p>}
+
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <button
+              onClick={run}
+              disabled={busy}
+              className="inline-flex items-center gap-2 rounded-lg bg-rose-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-rose-300 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Wand2 className="h-4 w-4" />}
+              {busy ? "Processing…" : resultUrl ? "Run again" : "Remove background"}
+            </button>
+            {resultUrl && (
+              <button
+                onClick={download}
+                className="inline-flex items-center gap-2 rounded-lg border border-rose-400/40 px-4 py-2 text-sm font-semibold text-rose-400 transition hover:bg-rose-400/10"
+              >
+                <FileOutput className="h-4 w-4" />
+                Download PNG
+              </button>
+            )}
+            <button
+              onClick={() => {
+                setFile(null);
+                setImageUrl(null);
+                setResultUrl(null);
+              }}
+              className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-800"
+            >
+              Choose another
+            </button>
+          </div>
+        </div>
+      )}
+    </InstantToolShell>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /*  Invoice Generator — fully operational, client-side                        */
 /* -------------------------------------------------------------------------- */
 
@@ -2452,6 +2609,9 @@ export default function Page() {
       )}
       {activeTool?.kind === "instant" && activeTool.id === "img-cropper" && (
         <ImageCropperTool onClose={closeTool} />
+      )}
+      {activeTool?.kind === "instant" && activeTool.id === "bg-remover" && (
+        <BackgroundRemoverTool onClose={closeTool} />
       )}
       {activeTool?.kind === "simulated" && <SimulatedToolRunner tool={activeTool} onClose={closeTool} />}
     </div>
