@@ -309,8 +309,7 @@ const TOOLS = [
     desc: "Fill in a simple service-agreement template in minutes.",
     icon: PenTool,
     category: "business-kits",
-    kind: "simulated",
-    steps: ["Loading clauses…", "Merging your details…", "Finalizing document…"],
+    kind: "contract",
   },
   {
     id: "receipt-generator",
@@ -3720,6 +3719,146 @@ function BusinessCardTool({ onClose }) {
 }
 
 /* -------------------------------------------------------------------------- */
+/*  Contract Template Kit — fully real, print-to-PDF                          */
+/* -------------------------------------------------------------------------- */
+
+function ContractTemplate({ onClose }) {
+  const [provider, setProvider] = useState({ name: "Your Business Name", address: "123 Market Street, Springfield" });
+  const [client, setClient] = useState({ name: "Client Name", address: "45 Client Avenue, Rivertown" });
+  const [effectiveDate, setEffectiveDate] = useState(new Date().toISOString().slice(0, 10));
+  const [services, setServices] = useState(
+    "The Service Provider will design and develop a marketing website for the Client, including up to 5 pages, responsive layout, and one round of revisions."
+  );
+  const [payment, setPayment] = useState({ amount: "2500", currency: "$", schedule: "50% upfront, 50% on completion" });
+  const [term, setTerm] = useState("This agreement begins on the effective date and continues until the services described above are completed.");
+  const [termination, setTermination] = useState("Either party may terminate this agreement with 14 days' written notice.");
+  const [governingLaw, setGoverningLaw] = useState("State of Delaware");
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950">
+      <div className="no-print sticky top-0 z-10 flex items-center justify-between border-b border-slate-800 bg-slate-950/95 px-4 py-3 backdrop-blur md:px-8">
+        <button onClick={onClose} className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-900">
+          <ArrowLeft className="h-4 w-4" />
+          Back to dashboard
+        </button>
+        <button onClick={() => window.print()} className="inline-flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-amber-300">
+          <Printer className="h-4 w-4" />
+          Print / Save as PDF
+        </button>
+      </div>
+
+      <div className="mx-auto grid max-w-6xl gap-6 px-4 py-6 md:grid-cols-[1fr_380px] md:px-8">
+        <div className="no-print space-y-5">
+          <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 px-3 py-2 text-[11px] text-amber-200/80">
+            This is a simple, general-purpose starting template — not a substitute for advice from a
+            qualified lawyer for anything high-stakes or unusual.
+          </div>
+
+          <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Parties</h3>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <input className="input" placeholder="Service provider name" value={provider.name} onChange={(e) => setProvider({ ...provider, name: e.target.value })} />
+              <input className="input" placeholder="Provider address" value={provider.address} onChange={(e) => setProvider({ ...provider, address: e.target.value })} />
+              <input className="input" placeholder="Client name" value={client.name} onChange={(e) => setClient({ ...client, name: e.target.value })} />
+              <input className="input" placeholder="Client address" value={client.address} onChange={(e) => setClient({ ...client, address: e.target.value })} />
+            </div>
+            <div className="mt-3">
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Effective date</label>
+              <input type="date" className="input w-48" value={effectiveDate} onChange={(e) => setEffectiveDate(e.target.value)} />
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Services</h3>
+            <textarea className="input" rows={3} value={services} onChange={(e) => setServices(e.target.value)} />
+          </section>
+
+          <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Payment</h3>
+            <div className="grid gap-3 sm:grid-cols-[80px_1fr]">
+              <select className="input" value={payment.currency} onChange={(e) => setPayment({ ...payment, currency: e.target.value })}>
+                {["$", "€", "£", "₹", "¥"].map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+              <input type="number" className="input" placeholder="Total amount" value={payment.amount} onChange={(e) => setPayment({ ...payment, amount: e.target.value })} />
+            </div>
+            <textarea className="input mt-3" rows={2} placeholder="Payment schedule" value={payment.schedule} onChange={(e) => setPayment({ ...payment, schedule: e.target.value })} />
+          </section>
+
+          <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Term & termination</h3>
+            <textarea className="input" rows={2} value={term} onChange={(e) => setTerm(e.target.value)} />
+            <textarea className="input mt-3" rows={2} value={termination} onChange={(e) => setTermination(e.target.value)} />
+          </section>
+
+          <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Governing law</h3>
+            <input className="input" value={governingLaw} onChange={(e) => setGoverningLaw(e.target.value)} />
+          </section>
+
+          <AdSlot variant="banner" />
+        </div>
+
+        <div className="md:sticky md:top-20 md:self-start">
+          <div id="invoice-print-area" className="invoice-print-area rounded-2xl border border-slate-800 bg-white p-8 text-slate-900 shadow-2xl">
+            <h1 className="text-center text-base font-bold uppercase tracking-wide">Service Agreement</h1>
+            <p className="mt-1 text-center font-mono text-[11px] text-slate-500">Effective {effectiveDate}</p>
+
+            <p className="mt-5 text-xs leading-relaxed text-slate-700">
+              This Service Agreement is entered into between <strong>{provider.name}</strong> ("Service
+              Provider"), located at {provider.address}, and <strong>{client.name}</strong> ("Client"),
+              located at {client.address}.
+            </p>
+
+            <div className="mt-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">1. Services</p>
+              <p className="mt-1 text-xs leading-relaxed text-slate-700">{services}</p>
+            </div>
+
+            <div className="mt-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">2. Payment</p>
+              <p className="mt-1 text-xs leading-relaxed text-slate-700">
+                The total fee for these services is {payment.currency}
+                {Number(payment.amount || 0).toLocaleString()}. {payment.schedule}
+              </p>
+            </div>
+
+            <div className="mt-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">3. Term</p>
+              <p className="mt-1 text-xs leading-relaxed text-slate-700">{term}</p>
+            </div>
+
+            <div className="mt-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">4. Termination</p>
+              <p className="mt-1 text-xs leading-relaxed text-slate-700">{termination}</p>
+            </div>
+
+            <div className="mt-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">5. Governing Law</p>
+              <p className="mt-1 text-xs leading-relaxed text-slate-700">
+                This agreement is governed by the laws of the {governingLaw}.
+              </p>
+            </div>
+
+            <div className="mt-8 grid grid-cols-2 gap-8 text-xs">
+              <div>
+                <div className="h-10 border-b border-slate-400" />
+                <p className="mt-1 text-slate-500">{provider.name} · Date</p>
+              </div>
+              <div>
+                <div className="h-10 border-b border-slate-400" />
+                <p className="mt-1 text-slate-500">{client.name} · Date</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /*  Invoice Generator — fully operational, client-side                        */
 /* -------------------------------------------------------------------------- */
 
@@ -4897,6 +5036,7 @@ export default function Page() {
       {activeTool?.kind === "quote" && <QuoteBuilder onClose={closeTool} />}
       {activeTool?.kind === "receipt" && <ReceiptGenerator onClose={closeTool} />}
       {activeTool?.kind === "proposal" && <ProposalBuilder onClose={closeTool} />}
+      {activeTool?.kind === "contract" && <ContractTemplate onClose={closeTool} />}
       {activeTool?.kind === "instant" && activeTool.id === "word-counter" && (
         <WordCounterTool onClose={closeTool} />
       )}
