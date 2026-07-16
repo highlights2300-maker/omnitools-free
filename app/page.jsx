@@ -319,8 +319,7 @@ const TOOLS = [
     desc: "Create a simple, printable payment receipt for a client.",
     icon: FileCheck2,
     category: "business-kits",
-    kind: "simulated",
-    steps: ["Loading template…", "Filling receipt details…", "Formatting for print…"],
+    kind: "receipt",
   },
   {
     id: "proposal-builder",
@@ -4098,6 +4097,179 @@ function QuoteBuilder({ onClose }) {
 }
 
 /* -------------------------------------------------------------------------- */
+/*  Receipt Generator — fully real, print-to-PDF                              */
+/* -------------------------------------------------------------------------- */
+
+let receiptItemIdCounter = 2;
+
+function ReceiptGenerator({ onClose }) {
+  const [business, setBusiness] = useState({
+    name: "Your Business Name",
+    email: "you@business.com",
+    phone: "+1 555 000 1234",
+  });
+  const [payer, setPayer] = useState({ name: "Client Name", email: "client@email.com" });
+  const [meta, setMeta] = useState({
+    number: "RCT-1001",
+    date: new Date().toISOString().slice(0, 10),
+    method: "Card",
+    currency: "$",
+  });
+  const [items, setItems] = useState([{ id: "1", desc: "Payment for services", amount: 250 }]);
+  const [notes, setNotes] = useState("Paid in full. Thank you for your business!");
+
+  const updateItem = (id, field, value) =>
+    setItems((prev) => prev.map((it) => (it.id === id ? { ...it, [field]: value } : it)));
+
+  const addItem = () => {
+    receiptItemIdCounter += 1;
+    setItems((prev) => [...prev, { id: String(receiptItemIdCounter), desc: "", amount: 0 }]);
+  };
+
+  const removeItem = (id) => setItems((prev) => (prev.length > 1 ? prev.filter((it) => it.id !== id) : prev));
+
+  const total = useMemo(() => items.reduce((sum, it) => sum + (Number(it.amount) || 0), 0), [items]);
+  const fmt = (n) => `${meta.currency}${n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950">
+      <div className="no-print sticky top-0 z-10 flex items-center justify-between border-b border-slate-800 bg-slate-950/95 px-4 py-3 backdrop-blur md:px-8">
+        <button onClick={onClose} className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-900">
+          <ArrowLeft className="h-4 w-4" />
+          Back to dashboard
+        </button>
+        <button onClick={() => window.print()} className="inline-flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-amber-300">
+          <Printer className="h-4 w-4" />
+          Print / Save as PDF
+        </button>
+      </div>
+
+      <div className="mx-auto grid max-w-5xl gap-6 px-4 py-6 md:grid-cols-[1fr_320px] md:px-8">
+        <div className="no-print space-y-5">
+          <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Your business</h3>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <input className="input" placeholder="Business name" value={business.name} onChange={(e) => setBusiness({ ...business, name: e.target.value })} />
+              <input className="input" placeholder="Email" value={business.email} onChange={(e) => setBusiness({ ...business, email: e.target.value })} />
+              <input className="input sm:col-span-2" placeholder="Phone" value={business.phone} onChange={(e) => setBusiness({ ...business, phone: e.target.value })} />
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Received from</h3>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <input className="input" placeholder="Payer name" value={payer.name} onChange={(e) => setPayer({ ...payer, name: e.target.value })} />
+              <input className="input" placeholder="Payer email" value={payer.email} onChange={(e) => setPayer({ ...payer, email: e.target.value })} />
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Receipt details</h3>
+            <div className="grid gap-3 sm:grid-cols-4">
+              <input className="input" placeholder="Receipt #" value={meta.number} onChange={(e) => setMeta({ ...meta, number: e.target.value })} />
+              <input type="date" className="input" value={meta.date} onChange={(e) => setMeta({ ...meta, date: e.target.value })} />
+              <select className="input" value={meta.method} onChange={(e) => setMeta({ ...meta, method: e.target.value })}>
+                {["Cash", "Card", "Bank Transfer", "Check", "Other"].map((m) => (
+                  <option key={m} value={m}>{m}</option>
+                ))}
+              </select>
+              <select className="input" value={meta.currency} onChange={(e) => setMeta({ ...meta, currency: e.target.value })}>
+                {["$", "€", "£", "₹", "¥"].map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+            <div className="mb-3 flex items-center justify-between">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">What was paid for</h3>
+              <button onClick={addItem} className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-slate-800">
+                <Plus className="h-3.5 w-3.5" />
+                Add line
+              </button>
+            </div>
+            <div className="space-y-2">
+              {items.map((it) => (
+                <div key={it.id} className="grid grid-cols-[1fr_100px_28px] items-center gap-2">
+                  <input className="input" placeholder="Description" value={it.desc} onChange={(e) => updateItem(it.id, "desc", e.target.value)} />
+                  <input type="number" min="0" step="0.01" className="input text-right font-mono" value={it.amount} onChange={(e) => updateItem(it.id, "amount", e.target.value)} />
+                  <button onClick={() => removeItem(it.id)} className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-600 transition hover:bg-red-500/10 hover:text-red-400">
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Notes</h3>
+            <textarea className="input" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} />
+          </section>
+
+          <AdSlot variant="banner" />
+        </div>
+
+        <div className="md:sticky md:top-20 md:self-start">
+          <div id="invoice-print-area" className="invoice-print-area rounded-2xl border border-slate-800 bg-white p-8 text-slate-900 shadow-2xl">
+            <div className="flex items-start justify-between border-b border-slate-200 pb-6">
+              <div>
+                <h1 className="text-lg font-bold">{business.name}</h1>
+                <p className="mt-1 text-xs text-slate-500">{business.email} · {business.phone}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-xs uppercase tracking-widest text-slate-400">Receipt</p>
+                <p className="font-mono text-sm font-semibold">{meta.number}</p>
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-4 text-xs">
+              <div>
+                <p className="uppercase tracking-widest text-slate-400">Received from</p>
+                <p className="mt-1 font-semibold">{payer.name}</p>
+                <p className="text-slate-500">{payer.email}</p>
+              </div>
+              <div className="text-right">
+                <p><span className="uppercase tracking-widest text-slate-400">Date </span><span className="font-mono">{meta.date}</span></p>
+                <p className="mt-1"><span className="uppercase tracking-widest text-slate-400">Method </span><span className="font-mono">{meta.method}</span></p>
+              </div>
+            </div>
+
+            <table className="mt-6 w-full text-xs">
+              <thead>
+                <tr className="border-b border-slate-200 text-left uppercase tracking-widest text-slate-400">
+                  <th className="py-2 font-medium">Description</th>
+                  <th className="py-2 text-right font-medium">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.map((it) => (
+                  <tr key={it.id} className="border-b border-slate-100">
+                    <td className="py-2 pr-2">{it.desc || "—"}</td>
+                    <td className="py-2 text-right font-mono">{fmt(Number(it.amount) || 0)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div className="mt-4 flex justify-end">
+              <div className="w-48 text-xs">
+                <div className="mt-1 flex justify-between border-t border-slate-200 py-2 text-sm font-bold">
+                  <span>Total received</span>
+                  <span className="font-mono">{fmt(total)}</span>
+                </div>
+              </div>
+            </div>
+
+            {notes && <div className="mt-6 border-t border-slate-200 pt-4 text-[11px] text-slate-500">{notes}</div>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /*  Main page                                                                  */
 /* -------------------------------------------------------------------------- */
 
@@ -4339,6 +4511,7 @@ export default function Page() {
       {/* ---------------------------------------------------------------- */}
       {activeTool?.kind === "invoice" && <InvoiceGenerator onClose={closeTool} />}
       {activeTool?.kind === "quote" && <QuoteBuilder onClose={closeTool} />}
+      {activeTool?.kind === "receipt" && <ReceiptGenerator onClose={closeTool} />}
       {activeTool?.kind === "instant" && activeTool.id === "word-counter" && (
         <WordCounterTool onClose={closeTool} />
       )}
