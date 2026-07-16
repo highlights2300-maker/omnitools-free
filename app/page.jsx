@@ -213,11 +213,10 @@ const TOOLS = [
   {
     id: "video-trimmer",
     name: "Video Trimmer",
-    desc: "Cut clips down to the moment that matters, no upload wait.",
+    desc: "Cut clips down to the moment that matters — best for short clips.",
     icon: Video,
     category: "media-studio",
-    kind: "simulated",
-    steps: ["Reading frames…", "Seeking cut points…", "Encoding trimmed clip…"],
+    kind: "instant",
   },
   {
     id: "audio-converter",
@@ -4073,6 +4072,223 @@ function GifMakerTool({ onClose }) {
 }
 
 /* -------------------------------------------------------------------------- */
+/*  Video Trimmer — fully real, powered by ffmpeg.wasm running in-browser     */
+/* -------------------------------------------------------------------------- */
+
+function VideoTrimmerTool({ onClose }) {
+  const [file, setFile] = useState(null);
+  const [videoUrl, setVideoUrl] = useState(null);
+  const [duration, setDuration] = useState(0);
+  const [start, setStart] = useState(0);
+  const [end, setEnd] = useState(0);
+  const [busy, setBusy] = useState(false);
+  const [statusText, setStatusText] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [resultUrl, setResultUrl] = useState(null);
+  const [error, setError] = useState(null);
+  const fileInputRef = useRef(null);
+  const ffmpegRef = useRef(null);
+
+  const onPickFile = (f) => {
+    if (!f || !f.type.startsWith("video/")) return;
+    setFile(f);
+    setResultUrl(null);
+    setError(null);
+    setVideoUrl(URL.createObjectURL(f));
+  };
+
+  const onLoadedMetadata = (e) => {
+    const d = e.target.duration;
+    setDuration(d);
+    setStart(0);
+    setEnd(Math.min(d, 15));
+  };
+
+  const secondsToClock = (s) => {
+    const m = Math.floor(s / 60);
+    const sec = (s % 60).toFixed(1);
+    return `${m}:${sec.padStart(4, "0")}`;
+  };
+
+  const trim = async () => {
+    if (!file || end <= start) return;
+    setBusy(true);
+    setError(null);
+    setProgress(0);
+    try {
+      setStatusText("Loading video engine…");
+      const { FFmpeg } = await import("@ffmpeg/ffmpeg");
+      const { fetchFile, toBlobURL } = await import("@ffmpeg/util");
+
+      if (!ffmpegRef.current) {
+        const ffmpeg = new FFmpeg();
+        const base = "https://unpkg.com/@ffmpeg/core@0.12.10/dist/umd";
+        ffmpeg.on("progress", ({ progress: p }) => setProgress(Math.min(100, Math.round(p * 100))));
+        ffmpeg.on("log", ({ message }) => setStatusText(message.slice(0, 60)));
+        await ffmpeg.load({
+          coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, "text/javascript"),
+          wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, "application/wasm"),
+        });
+        ffmpegRef.current = ffmpeg;
+      }
+      const ffmpeg = ffmpegRef.current;
+
+      setStatusText("Reading video file…");
+      const inputName = "input" + (file.name.match(/\.\w+$/)?.[0] || ".mp4");
+      await ffmpeg.writeFile(inputName, await fetchFile(file));
+
+      setStatusText("Trimming…");
+      await ffmpeg.exec([
+        "-i",
+        inputName,
+        "-ss",
+        String(start),
+        "-to",
+        String(end),
+        "-c:v",
+        "libx264",
+        "-c:a",
+        "aac",
+        "output.mp4",
+      ]);
+
+      const data = await ffmpeg.readFile("output.mp4");
+      const blob = new Blob([data.buffer], { type: "video/mp4" });
+      setResultUrl((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return URL.createObjectURL(blob);
+      });
+    } catch (e) {
+      setError("Couldn't trim that video. Try a shorter clip or a different file.");
+    } finally {
+      setBusy(false);
+      setStatusText("");
+    }
+  };
+
+  const download = () => {
+    if (!resultUrl) return;
+    const a = document.createElement("a");
+    a.href = resultUrl;
+    a.download = "trimmed.mp4";
+    a.click();
+  };
+
+  return (
+    <InstantToolShell
+      title="Video Trimmer"
+      subtitle="Trimmed entirely on your device — nothing is uploaded"
+      icon={Video}
+      onClose={onClose}
+    >
+      {!file ? (
+        <div
+          onClick={() => fileInputRef.current?.click()}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => {
+            e.preventDefault();
+            onPickFile(e.dataTransfer.files?.[0]);
+          }}
+          className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-700 bg-slate-950/40 px-6 py-14 text-center transition hover:border-rose-400/40"
+        >
+          <Video className="mb-3 h-9 w-9 text-slate-600" />
+          <p className="text-sm font-medium text-slate-300">Drag & drop a video, or click to choose one</p>
+          <p className="mt-1 text-xs text-slate-500">Best for short clips — under a minute or two</p>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="video/*"
+            className="hidden"
+            onChange={(e) => onPickFile(e.target.files?.[0])}
+          />
+        </div>
+      ) : (
+        <div>
+          <video
+            src={videoUrl}
+            controls
+            onLoadedMetadata={onLoadedMetadata}
+            className="w-full rounded-xl border border-slate-800 bg-black"
+          />
+
+          {duration > 0 && (
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">
+                  Start — {secondsToClock(start)}
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max={duration}
+                  step="0.1"
+                  value={start}
+                  onChange={(e) => setStart(Math.min(Number(e.target.value), end - 0.1))}
+                  className="w-full accent-rose-400"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">
+                  End — {secondsToClock(end)}
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max={duration}
+                  step="0.1"
+                  value={end}
+                  onChange={(e) => setEnd(Math.max(Number(e.target.value), start + 0.1))}
+                  className="w-full accent-rose-400"
+                />
+              </div>
+            </div>
+          )}
+
+          <p className="mt-2 text-xs text-slate-500">
+            Clip length: {secondsToClock(Math.max(0, end - start))}
+          </p>
+
+          {error && <p className="mt-3 text-xs text-red-400">{error}</p>}
+
+          {busy && (
+            <div className="mt-3">
+              <div className="h-2 w-full overflow-hidden rounded-full bg-slate-800">
+                <div className="h-full rounded-full bg-rose-400 transition-all" style={{ width: `${progress}%` }} />
+              </div>
+              <p className="mt-1 truncate font-mono text-[11px] text-slate-500">{statusText}</p>
+            </div>
+          )}
+
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <button
+              onClick={trim}
+              disabled={busy || duration === 0}
+              className="inline-flex items-center gap-2 rounded-lg bg-rose-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-rose-300 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Scissors className="h-4 w-4" />}
+              {busy ? "Trimming…" : "Trim video"}
+            </button>
+            {resultUrl && (
+              <button
+                onClick={download}
+                className="inline-flex items-center gap-2 rounded-lg border border-rose-400/40 px-4 py-2 text-sm font-semibold text-rose-400 transition hover:bg-rose-400/10"
+              >
+                <FileOutput className="h-4 w-4" />
+                Download trimmed.mp4
+              </button>
+            )}
+          </div>
+
+          {resultUrl && (
+            <video src={resultUrl} controls className="mt-4 w-full rounded-xl border border-slate-800 bg-black" />
+          )}
+        </div>
+      )}
+    </InstantToolShell>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /*  Invoice Generator — fully operational, client-side                        */
 /* -------------------------------------------------------------------------- */
 
@@ -5319,6 +5535,9 @@ export default function Page() {
       )}
       {activeTool?.kind === "instant" && activeTool.id === "gif-maker" && (
         <GifMakerTool onClose={closeTool} />
+      )}
+      {activeTool?.kind === "instant" && activeTool.id === "video-trimmer" && (
+        <VideoTrimmerTool onClose={closeTool} />
       )}
       {activeTool?.kind === "simulated" && <SimulatedToolRunner tool={activeTool} onClose={closeTool} />}
     </div>
