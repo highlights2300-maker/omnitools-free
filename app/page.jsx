@@ -301,8 +301,7 @@ const TOOLS = [
     desc: "Design a print-ready double-sided business card.",
     icon: Briefcase,
     category: "business-kits",
-    kind: "simulated",
-    steps: ["Laying out grid…", "Placing typography…", "Rendering bleed & margins…"],
+    kind: "instant",
   },
   {
     id: "contract-template",
@@ -3540,6 +3539,187 @@ function ESignatureTool({ onClose }) {
 }
 
 /* -------------------------------------------------------------------------- */
+/*  Business Card Designer — fully real, front & back rendered via Canvas     */
+/* -------------------------------------------------------------------------- */
+
+function BusinessCardTool({ onClose }) {
+  const [name, setName] = useState("Jordan Blake");
+  const [title, setTitle] = useState("Founder & Designer");
+  const [company, setCompany] = useState("Studio North");
+  const [phone, setPhone] = useState("+1 555 012 3456");
+  const [email, setEmail] = useState("jordan@studionorth.co");
+  const [website, setWebsite] = useState("studionorth.co");
+  const [tagline, setTagline] = useState("Design that works as hard as you do.");
+  const [accent, setAccent] = useState("#fb7185");
+  const [bg, setBg] = useState("#0f172a");
+  const [text, setText] = useState("#f8fafc");
+  const [frontUrl, setFrontUrl] = useState(null);
+  const [backUrl, setBackUrl] = useState(null);
+
+  const CARD_W = 1050;
+  const CARD_H = 600;
+
+  useEffect(() => {
+    const frontCanvas = document.createElement("canvas");
+    frontCanvas.width = CARD_W;
+    frontCanvas.height = CARD_H;
+    const fctx = frontCanvas.getContext("2d");
+    fctx.fillStyle = bg;
+    fctx.fillRect(0, 0, CARD_W, CARD_H);
+    fctx.fillStyle = accent;
+    fctx.fillRect(0, 0, 18, CARD_H);
+
+    fctx.fillStyle = text;
+    fctx.font = "700 52px Arial, sans-serif";
+    fctx.fillText(name, 70, 200);
+    fctx.font = "400 28px Arial, sans-serif";
+    fctx.fillStyle = accent;
+    fctx.fillText(title, 70, 245);
+    fctx.fillStyle = text;
+    fctx.font = "600 24px Arial, sans-serif";
+    fctx.fillText(company, 70, 300);
+
+    fctx.font = "400 22px Arial, sans-serif";
+    fctx.fillStyle = text;
+    fctx.globalAlpha = 0.85;
+    fctx.fillText(phone, 70, 470);
+    fctx.fillText(email, 70, 505);
+    fctx.fillText(website, 70, 540);
+    fctx.globalAlpha = 1;
+
+    frontCanvas.toBlob((blob) => {
+      if (!blob) return;
+      setFrontUrl((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return URL.createObjectURL(blob);
+      });
+    }, "image/png");
+
+    const backCanvas = document.createElement("canvas");
+    backCanvas.width = CARD_W;
+    backCanvas.height = CARD_H;
+    const bctx = backCanvas.getContext("2d");
+    bctx.fillStyle = accent;
+    bctx.fillRect(0, 0, CARD_W, CARD_H);
+    bctx.fillStyle = bg;
+    bctx.textAlign = "center";
+    bctx.font = "700 56px Arial, sans-serif";
+    bctx.fillText(company, CARD_W / 2, CARD_H / 2 - 10);
+    bctx.font = "400 24px Arial, sans-serif";
+    bctx.globalAlpha = 0.85;
+    bctx.fillText(tagline, CARD_W / 2, CARD_H / 2 + 40);
+    bctx.globalAlpha = 1;
+    bctx.textAlign = "left";
+
+    backCanvas.toBlob((blob) => {
+      if (!blob) return;
+      setBackUrl((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return URL.createObjectURL(blob);
+      });
+    }, "image/png");
+  }, [name, title, company, phone, email, website, tagline, accent, bg, text]);
+
+  const downloadUrl = (url, filename) => {
+    if (!url) return;
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+  };
+
+  return (
+    <InstantToolShell
+      title="Business Card Designer"
+      subtitle="Rendered at print resolution, entirely on your device"
+      icon={Briefcase}
+      onClose={onClose}
+    >
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1.1fr]">
+        <div className="space-y-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div>
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Name</label>
+              <input className="input" value={name} onChange={(e) => setName(e.target.value)} />
+            </div>
+            <div>
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Title</label>
+              <input className="input" value={title} onChange={(e) => setTitle(e.target.value)} />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Company</label>
+              <input className="input" value={company} onChange={(e) => setCompany(e.target.value)} />
+            </div>
+            <div>
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Phone</label>
+              <input className="input" value={phone} onChange={(e) => setPhone(e.target.value)} />
+            </div>
+            <div>
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Email</label>
+              <input className="input" value={email} onChange={(e) => setEmail(e.target.value)} />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Website</label>
+              <input className="input" value={website} onChange={(e) => setWebsite(e.target.value)} />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Back-of-card tagline</label>
+              <input className="input" value={tagline} onChange={(e) => setTagline(e.target.value)} />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3 pt-2">
+            <div>
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Accent</label>
+              <input type="color" value={accent} onChange={(e) => setAccent(e.target.value)} className="h-9 w-full cursor-pointer rounded-lg border border-slate-800 bg-transparent" />
+            </div>
+            <div>
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Background</label>
+              <input type="color" value={bg} onChange={(e) => setBg(e.target.value)} className="h-9 w-full cursor-pointer rounded-lg border border-slate-800 bg-transparent" />
+            </div>
+            <div>
+              <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Text</label>
+              <input type="color" value={text} onChange={(e) => setText(e.target.value)} className="h-9 w-full cursor-pointer rounded-lg border border-slate-800 bg-transparent" />
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div>
+            <p className="mb-1 text-[11px] uppercase tracking-wider text-slate-500">Front</p>
+            <div className="overflow-hidden rounded-xl border border-slate-800">
+              {frontUrl && <img src={frontUrl} alt="Card front" className="w-full" />}
+            </div>
+            <button
+              onClick={() => downloadUrl(frontUrl, "business-card-front.png")}
+              disabled={!frontUrl}
+              className="mt-2 inline-flex items-center gap-2 rounded-lg bg-rose-400 px-3 py-1.5 text-xs font-semibold text-slate-950 transition hover:bg-rose-300 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <FileOutput className="h-3.5 w-3.5" />
+              Download front
+            </button>
+          </div>
+          <div>
+            <p className="mb-1 text-[11px] uppercase tracking-wider text-slate-500">Back</p>
+            <div className="overflow-hidden rounded-xl border border-slate-800">
+              {backUrl && <img src={backUrl} alt="Card back" className="w-full" />}
+            </div>
+            <button
+              onClick={() => downloadUrl(backUrl, "business-card-back.png")}
+              disabled={!backUrl}
+              className="mt-2 inline-flex items-center gap-2 rounded-lg bg-rose-400 px-3 py-1.5 text-xs font-semibold text-slate-950 transition hover:bg-rose-300 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <FileOutput className="h-3.5 w-3.5" />
+              Download back
+            </button>
+          </div>
+        </div>
+      </div>
+    </InstantToolShell>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /*  Invoice Generator — fully operational, client-side                        */
 /* -------------------------------------------------------------------------- */
 
@@ -4779,6 +4959,9 @@ export default function Page() {
       )}
       {activeTool?.kind === "instant" && activeTool.id === "e-signature" && (
         <ESignatureTool onClose={closeTool} />
+      )}
+      {activeTool?.kind === "instant" && activeTool.id === "business-card" && (
+        <BusinessCardTool onClose={closeTool} />
       )}
       {activeTool?.kind === "simulated" && <SimulatedToolRunner tool={activeTool} onClose={closeTool} />}
     </div>
