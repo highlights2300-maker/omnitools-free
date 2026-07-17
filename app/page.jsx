@@ -3875,6 +3875,22 @@ function loadScriptOnce(src) {
   });
 }
 
+// Loads FFmpeg via its UMD build from a CDN at runtime, rather than importing
+// the @ffmpeg/ffmpeg npm package directly. The npm package's ESM build calls
+// `new Worker(new URL(classWorkerURL, import.meta.url))`, which Next.js's
+// bundler (both Webpack and Turbopack) cannot statically resolve and fails
+// the production build with "Module not found" — a widely-reported, still
+// unresolved issue as of ffmpeg.wasm 0.12.15 on Next.js 14 and 15. Loading
+// the prebuilt UMD scripts as plain <script> tags sidesteps bundling
+// entirely, the same pattern already used for the GIF encoder above.
+async function loadFFmpegGlobals() {
+  await loadScriptOnce("https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js");
+  await loadScriptOnce("https://unpkg.com/@ffmpeg/util@0.12.2/dist/umd/index.js");
+  const { FFmpeg } = window.FFmpegWASM;
+  const { fetchFile, toBlobURL } = window.FFmpegUtil;
+  return { FFmpeg, fetchFile, toBlobURL };
+}
+
 function GifMakerTool({ onClose }) {
   const [files, setFiles] = useState([]); // { id, file, url }
   const [delay, setDelay] = useState(400);
@@ -4116,12 +4132,11 @@ function VideoTrimmerTool({ onClose }) {
     setProgress(0);
     try {
       setStatusText("Loading video engine…");
-      const { FFmpeg } = await import("@ffmpeg/ffmpeg");
-      const { fetchFile, toBlobURL } = await import("@ffmpeg/util");
+      const { FFmpeg, fetchFile, toBlobURL } = await loadFFmpegGlobals();
 
       if (!ffmpegRef.current) {
         const ffmpeg = new FFmpeg();
-        const base = "https://unpkg.com/@ffmpeg/core@0.12.10/dist/umd";
+        const base = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
         ffmpeg.on("progress", ({ progress: p }) => setProgress(Math.min(100, Math.round(p * 100))));
         ffmpeg.on("log", ({ message }) => setStatusText(message.slice(0, 60)));
         await ffmpeg.load({
@@ -4325,12 +4340,11 @@ function AudioConverterTool({ onClose }) {
     setProgress(0);
     try {
       setStatusText("Loading audio engine…");
-      const { FFmpeg } = await import("@ffmpeg/ffmpeg");
-      const { fetchFile, toBlobURL } = await import("@ffmpeg/util");
+      const { FFmpeg, fetchFile, toBlobURL } = await loadFFmpegGlobals();
 
       if (!ffmpegRef.current) {
         const ffmpeg = new FFmpeg();
-        const base = "https://unpkg.com/@ffmpeg/core@0.12.10/dist/umd";
+        const base = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
         ffmpeg.on("progress", ({ progress: p }) => setProgress(Math.min(100, Math.round(p * 100))));
         ffmpeg.on("log", ({ message }) => setStatusText(message.slice(0, 60)));
         await ffmpeg.load({
