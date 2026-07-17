@@ -5640,6 +5640,13 @@ export default function Page() {
           )}
 
           <footer className="border-t border-slate-900 pt-6 text-center text-[11px] text-slate-600">
+            <nav className="mb-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-slate-500">
+              <a href="/about" className="hover:text-slate-300">About</a>
+              <a href="/faq" className="hover:text-slate-300">FAQ</a>
+              <a href="/privacy" className="hover:text-slate-300">Privacy Policy</a>
+              <a href="/terms" className="hover:text-slate-300">Terms</a>
+              <a href="/contact" className="hover:text-slate-300">Contact</a>
+            </nav>
             OmniTools Free — no accounts, no file uploads, no tracking. Everything above runs on your
             own device.
           </footer>
