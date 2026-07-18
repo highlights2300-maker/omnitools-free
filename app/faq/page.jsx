@@ -1,14 +1,14 @@
 import StaticPageShell from "../components/StaticPageShell";
 
 export const metadata = {
-  title: "Frequently Asked Questions — OmniTools Free",
+  title: "Frequently Asked Questions — QuickZeta",
   description:
-    "Answers to common questions about how OmniTools Free's browser-based tools work, whether they're really free, and how your files stay private.",
+    "Answers to common questions about how QuickZeta's browser-based tools work, whether they're really free, and how your files stay private.",
 };
 
 const FAQS = [
   {
-    q: "Is OmniTools Free actually free, with no hidden limits?",
+    q: "Is QuickZeta actually free, with no hidden limits?",
     a: "Yes. Every tool works with no sign-up, no daily usage cap, and no watermark on your output. The site is supported by ads rather than subscriptions or per-file fees.",
   },
   {

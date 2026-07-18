@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Zap, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import LogoMark from "./Logo";
 
 export default function StaticPageShell({ title, eyebrow, children }) {
   return (
@@ -8,10 +9,10 @@ export default function StaticPageShell({ title, eyebrow, children }) {
         <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-5 md:px-8">
           <Link href="/" className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-400 text-slate-950">
-              <Zap className="h-4 w-4" strokeWidth={2.5} />
+              <LogoMark className="h-4 w-4" />
             </div>
             <span className="text-base font-black tracking-tight text-slate-50">
-              Omni<span className="text-amber-400">Tools</span> Free
+              Quick<span className="text-amber-400">Zeta</span>
             </span>
           </Link>
           <Link
@@ -34,7 +35,7 @@ export default function StaticPageShell({ title, eyebrow, children }) {
 
       <footer className="border-t border-slate-900 py-8">
         <div className="mx-auto max-w-3xl px-4 text-center text-[11px] text-slate-600 md:px-8">
-          OmniTools Free — no accounts, no file uploads, no tracking of your own data.
+          QuickZeta — no accounts, no file uploads, no tracking of your own data.
         </div>
       </footer>
     </div>

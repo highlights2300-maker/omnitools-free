@@ -2,9 +2,9 @@ import StaticPageShell from "../components/StaticPageShell";
 import { ShieldCheck, Zap, Lock, Layers } from "lucide-react";
 
 export const metadata = {
-  title: "About — OmniTools Free",
+  title: "About — QuickZeta",
   description:
-    "Why OmniTools Free exists, how it's built, and the philosophy behind running everything in your browser instead of on a server.",
+    "Why QuickZeta exists, how it's built, and the philosophy behind running everything in your browser instead of on a server.",
 };
 
 function H2({ children }) {
@@ -13,11 +13,11 @@ function H2({ children }) {
 
 export default function AboutPage() {
   return (
-    <StaticPageShell eyebrow="Our story" title="About OmniTools Free">
+    <StaticPageShell eyebrow="Our story" title="About QuickZeta">
       <p>
         Most "free" tool sites online aren't really free. They cap you at two or three files a day, show
         a full-screen ad before every download, or quietly upload your document to a server you've never
-        heard of. OmniTools Free started from a simple frustration with that pattern, and a simple
+        heard of. QuickZeta started from a simple frustration with that pattern, and a simple
         alternative: what if the tool just ran on your own computer, the way a calculator does?
       </p>
 
@@ -62,7 +62,7 @@ export default function AboutPage() {
 
       <H2>What we won't build</H2>
       <p>
-        OmniTools Free intentionally stays out of a few categories: interest-based loan or financial
+        QuickZeta intentionally stays out of a few categories: interest-based loan or financial
         calculators, gambling features, and day-trading tools. We'd rather stay focused on the
         productivity, document, and creative tools people actually reach for day to day.
       </p>

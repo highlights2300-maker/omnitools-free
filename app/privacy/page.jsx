@@ -1,9 +1,9 @@
 import StaticPageShell from "../components/StaticPageShell";
 
 export const metadata = {
-  title: "Privacy Policy — OmniTools Free",
+  title: "Privacy Policy — QuickZeta",
   description:
-    "How OmniTools Free handles your data: what we don't collect, what our advertising partners do, and your choices.",
+    "How QuickZeta handles your data: what we don't collect, what our advertising partners do, and your choices.",
 };
 
 function H2({ children }) {
@@ -16,7 +16,7 @@ export default function PrivacyPage() {
       <p className="text-slate-400">Last updated: {new Date().toISOString().slice(0, 10)}</p>
 
       <p>
-        OmniTools Free is built around a simple idea: your files should never leave your device. Every
+        QuickZeta is built around a simple idea: your files should never leave your device. Every
         tool on this site — the PDF merger, image compressor, invoice generator, and everything else —
         processes your data locally, inside your own browser. We do not operate a server that receives,
         stores, or scans the files, text, or images you work with here.
@@ -40,7 +40,7 @@ export default function PrivacyPage() {
       <p>
         This site is supported by Google AdSense. To show relevant ads and measure their performance,
         Google and its advertising partners may place cookies in your browser and use device
-        identifiers. This is separate from anything OmniTools Free itself does — we don't control or
+        identifiers. This is separate from anything QuickZeta itself does — we don't control or
         see the data Google's advertising systems collect. You can learn more about how Google uses
         this information, and adjust your ad personalization settings, at{" "}
         <a
@@ -65,7 +65,7 @@ export default function PrivacyPage() {
 
       <H2>Cookies</H2>
       <p>
-        OmniTools Free does not set its own tracking cookies. Cookies you may see in your browser while
+        QuickZeta does not set its own tracking cookies. Cookies you may see in your browser while
         using this site come from our advertising partner (Google) as described above. You can block or
         delete cookies at any time through your browser's settings; doing so will not affect any tool's
         functionality, since none of them depend on cookies to work.
@@ -81,7 +81,7 @@ export default function PrivacyPage() {
 
       <H2>Children's privacy</H2>
       <p>
-        OmniTools Free is not directed at children under 13, and we do not knowingly collect personal
+        QuickZeta is not directed at children under 13, and we do not knowingly collect personal
         information from anyone in that age group.
       </p>
 

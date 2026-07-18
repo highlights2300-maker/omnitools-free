@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import QRCode from "qrcode";
+import LogoMark from "./components/Logo";
 import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import JSZip from "jszip";
 import {
@@ -977,7 +978,7 @@ function TimesheetCalculatorTool({ onClose }) {
 function QrCodeGeneratorTool({ onClose }) {
   const [mode, setMode] = useState("link"); // link | text | wifi
   const [link, setLink] = useState("https://");
-  const [text, setText] = useState("Hello from OmniTools!");
+  const [text, setText] = useState("Hello from QuickZeta!");
   const [wifi, setWifi] = useState({ ssid: "", password: "", encryption: "WPA" });
   const [dataUrl, setDataUrl] = useState(null);
   const [error, setError] = useState(null);
@@ -5496,11 +5497,11 @@ export default function Page() {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-400 text-slate-950">
-                <Zap className="h-5 w-5" strokeWidth={2.5} />
+                <LogoMark className="h-5 w-5" />
               </div>
               <div>
                 <h1 className="text-lg font-black tracking-tight text-slate-50">
-                  Omni<span className="text-amber-400">Tools</span> Free
+                  Quick<span className="text-amber-400">Zeta</span>
                 </h1>
                 <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-500">
                   No logins · No uploads · No logs
@@ -5647,7 +5648,7 @@ export default function Page() {
               <a href="/terms" className="hover:text-slate-300">Terms</a>
               <a href="/contact" className="hover:text-slate-300">Contact</a>
             </nav>
-            OmniTools Free — no accounts, no file uploads, no tracking. Everything above runs on your
+            QuickZeta — no accounts, no file uploads, no tracking. Everything above runs on your
             own device.
           </footer>
         </main>

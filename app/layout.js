@@ -1,7 +1,8 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "OmniTools Free — Free Online Tools, No Uploads, No Logins",
+  metadataBase: new URL("https://quickzeta.com"),
+  title: "QuickZeta — Free Online Tools, No Uploads, No Logins",
   description:
     "30+ free document, image, and business tools that run entirely in your browser. No accounts, no file uploads, no daily limits, no watermarks — everything processes on your own device.",
   keywords: [
@@ -14,14 +15,16 @@ export const metadata = {
     "client-side tools",
   ],
   openGraph: {
-    title: "OmniTools Free — Free Online Tools, No Uploads, No Logins",
+    title: "QuickZeta — Free Online Tools, No Uploads, No Logins",
     description:
       "30+ free document, image, and business tools that run entirely in your browser. Nothing is ever uploaded to a server.",
+    url: "https://quickzeta.com",
+    siteName: "QuickZeta",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "OmniTools Free",
+    title: "QuickZeta",
     description: "30+ free tools that run entirely in your browser. No uploads, no logins, no logs.",
   },
 };

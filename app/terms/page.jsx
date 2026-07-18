@@ -1,8 +1,8 @@
 import StaticPageShell from "../components/StaticPageShell";
 
 export const metadata = {
-  title: "Terms of Service — OmniTools Free",
-  description: "The terms for using OmniTools Free's browser-based tools.",
+  title: "Terms of Service — QuickZeta",
+  description: "The terms for using QuickZeta's browser-based tools.",
 };
 
 function H2({ children }) {
@@ -15,13 +15,13 @@ export default function TermsPage() {
       <p className="text-slate-400">Last updated: {new Date().toISOString().slice(0, 10)}</p>
 
       <p>
-        By using OmniTools Free, you agree to the terms below. If you don't agree, please don't use the
+        By using QuickZeta, you agree to the terms below. If you don't agree, please don't use the
         site.
       </p>
 
       <H2>The service</H2>
       <p>
-        OmniTools Free provides a collection of browser-based tools for working with documents, images,
+        QuickZeta provides a collection of browser-based tools for working with documents, images,
         and simple business paperwork. Tools run entirely on your own device; we don't provide any
         server-side processing, storage, or account system.
       </p>
@@ -44,7 +44,7 @@ export default function TermsPage() {
 
       <H2>Acceptable use</H2>
       <p>
-        Please don't use OmniTools Free to create or distribute anything illegal, to infringe on
+        Please don't use QuickZeta to create or distribute anything illegal, to infringe on
         someone's rights, or to attempt to disrupt or reverse-engineer the site in a way that harms other
         users.
       </p>

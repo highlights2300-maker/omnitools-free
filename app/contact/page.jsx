@@ -2,8 +2,8 @@ import StaticPageShell from "../components/StaticPageShell";
 import { Mail } from "lucide-react";
 
 export const metadata = {
-  title: "Contact — OmniTools Free",
-  description: "Get in touch with the team behind OmniTools Free.",
+  title: "Contact — QuickZeta",
+  description: "Get in touch with the team behind QuickZeta.",
 };
 
 export default function ContactPage() {
