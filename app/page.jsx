@@ -203,6 +203,7 @@ const TOOLS = [
     icon: ImageIcon,
     category: "media-studio",
     kind: "instant",
+    href: "/tools/image-compressor",
   },
   {
     id: "img-cropper",
