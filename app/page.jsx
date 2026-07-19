@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import QRCode from "qrcode";
 import LogoMark from "./components/Logo";
+import Link from "next/link";
 import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import JSZip from "jszip";
 import {
@@ -284,6 +285,7 @@ const TOOLS = [
     icon: Receipt,
     category: "business-kits",
     kind: "invoice",
+    href: "/tools/invoice-generator",
   },
   {
     id: "quote-builder",
@@ -435,18 +437,33 @@ function ToolCard({ tool, category, isFavorite, onToggleFavorite, onOpen }) {
         <Pin className={`h-4 w-4 ${isFavorite ? "fill-amber-400" : ""}`} />
       </button>
 
-      <button onClick={() => onOpen(tool)} className="flex flex-1 flex-col items-start text-left">
-        <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl ${a.bg} ${a.text}`}>
-          <Icon className="h-5 w-5" />
-        </div>
-        <h3 className="pr-6 text-sm font-semibold text-slate-100">{tool.name}</h3>
-        <p className="mt-1 text-xs leading-relaxed text-slate-400">{tool.desc}</p>
-        <span
-          className={`mt-3 inline-flex items-center gap-1 text-xs font-medium ${a.text} opacity-0 transition group-hover:opacity-100`}
-        >
-          Open tool →
-        </span>
-      </button>
+      {tool.href ? (
+        <Link href={tool.href} className="flex flex-1 flex-col items-start text-left">
+          <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl ${a.bg} ${a.text}`}>
+            <Icon className="h-5 w-5" />
+          </div>
+          <h3 className="pr-6 text-sm font-semibold text-slate-100">{tool.name}</h3>
+          <p className="mt-1 text-xs leading-relaxed text-slate-400">{tool.desc}</p>
+          <span
+            className={`mt-3 inline-flex items-center gap-1 text-xs font-medium ${a.text} opacity-0 transition group-hover:opacity-100`}
+          >
+            Open tool →
+          </span>
+        </Link>
+      ) : (
+        <button onClick={() => onOpen(tool)} className="flex flex-1 flex-col items-start text-left">
+          <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl ${a.bg} ${a.text}`}>
+            <Icon className="h-5 w-5" />
+          </div>
+          <h3 className="pr-6 text-sm font-semibold text-slate-100">{tool.name}</h3>
+          <p className="mt-1 text-xs leading-relaxed text-slate-400">{tool.desc}</p>
+          <span
+            className={`mt-3 inline-flex items-center gap-1 text-xs font-medium ${a.text} opacity-0 transition group-hover:opacity-100`}
+          >
+            Open tool →
+          </span>
+        </button>
+      )}
     </div>
   );
 }
