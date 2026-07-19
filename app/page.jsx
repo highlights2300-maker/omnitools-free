@@ -762,7 +762,7 @@ function UnitConverterTool({ onClose }) {
         <div>
           <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">From</label>
           <div className="flex gap-2">
-            <input type="number" className="input" value={value} onChange={(e) => setValue(e.target.value)} />
+            <input type="number" inputMode="decimal" className="input" value={value} onChange={(e) => setValue(e.target.value)} />
             <select className="input w-24" value={from} onChange={(e) => setFrom(e.target.value)}>
               {unitList.map((u) => (
                 <option key={u} value={u}>
@@ -806,11 +806,11 @@ function TipCalculatorTool({ onClose }) {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Bill amount</label>
-          <input type="number" className="input" value={bill} onChange={(e) => setBill(e.target.value)} />
+          <input type="number" inputMode="decimal" className="input" value={bill} onChange={(e) => setBill(e.target.value)} />
         </div>
         <div>
           <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Number of people</label>
-          <input type="number" min="1" className="input" value={people} onChange={(e) => setPeople(e.target.value)} />
+          <input type="number" inputMode="decimal" min="1" className="input" value={people} onChange={(e) => setPeople(e.target.value)} />
         </div>
       </div>
       <div className="mt-4">
@@ -851,9 +851,9 @@ function PercentageCalculatorTool({ onClose }) {
         <section className="rounded-xl border border-slate-800 bg-slate-950/40 p-4">
           <p className="mb-2 text-xs font-medium text-slate-300">What is X% of Y?</p>
           <div className="flex flex-wrap items-center gap-2 text-sm">
-            <input type="number" className="input w-24" value={x} onChange={(e) => setX(e.target.value)} />
+            <input type="number" inputMode="decimal" className="input w-24" value={x} onChange={(e) => setX(e.target.value)} />
             <span className="text-slate-500">% of</span>
-            <input type="number" className="input w-28" value={y} onChange={(e) => setY(e.target.value)} />
+            <input type="number" inputMode="decimal" className="input w-28" value={y} onChange={(e) => setY(e.target.value)} />
             <span className="text-slate-500">=</span>
             <span className="font-mono text-rose-400">{percentOfValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>
           </div>
@@ -866,9 +866,9 @@ function PercentageCalculatorTool({ onClose }) {
           <p className="mb-2 text-xs font-medium text-slate-300">Markup: cost + margin → sale price</p>
           <div className="flex flex-wrap items-center gap-2 text-sm">
             <span className="text-slate-500">Cost</span>
-            <input type="number" className="input w-24" value={cost} onChange={(e) => setCost(e.target.value)} />
+            <input type="number" inputMode="decimal" className="input w-24" value={cost} onChange={(e) => setCost(e.target.value)} />
             <span className="text-slate-500">+ markup</span>
-            <input type="number" className="input w-20" value={markupPct} onChange={(e) => setMarkupPct(e.target.value)} />
+            <input type="number" inputMode="decimal" className="input w-20" value={markupPct} onChange={(e) => setMarkupPct(e.target.value)} />
             <span className="text-slate-500">% =</span>
             <span className="font-mono text-rose-400">${markupPrice.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>
           </div>
@@ -952,14 +952,14 @@ function TimesheetCalculatorTool({ onClose }) {
     <InstantToolShell title="Timesheet Calculator" subtitle="Add up hours and pay for the week" icon={Clock3} onClose={onClose}>
       <div className="mb-4 flex items-center gap-2">
         <label className="text-xs text-slate-500">Hourly rate</label>
-        <input type="number" className="input w-24" value={rate} onChange={(e) => setRate(e.target.value)} />
+        <input type="number" inputMode="decimal" className="input w-24" value={rate} onChange={(e) => setRate(e.target.value)} />
       </div>
       <div className="space-y-2">
         {rows.map((r) => (
           <div key={r.id} className="grid grid-cols-[1fr_90px_28px] items-center gap-2">
             <input className="input" placeholder="Day" value={r.day} onChange={(e) => updateRow(r.id, "day", e.target.value)} />
             <input
-              type="number"
+              type="number" inputMode="decimal"
               className="input text-right font-mono"
               value={r.hours}
               onChange={(e) => updateRow(r.id, "hours", e.target.value)}
@@ -1772,7 +1772,7 @@ function ImageCropperTool({ onClose }) {
               <div>
                 <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Export width</label>
                 <input
-                  type="number"
+                  type="number" inputMode="decimal"
                   className="input"
                   value={targetWidth}
                   onChange={(e) => setTargetWidth(Number(e.target.value) || 0)}
@@ -1780,7 +1780,7 @@ function ImageCropperTool({ onClose }) {
               </div>
               <div>
                 <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Export height</label>
-                <input type="number" className="input" value={targetHeight} disabled={lockAspect} onChange={() => {}} />
+                <input type="number" inputMode="decimal" className="input" value={targetHeight} disabled={lockAspect} onChange={() => {}} />
               </div>
             </div>
             <label className="mt-2 flex items-center gap-2 text-xs text-slate-400">
@@ -3796,7 +3796,7 @@ function ContractTemplate({ onClose }) {
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
-              <input type="number" className="input" placeholder="Total amount" value={payment.amount} onChange={(e) => setPayment({ ...payment, amount: e.target.value })} />
+              <input type="number" inputMode="decimal" className="input" placeholder="Total amount" value={payment.amount} onChange={(e) => setPayment({ ...payment, amount: e.target.value })} />
             </div>
             <textarea className="input mt-3" rows={2} placeholder="Payment schedule" value={payment.schedule} onChange={(e) => setPayment({ ...payment, schedule: e.target.value })} />
           </section>
@@ -4597,12 +4597,15 @@ function InvoiceGenerator({ onClose }) {
               <input
                 className="input"
                 placeholder="Email"
+                type="email"
                 value={business.email}
                 onChange={(e) => setBusiness({ ...business, email: e.target.value })}
               />
               <input
                 className="input"
                 placeholder="Phone"
+                type="tel"
+                inputMode="tel"
                 value={business.phone}
                 onChange={(e) => setBusiness({ ...business, phone: e.target.value })}
               />
@@ -4630,6 +4633,7 @@ function InvoiceGenerator({ onClose }) {
               <input
                 className="input"
                 placeholder="Client email"
+                type="email"
                 value={client.email}
                 onChange={(e) => setClient({ ...client, email: e.target.value })}
               />
@@ -4703,14 +4707,14 @@ function InvoiceGenerator({ onClose }) {
                     onChange={(e) => updateItem(it.id, "desc", e.target.value)}
                   />
                   <input
-                    type="number"
+                    type="number" inputMode="decimal"
                     min="0"
                     className="input text-center"
                     value={it.qty}
                     onChange={(e) => updateItem(it.id, "qty", e.target.value)}
                   />
                   <input
-                    type="number"
+                    type="number" inputMode="decimal"
                     min="0"
                     step="0.01"
                     className="input text-right font-mono"
@@ -4729,7 +4733,7 @@ function InvoiceGenerator({ onClose }) {
             <div className="mt-4 flex items-center gap-3">
               <label className="text-xs text-slate-500">Tax rate (%)</label>
               <input
-                type="number"
+                type="number" inputMode="decimal"
                 min="0"
                 step="0.1"
                 className="input w-24 font-mono"
@@ -4929,8 +4933,8 @@ function QuoteBuilder({ onClose }) {
             <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Your business</h3>
             <div className="grid gap-3 sm:grid-cols-2">
               <input className="input" placeholder="Business name" value={business.name} onChange={(e) => setBusiness({ ...business, name: e.target.value })} />
-              <input className="input" placeholder="Email" value={business.email} onChange={(e) => setBusiness({ ...business, email: e.target.value })} />
-              <input className="input" placeholder="Phone" value={business.phone} onChange={(e) => setBusiness({ ...business, phone: e.target.value })} />
+              <input className="input" type="email" placeholder="Email" value={business.email} onChange={(e) => setBusiness({ ...business, email: e.target.value })} />
+              <input className="input" type="tel" inputMode="tel" placeholder="Phone" value={business.phone} onChange={(e) => setBusiness({ ...business, phone: e.target.value })} />
               <textarea className="input sm:col-span-2" rows={2} placeholder="Address" value={business.address} onChange={(e) => setBusiness({ ...business, address: e.target.value })} />
             </div>
           </section>
@@ -4939,7 +4943,7 @@ function QuoteBuilder({ onClose }) {
             <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Prepared for</h3>
             <div className="grid gap-3 sm:grid-cols-2">
               <input className="input" placeholder="Client name" value={client.name} onChange={(e) => setClient({ ...client, name: e.target.value })} />
-              <input className="input" placeholder="Client email" value={client.email} onChange={(e) => setClient({ ...client, email: e.target.value })} />
+              <input className="input" type="email" placeholder="Client email" value={client.email} onChange={(e) => setClient({ ...client, email: e.target.value })} />
               <textarea className="input sm:col-span-2" rows={2} placeholder="Client address" value={client.address} onChange={(e) => setClient({ ...client, address: e.target.value })} />
             </div>
           </section>
@@ -4970,8 +4974,8 @@ function QuoteBuilder({ onClose }) {
               {items.map((it) => (
                 <div key={it.id} className="grid grid-cols-[1fr_60px_90px_28px] items-center gap-2">
                   <input className="input" placeholder="Description" value={it.desc} onChange={(e) => updateItem(it.id, "desc", e.target.value)} />
-                  <input type="number" min="0" className="input text-center" value={it.qty} onChange={(e) => updateItem(it.id, "qty", e.target.value)} />
-                  <input type="number" min="0" step="0.01" className="input text-right font-mono" value={it.rate} onChange={(e) => updateItem(it.id, "rate", e.target.value)} />
+                  <input type="number" inputMode="decimal" min="0" className="input text-center" value={it.qty} onChange={(e) => updateItem(it.id, "qty", e.target.value)} />
+                  <input type="number" inputMode="decimal" min="0" step="0.01" className="input text-right font-mono" value={it.rate} onChange={(e) => updateItem(it.id, "rate", e.target.value)} />
                   <button onClick={() => removeItem(it.id)} className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-600 transition hover:bg-red-500/10 hover:text-red-400">
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -4980,7 +4984,7 @@ function QuoteBuilder({ onClose }) {
             </div>
             <div className="mt-4 flex items-center gap-3">
               <label className="text-xs text-slate-500">Tax rate (%)</label>
-              <input type="number" min="0" step="0.1" className="input w-24 font-mono" value={taxRate} onChange={(e) => setTaxRate(e.target.value)} />
+              <input type="number" inputMode="decimal" min="0" step="0.1" className="input w-24 font-mono" value={taxRate} onChange={(e) => setTaxRate(e.target.value)} />
             </div>
           </section>
 
@@ -5110,8 +5114,8 @@ function ReceiptGenerator({ onClose }) {
             <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Your business</h3>
             <div className="grid gap-3 sm:grid-cols-2">
               <input className="input" placeholder="Business name" value={business.name} onChange={(e) => setBusiness({ ...business, name: e.target.value })} />
-              <input className="input" placeholder="Email" value={business.email} onChange={(e) => setBusiness({ ...business, email: e.target.value })} />
-              <input className="input sm:col-span-2" placeholder="Phone" value={business.phone} onChange={(e) => setBusiness({ ...business, phone: e.target.value })} />
+              <input className="input" type="email" placeholder="Email" value={business.email} onChange={(e) => setBusiness({ ...business, email: e.target.value })} />
+              <input className="input sm:col-span-2" type="tel" inputMode="tel" placeholder="Phone" value={business.phone} onChange={(e) => setBusiness({ ...business, phone: e.target.value })} />
             </div>
           </section>
 
@@ -5119,7 +5123,7 @@ function ReceiptGenerator({ onClose }) {
             <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Received from</h3>
             <div className="grid gap-3 sm:grid-cols-2">
               <input className="input" placeholder="Payer name" value={payer.name} onChange={(e) => setPayer({ ...payer, name: e.target.value })} />
-              <input className="input" placeholder="Payer email" value={payer.email} onChange={(e) => setPayer({ ...payer, email: e.target.value })} />
+              <input className="input" type="email" placeholder="Payer email" value={payer.email} onChange={(e) => setPayer({ ...payer, email: e.target.value })} />
             </div>
           </section>
 
@@ -5153,7 +5157,7 @@ function ReceiptGenerator({ onClose }) {
               {items.map((it) => (
                 <div key={it.id} className="grid grid-cols-[1fr_100px_28px] items-center gap-2">
                   <input className="input" placeholder="Description" value={it.desc} onChange={(e) => updateItem(it.id, "desc", e.target.value)} />
-                  <input type="number" min="0" step="0.01" className="input text-right font-mono" value={it.amount} onChange={(e) => updateItem(it.id, "amount", e.target.value)} />
+                  <input type="number" inputMode="decimal" min="0" step="0.01" className="input text-right font-mono" value={it.amount} onChange={(e) => updateItem(it.id, "amount", e.target.value)} />
                   <button onClick={() => removeItem(it.id)} className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-600 transition hover:bg-red-500/10 hover:text-red-400">
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -5349,7 +5353,7 @@ function ProposalBuilder({ onClose }) {
               {pricing.map((it) => (
                 <div key={it.id} className="grid grid-cols-[1fr_100px_28px] items-center gap-2">
                   <input className="input" placeholder="Description" value={it.desc} onChange={(e) => updatePricing(it.id, "desc", e.target.value)} />
-                  <input type="number" min="0" step="0.01" className="input text-right font-mono" value={it.amount} onChange={(e) => updatePricing(it.id, "amount", e.target.value)} />
+                  <input type="number" inputMode="decimal" min="0" step="0.01" className="input text-right font-mono" value={it.amount} onChange={(e) => updatePricing(it.id, "amount", e.target.value)} />
                   <button onClick={() => removePricing(it.id)} className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-600 transition hover:bg-red-500/10 hover:text-red-400">
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -5486,6 +5490,8 @@ export default function Page() {
           color: rgb(241 245 249);
           outline: none;
           width: 100%;
+          min-height: 48px;
+          box-sizing: border-box;
         }
         .input:focus {
           border-color: rgb(251 191 36 / 0.5);
