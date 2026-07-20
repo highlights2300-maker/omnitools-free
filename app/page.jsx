@@ -129,6 +129,7 @@ const TOOLS = [
     icon: Layers,
     category: "document-desk",
     kind: "instant",
+    href: "/tools/pdf-merger",
   },
   {
     id: "pdf-split",
