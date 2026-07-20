@@ -246,6 +246,7 @@ const TOOLS = [
     icon: Wand2,
     category: "media-studio",
     kind: "instant",
+    href: "/tools/background-remover",
   },
   {
     id: "meme-generator",
