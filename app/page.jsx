@@ -138,6 +138,7 @@ const TOOLS = [
     icon: Scissors,
     category: "document-desk",
     kind: "instant",
+    href: "/tools/pdf-splitter",
   },
   {
     id: "img-to-pdf",
