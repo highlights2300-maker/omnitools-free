@@ -4248,6 +4248,7 @@ function VideoTrimmerTool({ onClose }) {
         return URL.createObjectURL(blob);
       });
     } catch (e) {
+      console.error("Video trim failed:", e);
       setError("Couldn't trim that video. Try a shorter clip or a different file.");
     } finally {
       setBusy(false);
@@ -4445,6 +4446,7 @@ function AudioConverterTool({ onClose }) {
         return URL.createObjectURL(blob);
       });
     } catch (e) {
+      console.error("Audio conversion failed:", e);
       setError("Couldn't convert that file. Try a different audio file or format.");
     } finally {
       setBusy(false);

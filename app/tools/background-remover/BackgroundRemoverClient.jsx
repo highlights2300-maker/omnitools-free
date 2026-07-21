@@ -17,7 +17,7 @@ function loadRemoveBackground() {
     cachedRemoveBackground = window.__imglyRemoveBackground;
     return Promise.resolve(cachedRemoveBackground);
   }
-  return new Promise((resolve, reject) => {
+  const loadPromise = new Promise((resolve, reject) => {
     const onReady = () => {
       window.removeEventListener("imgly-bg-removal-ready", onReady);
       cachedRemoveBackground = window.__imglyRemoveBackground;
@@ -38,6 +38,17 @@ function loadRemoveBackground() {
     };
     document.head.appendChild(script);
   });
+
+  // This step just loads a small wrapper script, not the AI model itself —
+  // it should complete in a couple of seconds. If it hangs past 20s, that's
+  // a genuine load failure (blocked script, network issue), not a slow
+  // model download — the model download happens later, with its own
+  // progress reporting.
+  const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error("Timed out loading the background removal tool")), 20000)
+  );
+
+  return Promise.race([loadPromise, timeoutPromise]);
 }
 
 export default function BackgroundRemoverClient() {
@@ -79,9 +90,13 @@ export default function BackgroundRemoverClient() {
       });
     } catch (e) {
       console.error("Background removal failed:", e);
-      const isNetworkError = String(e?.message || e).toLowerCase().includes("fetch");
+      const msg = String(e?.message || e).toLowerCase();
+      const isTimeout = msg.includes("timed out");
+      const isNetworkError = msg.includes("fetch");
       setError(
-        isNetworkError
+        isTimeout
+          ? "This is taking too long to load — your network or an ad blocker may be blocking it. Try an incognito/private window, or a different network."
+          : isNetworkError
           ? "Couldn't download the AI model — an ad blocker or privacy extension may be blocking it. Try an incognito/private window, or disable extensions for this site."
           : "Couldn't process that image. Try a smaller file or a different photo."
       );
