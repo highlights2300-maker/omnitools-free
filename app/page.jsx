@@ -3963,6 +3963,16 @@ function GifMakerTool({ onClose }) {
       await loadScriptOnce("https://unpkg.com/gif.js@0.2.0/dist/gif.js");
       const GIF = window.GIF;
 
+      // gif.js runs its encoder in a Web Worker. Pointing a worker directly at
+      // a cross-origin CDN URL is blocked by most browsers' same-origin
+      // policy for workers. Fetching the script and wrapping it in a local
+      // Blob makes the browser treat it as same-origin instead.
+      const workerResponse = await fetch("https://unpkg.com/gif.js@0.2.0/dist/gif.worker.js");
+      const workerScriptText = await workerResponse.text();
+      const workerBlobUrl = URL.createObjectURL(
+        new Blob([workerScriptText], { type: "application/javascript" })
+      );
+
       const FRAME_SIZE = 480;
       const loaded = await Promise.all(
         files.map(
@@ -3978,7 +3988,7 @@ function GifMakerTool({ onClose }) {
       const gif = new GIF({
         workers: 2,
         quality: 10,
-        workerScript: "https://unpkg.com/gif.js@0.2.0/dist/gif.worker.js",
+        workerScript: workerBlobUrl,
         width: FRAME_SIZE,
         height: FRAME_SIZE,
       });
@@ -4004,6 +4014,7 @@ function GifMakerTool({ onClose }) {
       });
       gif.render();
     } catch (e) {
+      console.error("GIF build failed:", e);
       setError("Couldn't build the GIF. Try fewer or smaller images.");
       setBusy(false);
     }
