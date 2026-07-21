@@ -1855,7 +1855,9 @@ function BackgroundRemoverTool({ onClose }) {
     setError(null);
     setStatusText("Loading on-device model…");
     try {
-      const mod = await import("@imgly/background-removal");
+      const mod = await import(
+        /* webpackIgnore: true */ "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.7.0/+esm"
+      );
       const removeBackground = typeof mod.default === "function" ? mod.default : mod;
       const blob = await removeBackground(file, {
         progress: (key, current, total) => {
