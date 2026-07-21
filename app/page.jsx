@@ -1855,10 +1855,7 @@ function BackgroundRemoverTool({ onClose }) {
     setError(null);
     setStatusText("Loading on-device model…");
     try {
-      const mod = await import(
-        /* webpackIgnore: true */ "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.7.0/+esm"
-      );
-      const removeBackground = typeof mod.default === "function" ? mod.default : mod;
+      const removeBackground = await loadRemoveBackground();
       const blob = await removeBackground(file, {
         progress: (key, current, total) => {
           if (key.startsWith("fetch")) {
@@ -3920,6 +3917,42 @@ async function loadFFmpegGlobals() {
   const { FFmpeg } = window.FFmpegWASM;
   const { fetchFile, toBlobURL } = window.FFmpegUtil;
   return { FFmpeg, fetchFile, toBlobURL };
+}
+
+// Loads background-removal via a runtime-injected native <script type="module">
+// element rather than a JS import() expression. This library has repeatedly
+// broken when Next.js's bundler (both Webpack and Turbopack) tries to
+// statically process it — a plain <script> tag's text content is parsed and
+// executed only by the browser itself, so no bundler ever touches it.
+let cachedRemoveBackground = null;
+
+function loadRemoveBackground() {
+  if (cachedRemoveBackground) return Promise.resolve(cachedRemoveBackground);
+  if (window.__imglyRemoveBackground) {
+    cachedRemoveBackground = window.__imglyRemoveBackground;
+    return Promise.resolve(cachedRemoveBackground);
+  }
+  return new Promise((resolve, reject) => {
+    const onReady = () => {
+      window.removeEventListener("imgly-bg-removal-ready", onReady);
+      cachedRemoveBackground = window.__imglyRemoveBackground;
+      if (cachedRemoveBackground) resolve(cachedRemoveBackground);
+      else reject(new Error("Background removal module loaded but export was missing"));
+    };
+    window.addEventListener("imgly-bg-removal-ready", onReady);
+    const script = document.createElement("script");
+    script.type = "module";
+    script.textContent = `
+      import removeBackground from "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.7.0/+esm";
+      window.__imglyRemoveBackground = removeBackground;
+      window.dispatchEvent(new Event("imgly-bg-removal-ready"));
+    `;
+    script.onerror = () => {
+      window.removeEventListener("imgly-bg-removal-ready", onReady);
+      reject(new Error("Failed to load the background removal module script"));
+    };
+    document.head.appendChild(script);
+  });
 }
 
 function GifMakerTool({ onClose }) {
