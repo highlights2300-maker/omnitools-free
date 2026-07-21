@@ -13,23 +13,31 @@ let cachedRemoveBackground = null;
 
 function loadRemoveBackground() {
   if (cachedRemoveBackground) return Promise.resolve(cachedRemoveBackground);
-  if (window.__imglyRemoveBackground) {
-    cachedRemoveBackground = window.__imglyRemoveBackground;
-    return Promise.resolve(cachedRemoveBackground);
-  }
   const loadPromise = new Promise((resolve, reject) => {
     const onReady = () => {
       window.removeEventListener("imgly-bg-removal-ready", onReady);
-      cachedRemoveBackground = window.__imglyRemoveBackground;
-      if (cachedRemoveBackground) resolve(cachedRemoveBackground);
-      else reject(new Error("Background removal module loaded but export was missing"));
+      const mod = window.__imglyBgRemovalModule;
+      const fn =
+        typeof mod?.default === "function"
+          ? mod.default
+          : typeof mod?.removeBackground === "function"
+          ? mod.removeBackground
+          : typeof mod === "function"
+          ? mod
+          : null;
+      if (fn) {
+        cachedRemoveBackground = fn;
+        resolve(fn);
+      } else {
+        reject(new Error(`Background removal module loaded but no usable export was found (got: ${Object.keys(mod || {}).join(", ")})`));
+      }
     };
     window.addEventListener("imgly-bg-removal-ready", onReady);
     const script = document.createElement("script");
     script.type = "module";
     script.textContent = `
-      import removeBackground from "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.7.0/+esm";
-      window.__imglyRemoveBackground = removeBackground;
+      import * as bgRemovalModule from "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.7.0/+esm";
+      window.__imglyBgRemovalModule = bgRemovalModule;
       window.dispatchEvent(new Event("imgly-bg-removal-ready"));
     `;
     script.onerror = () => {
