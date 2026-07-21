@@ -1855,7 +1855,8 @@ function BackgroundRemoverTool({ onClose }) {
     setError(null);
     setStatusText("Loading on-device model…");
     try {
-      const { default: removeBackground } = await import("@imgly/background-removal");
+      const mod = await import("@imgly/background-removal");
+      const removeBackground = typeof mod.default === "function" ? mod.default : mod;
       const blob = await removeBackground(file, {
         progress: (key, current, total) => {
           if (key.startsWith("fetch")) {
@@ -1870,7 +1871,13 @@ function BackgroundRemoverTool({ onClose }) {
         return URL.createObjectURL(blob);
       });
     } catch (e) {
-      setError("Couldn't process that image. Try a smaller file or a different photo.");
+      console.error("Background removal failed:", e);
+      const isNetworkError = String(e?.message || e).toLowerCase().includes("fetch");
+      setError(
+        isNetworkError
+          ? "Couldn't download the AI model — an ad blocker or privacy extension may be blocking it. Try an incognito/private window, or disable extensions for this site."
+          : "Couldn't process that image. Try a smaller file or a different photo."
+      );
     } finally {
       setBusy(false);
       setStatusText("");

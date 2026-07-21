@@ -26,7 +26,8 @@ export default function BackgroundRemoverClient() {
     setError(null);
     setStatusText("Loading on-device model…");
     try {
-      const { default: removeBackground } = await import("@imgly/background-removal");
+      const mod = await import("@imgly/background-removal");
+      const removeBackground = typeof mod.default === "function" ? mod.default : mod;
       const blob = await removeBackground(file, {
         progress: (key, current, total) => {
           if (key.startsWith("fetch")) {
