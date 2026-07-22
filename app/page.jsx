@@ -352,6 +352,7 @@ const TOOLS = [
     icon: HandCoins,
     category: "quick-calculators",
     kind: "instant",
+    href: "/tools/tip-calculator",
   },
   {
     id: "percentage-calculator",
