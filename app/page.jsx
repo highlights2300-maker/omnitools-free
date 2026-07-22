@@ -372,6 +372,7 @@ const TOOLS = [
     icon: Cake,
     category: "quick-calculators",
     kind: "instant",
+    href: "/tools/age-calculator",
   },
   {
     id: "timesheet-calculator",
@@ -380,6 +381,7 @@ const TOOLS = [
     icon: Clock3,
     category: "quick-calculators",
     kind: "instant",
+    href: "/tools/timesheet-calculator",
   },
 ];
 
