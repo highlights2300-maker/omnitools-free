@@ -4225,6 +4225,10 @@ function VideoTrimmerTool({ onClose }) {
         await ffmpeg.load({
           coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, "text/javascript"),
           wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, "application/wasm"),
+          classWorkerURL: await toBlobURL(
+            "https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/814.ffmpeg.js",
+            "text/javascript"
+          ),
         });
         ffmpegRef.current = ffmpeg;
       }
@@ -4434,6 +4438,10 @@ function AudioConverterTool({ onClose }) {
         await ffmpeg.load({
           coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, "text/javascript"),
           wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, "application/wasm"),
+          classWorkerURL: await toBlobURL(
+            "https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/814.ffmpeg.js",
+            "text/javascript"
+          ),
         });
         ffmpegRef.current = ffmpeg;
       }
