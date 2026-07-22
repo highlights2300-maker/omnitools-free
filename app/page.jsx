@@ -3919,6 +3919,13 @@ async function loadFFmpegGlobals() {
   return { FFmpeg, fetchFile, toBlobURL };
 }
 
+function withTimeout(promise, ms, message) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error(message)), ms)),
+  ]);
+}
+
 // Loads background-removal via a runtime-injected native <script type="module">
 // element rather than a JS import() expression. This library has repeatedly
 // broken when Next.js's bundler (both Webpack and Turbopack) tries to
@@ -4222,14 +4229,18 @@ function VideoTrimmerTool({ onClose }) {
         const base = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
         ffmpeg.on("progress", ({ progress: p }) => setProgress(Math.min(100, Math.round(p * 100))));
         ffmpeg.on("log", ({ message }) => setStatusText(message.slice(0, 60)));
-        await ffmpeg.load({
-          coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, "text/javascript"),
-          wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, "application/wasm"),
-          classWorkerURL: await toBlobURL(
-            "https://unpkg.com/@ffmpeg/ffmpeg@0.12.15/dist/esm/worker.js",
-            "text/javascript"
-          ),
-        });
+        await withTimeout(
+          ffmpeg.load({
+            coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, "text/javascript"),
+            wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, "application/wasm"),
+            classWorkerURL: await toBlobURL(
+              "https://unpkg.com/@ffmpeg/ffmpeg@0.12.15/dist/esm/worker.js",
+              "text/javascript"
+            ),
+          }),
+          30000,
+          "Timed out loading the video engine — check your network connection and try again"
+        );
         ffmpegRef.current = ffmpeg;
       }
       const ffmpeg = ffmpegRef.current;
@@ -4435,14 +4446,18 @@ function AudioConverterTool({ onClose }) {
         const base = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
         ffmpeg.on("progress", ({ progress: p }) => setProgress(Math.min(100, Math.round(p * 100))));
         ffmpeg.on("log", ({ message }) => setStatusText(message.slice(0, 60)));
-        await ffmpeg.load({
-          coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, "text/javascript"),
-          wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, "application/wasm"),
-          classWorkerURL: await toBlobURL(
-            "https://unpkg.com/@ffmpeg/ffmpeg@0.12.15/dist/esm/worker.js",
-            "text/javascript"
-          ),
-        });
+        await withTimeout(
+          ffmpeg.load({
+            coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, "text/javascript"),
+            wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, "application/wasm"),
+            classWorkerURL: await toBlobURL(
+              "https://unpkg.com/@ffmpeg/ffmpeg@0.12.15/dist/esm/worker.js",
+              "text/javascript"
+            ),
+          }),
+          30000,
+          "Timed out loading the audio engine — check your network connection and try again"
+        );
         ffmpegRef.current = ffmpeg;
       }
       const ffmpeg = ffmpegRef.current;
