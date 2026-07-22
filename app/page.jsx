@@ -363,6 +363,7 @@ const TOOLS = [
     icon: Percent,
     category: "quick-calculators",
     kind: "instant",
+    href: "/tools/percentage-calculator",
   },
   {
     id: "age-calculator",
