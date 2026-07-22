@@ -155,6 +155,7 @@ const TOOLS = [
     icon: FileText,
     category: "document-desk",
     kind: "instant",
+    href: "/tools/word-counter",
   },
   {
     id: "e-signature",
