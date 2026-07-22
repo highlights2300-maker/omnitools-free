@@ -238,6 +238,7 @@ const TOOLS = [
     icon: QrCode,
     category: "media-studio",
     kind: "instant",
+    href: "/tools/qr-code-generator",
   },
   {
     id: "bg-remover",
