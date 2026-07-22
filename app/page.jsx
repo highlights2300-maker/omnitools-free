@@ -147,6 +147,7 @@ const TOOLS = [
     icon: FileOutput,
     category: "document-desk",
     kind: "instant",
+    href: "/tools/image-to-pdf",
   },
   {
     id: "word-counter",
