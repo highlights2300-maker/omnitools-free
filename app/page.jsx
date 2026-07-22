@@ -343,6 +343,7 @@ const TOOLS = [
     icon: Ruler,
     category: "quick-calculators",
     kind: "instant",
+    href: "/tools/unit-converter",
   },
   {
     id: "tip-calculator",
