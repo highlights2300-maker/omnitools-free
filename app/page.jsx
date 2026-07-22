@@ -215,6 +215,7 @@ const TOOLS = [
     icon: Crop,
     category: "media-studio",
     kind: "instant",
+    href: "/tools/image-cropper",
   },
   {
     id: "video-trimmer",
