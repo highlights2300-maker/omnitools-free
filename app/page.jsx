@@ -282,6 +282,7 @@ const TOOLS = [
     icon: Clapperboard,
     category: "media-studio",
     kind: "instant",
+    href: "/tools/gif-maker",
   },
 
   // Business Kits
