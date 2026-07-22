@@ -259,6 +259,7 @@ const TOOLS = [
     icon: ImagePlus,
     category: "media-studio",
     kind: "instant",
+    href: "/tools/meme-generator",
   },
   {
     id: "photo-collage",

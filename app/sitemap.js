@@ -18,6 +18,7 @@ export default function sitemap() {
     { path: "/tools/image-to-pdf", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/percentage-calculator", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/age-calculator", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/tools/timesheet-calculator", priority: 0.9, changeFrequency: "monthly" },
     { path: "/about", priority: 0.5, changeFrequency: "monthly" },
     { path: "/faq", priority: 0.5, changeFrequency: "monthly" },
     { path: "/privacy", priority: 0.3, changeFrequency: "yearly" },
