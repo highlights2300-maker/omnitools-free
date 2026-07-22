@@ -3912,8 +3912,8 @@ function loadScriptOnce(src) {
 // the prebuilt UMD scripts as plain <script> tags sidesteps bundling
 // entirely, the same pattern already used for the GIF encoder above.
 async function loadFFmpegGlobals() {
-  await loadScriptOnce("https://unpkg.com/@ffmpeg/ffmpeg@0.12.15/dist/umd/ffmpeg.js");
-  await loadScriptOnce("https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js");
+  await loadScriptOnce("/ffmpeg/ffmpeg.js");
+  await loadScriptOnce("/ffmpeg/ffmpeg-util.js");
   const { FFmpeg } = window.FFmpegWASM;
   const { fetchFile, toBlobURL } = window.FFmpegUtil;
   return { FFmpeg, fetchFile, toBlobURL };
@@ -4226,17 +4226,12 @@ function VideoTrimmerTool({ onClose }) {
 
       if (!ffmpegRef.current) {
         const ffmpeg = new FFmpeg();
-        const base = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
         ffmpeg.on("progress", ({ progress: p }) => setProgress(Math.min(100, Math.round(p * 100))));
         ffmpeg.on("log", ({ message }) => setStatusText(message.slice(0, 60)));
         await withTimeout(
           ffmpeg.load({
-            coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, "text/javascript"),
-            wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, "application/wasm"),
-            classWorkerURL: await toBlobURL(
-              "https://unpkg.com/@ffmpeg/ffmpeg@0.12.15/dist/esm/worker.js",
-              "text/javascript"
-            ),
+            coreURL: await toBlobURL("/ffmpeg/ffmpeg-core.js", "text/javascript"),
+            wasmURL: await toBlobURL("/ffmpeg/ffmpeg-core.wasm", "application/wasm"),
           }),
           30000,
           "Timed out loading the video engine — check your network connection and try again"
@@ -4443,17 +4438,12 @@ function AudioConverterTool({ onClose }) {
 
       if (!ffmpegRef.current) {
         const ffmpeg = new FFmpeg();
-        const base = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
         ffmpeg.on("progress", ({ progress: p }) => setProgress(Math.min(100, Math.round(p * 100))));
         ffmpeg.on("log", ({ message }) => setStatusText(message.slice(0, 60)));
         await withTimeout(
           ffmpeg.load({
-            coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, "text/javascript"),
-            wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, "application/wasm"),
-            classWorkerURL: await toBlobURL(
-              "https://unpkg.com/@ffmpeg/ffmpeg@0.12.15/dist/esm/worker.js",
-              "text/javascript"
-            ),
+            coreURL: await toBlobURL("/ffmpeg/ffmpeg-core.js", "text/javascript"),
+            wasmURL: await toBlobURL("/ffmpeg/ffmpeg-core.wasm", "application/wasm"),
           }),
           30000,
           "Timed out loading the audio engine — check your network connection and try again"
