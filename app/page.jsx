@@ -3912,7 +3912,7 @@ function loadScriptOnce(src) {
 // the prebuilt UMD scripts as plain <script> tags sidesteps bundling
 // entirely, the same pattern already used for the GIF encoder above.
 async function loadFFmpegGlobals() {
-  await loadScriptOnce("https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js");
+  await loadScriptOnce("https://unpkg.com/@ffmpeg/ffmpeg@0.12.15/dist/umd/ffmpeg.js");
   await loadScriptOnce("https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js");
   const { FFmpeg } = window.FFmpegWASM;
   const { fetchFile, toBlobURL } = window.FFmpegUtil;
@@ -4226,7 +4226,7 @@ function VideoTrimmerTool({ onClose }) {
           coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, "text/javascript"),
           wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, "application/wasm"),
           classWorkerURL: await toBlobURL(
-            "https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/814.ffmpeg.js",
+            "https://unpkg.com/@ffmpeg/ffmpeg@0.12.15/dist/esm/worker.js",
             "text/javascript"
           ),
         });
@@ -4439,7 +4439,7 @@ function AudioConverterTool({ onClose }) {
           coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, "text/javascript"),
           wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, "application/wasm"),
           classWorkerURL: await toBlobURL(
-            "https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/814.ffmpeg.js",
+            "https://unpkg.com/@ffmpeg/ffmpeg@0.12.15/dist/esm/worker.js",
             "text/javascript"
           ),
         });
