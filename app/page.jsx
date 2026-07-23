@@ -268,6 +268,7 @@ const TOOLS = [
     icon: LayoutGrid,
     category: "media-studio",
     kind: "instant",
+    href: "/tools/photo-collage-maker",
   },
   {
     id: "img-format-converter",

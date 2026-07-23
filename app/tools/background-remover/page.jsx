@@ -94,7 +94,7 @@ export default function BackgroundRemoverPage() {
               <li>Product photos for an online store, isolated onto a clean white or branded background.</li>
               <li>Profile pictures or headshots, dropped onto a new background for a resume or website.</li>
               <li>Design assets — logos, icons, or cutouts — for use in a slide deck or marketing graphic.</li>
-              <li>Combining a photo with the site's own <Link href="/" className="text-amber-400 underline underline-offset-2">Photo Collage Maker or Meme Generator</Link> for a cleaner composite.</li>
+              <li>Combining a photo with the site's own <Link href="/tools/photo-collage-maker" className="text-amber-400 underline underline-offset-2">Photo Collage Maker</Link> or <Link href="/tools/meme-generator" className="text-amber-400 underline underline-offset-2">Meme Generator</Link> for a cleaner composite.</li>
             </ul>
           </section>
 
