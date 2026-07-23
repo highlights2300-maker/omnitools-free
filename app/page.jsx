@@ -183,6 +183,7 @@ const TOOLS = [
     icon: Shrink,
     category: "document-desk",
     kind: "instant",
+    href: "/tools/pdf-compressor",
   },
   {
     id: "pdf-watermark",
@@ -229,6 +230,7 @@ const TOOLS = [
     icon: Video,
     category: "media-studio",
     kind: "instant",
+    href: "/tools/video-trimmer",
   },
   {
     id: "audio-converter",
