@@ -23,6 +23,7 @@ export default function sitemap() {
     { path: "/tools/photo-collage-maker", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/image-format-converter", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/file-archiver", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/tools/e-signature-pad", priority: 0.9, changeFrequency: "monthly" },
     { path: "/about", priority: 0.5, changeFrequency: "monthly" },
     { path: "/faq", priority: 0.5, changeFrequency: "monthly" },
     { path: "/privacy", priority: 0.3, changeFrequency: "yearly" },

@@ -165,6 +165,7 @@ const TOOLS = [
     icon: FileSignature,
     category: "document-desk",
     kind: "instant",
+    href: "/tools/e-signature-pad",
   },
   {
     id: "file-archiver",
