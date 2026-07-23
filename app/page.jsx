@@ -239,6 +239,7 @@ const TOOLS = [
     icon: Music,
     category: "media-studio",
     kind: "instant",
+    href: "/tools/audio-converter",
   },
   {
     id: "qr-generator",
