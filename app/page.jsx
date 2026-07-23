@@ -173,6 +173,7 @@ const TOOLS = [
     icon: Archive,
     category: "document-desk",
     kind: "instant",
+    href: "/tools/file-archiver",
   },
   {
     id: "pdf-compressor",
