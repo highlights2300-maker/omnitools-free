@@ -191,6 +191,7 @@ const TOOLS = [
     icon: Droplet,
     category: "document-desk",
     kind: "instant",
+    href: "/tools/pdf-watermarker",
   },
   {
     id: "csv-json-converter",
