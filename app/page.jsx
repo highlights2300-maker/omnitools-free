@@ -199,6 +199,7 @@ const TOOLS = [
     icon: FileJson,
     category: "document-desk",
     kind: "instant",
+    href: "/tools/csv-json-converter",
   },
 
   // Media Studio
