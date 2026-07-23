@@ -277,6 +277,7 @@ const TOOLS = [
     icon: Repeat,
     category: "media-studio",
     kind: "instant",
+    href: "/tools/image-format-converter",
   },
   {
     id: "gif-maker",
