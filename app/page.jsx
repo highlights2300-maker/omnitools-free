@@ -44,6 +44,7 @@ import {
   KeyRound,
   Keyboard,
   Timer,
+  CaseSensitive,
   ImagePlus,
   LayoutGrid,
   Repeat,
@@ -442,6 +443,15 @@ const TOOLS = [
     category: "everyday-tools",
     kind: "instant",
     href: "/tools/countdown-timer-stopwatch",
+  },
+  {
+    id: "text-case-converter",
+    name: "Text Case Converter",
+    desc: "Convert text to UPPERCASE, camelCase, snake_case & more.",
+    icon: CaseSensitive,
+    category: "everyday-tools",
+    kind: "instant",
+    href: "/tools/text-case-converter",
   },
 ];
 
