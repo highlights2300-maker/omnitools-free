@@ -45,6 +45,7 @@ import {
   Keyboard,
   Timer,
   CaseSensitive,
+  Pipette,
   ImagePlus,
   LayoutGrid,
   Repeat,
@@ -452,6 +453,15 @@ const TOOLS = [
     category: "everyday-tools",
     kind: "instant",
     href: "/tools/text-case-converter",
+  },
+  {
+    id: "color-picker-converter",
+    name: "Color Picker & Converter",
+    desc: "Pick a color and convert between HEX, RGB, and HSL.",
+    icon: Pipette,
+    category: "everyday-tools",
+    kind: "instant",
+    href: "/tools/color-picker-converter",
   },
 ];
 
