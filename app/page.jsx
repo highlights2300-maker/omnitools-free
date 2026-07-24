@@ -41,6 +41,8 @@ import {
   Shrink,
   Droplet,
   FileJson,
+  KeyRound,
+  Keyboard,
   ImagePlus,
   LayoutGrid,
   Repeat,
@@ -87,6 +89,12 @@ const CATEGORIES = [
     tagline: "Everyday math — instant answers, computed right on your device.",
     accent: "rose",
   },
+  {
+    id: "everyday-tools",
+    name: "Everyday Tools",
+    tagline: "Handy utilities you'll come back to, again and again.",
+    accent: "violet",
+  },
 ];
 
 const ACCENT_MAP = {
@@ -117,6 +125,13 @@ const ACCENT_MAP = {
     bg: "bg-rose-400/10",
     border: "border-rose-400/20",
     dot: "bg-rose-400",
+  },
+  violet: {
+    ring: "ring-violet-400/30",
+    text: "text-violet-400",
+    bg: "bg-violet-400/10",
+    border: "border-violet-400/20",
+    dot: "bg-violet-400",
   },
 };
 
@@ -397,6 +412,26 @@ const TOOLS = [
     category: "quick-calculators",
     kind: "instant",
     href: "/tools/timesheet-calculator",
+  },
+
+  // Everyday Tools
+  {
+    id: "password-generator",
+    name: "Password Generator",
+    desc: "Create a strong, random password instantly.",
+    icon: KeyRound,
+    category: "everyday-tools",
+    kind: "instant",
+    href: "/tools/password-generator",
+  },
+  {
+    id: "typing-speed-test",
+    name: "Typing Speed Test",
+    desc: "Measure your typing speed in WPM, with live accuracy.",
+    icon: Keyboard,
+    category: "everyday-tools",
+    kind: "instant",
+    href: "/tools/typing-speed-test",
   },
 ];
 

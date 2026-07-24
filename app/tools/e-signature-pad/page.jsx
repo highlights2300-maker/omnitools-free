@@ -89,7 +89,7 @@ export default function ESignaturePadPage() {
               <li>Inserting a signature image into a Word document or slide deck.</li>
               <li>
                 Signing off on the site's own{" "}
-                <Link href="/" className="text-amber-400 underline underline-offset-2">
+                <Link href="/tools/contract-template-kit" className="text-amber-400 underline underline-offset-2">
                   Contract Template Kit
                 </Link>{" "}
                 or a printed agreement.
