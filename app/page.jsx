@@ -313,6 +313,7 @@ const TOOLS = [
     icon: FileSpreadsheet,
     category: "business-kits",
     kind: "quote",
+    href: "/tools/quote-builder",
   },
   {
     id: "business-card",
@@ -337,6 +338,7 @@ const TOOLS = [
     icon: FileCheck2,
     category: "business-kits",
     kind: "receipt",
+    href: "/tools/receipt-generator",
   },
   {
     id: "proposal-builder",
