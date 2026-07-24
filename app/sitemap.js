@@ -32,6 +32,7 @@ export default function sitemap() {
     { path: "/tools/quote-builder", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/receipt-generator", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/proposal-builder", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/tools/business-card-designer", priority: 0.9, changeFrequency: "monthly" },
     { path: "/about", priority: 0.5, changeFrequency: "monthly" },
     { path: "/faq", priority: 0.5, changeFrequency: "monthly" },
     { path: "/privacy", priority: 0.3, changeFrequency: "yearly" },

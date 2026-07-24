@@ -322,6 +322,7 @@ const TOOLS = [
     icon: Briefcase,
     category: "business-kits",
     kind: "instant",
+    href: "/tools/business-card-designer",
   },
   {
     id: "contract-template",
