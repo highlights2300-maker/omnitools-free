@@ -331,6 +331,7 @@ const TOOLS = [
     icon: PenTool,
     category: "business-kits",
     kind: "contract",
+    href: "/tools/contract-template-kit",
   },
   {
     id: "receipt-generator",
