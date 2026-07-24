@@ -43,6 +43,7 @@ import {
   FileJson,
   KeyRound,
   Keyboard,
+  Timer,
   ImagePlus,
   LayoutGrid,
   Repeat,
@@ -432,6 +433,15 @@ const TOOLS = [
     category: "everyday-tools",
     kind: "instant",
     href: "/tools/typing-speed-test",
+  },
+  {
+    id: "countdown-timer-stopwatch",
+    name: "Timer & Stopwatch",
+    desc: "A countdown timer with alert sound, plus a lap-tracking stopwatch.",
+    icon: Timer,
+    category: "everyday-tools",
+    kind: "instant",
+    href: "/tools/countdown-timer-stopwatch",
   },
 ];
 
