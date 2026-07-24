@@ -347,6 +347,7 @@ const TOOLS = [
     icon: ClipboardList,
     category: "business-kits",
     kind: "proposal",
+    href: "/tools/proposal-builder",
   },
 
   // Quick Calculators — fully real, instant, computed client-side
