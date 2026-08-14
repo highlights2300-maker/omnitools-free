@@ -58,66 +58,95 @@ export default function BackgroundRemoverPage() {
         <>
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              Remove a photo's background without uploading it anywhere
+              An AI model, running entirely in a browser tab
             </h2>
             <p className="mt-2">
-              Nearly every free background remover online works the same way: you upload your photo,
-              their server runs it through an AI model, and you download the result — meaning your image
-              briefly exists on a computer you don't control. This tool takes a different approach. The
-              same kind of AI model runs directly inside your browser, using your own device's processing
-              power, so your photo is never transmitted anywhere at all.
+              It sounds like it shouldn't be possible — cutting a subject out of a photo with real
+              precision has traditionally meant either genuine machine learning infrastructure running on
+              a server, or a person manually tracing an outline in Photoshop. This tool does neither. The
+              AI model that detects your photo's subject is downloaded once and runs directly inside your
+              browser, using the same kind of on-device machine learning that modern phones use for
+              portrait mode — your photo never has to leave your device to be analyzed.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Where it shines, and where it struggles</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Works well</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>A person against a plain wall or sky</li>
+                  <li>A product photographed on a solid-color surface</li>
+                  <li>An animal or object with a clear, distinct outline</li>
+                  <li>Good, even lighting with minimal shadow clutter</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Can be tricky</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Busy, cluttered, or patterned backgrounds</li>
+                  <li>Subjects that closely match the background color</li>
+                  <li>Fine detail like loose hair or fur strands</li>
+                  <li>Very low light or heavily shadowed photos</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">What the AI is actually doing</h2>
+            <p className="mt-2">
+              The technique is called image segmentation — the model looks at every pixel in your photo
+              and estimates the probability that it belongs to the main subject versus the background,
+              based on patterns it learned from studying a huge number of photos during training. It
+              isn't detecting "edges" the way a simple filter would; it's making a judgment about what's
+              foreground and what's background much closer to how a person would look at the photo and
+              instinctively know where the subject ends.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
+              <li>Choose a photo — drag one in or tap to select it from your device.</li>
               <li>
-                <strong className="text-slate-200">Choose a photo.</strong> Drag one in or tap to select
-                it from your device.
+                Click "Remove background." The first time, your browser downloads the AI model; after
+                that it's cached and starts almost instantly.
               </li>
-              <li>
-                <strong className="text-slate-200">Click "Remove background."</strong> The first time,
-                your browser downloads a small AI model — after that, it's cached and starts instantly on
-                future uses.
-              </li>
-              <li>
-                <strong className="text-slate-200">Download the result.</strong> You'll get a PNG with a
-                transparent background, ready to use anywhere.
-              </li>
+              <li>Download the result — a PNG with a transparent background, ready to use anywhere.</li>
             </ol>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Common uses for a transparent background</h2>
+            <h2 className="text-lg font-semibold text-slate-100">What people use a transparent cutout for</h2>
             <ul className="mt-2 list-disc space-y-1.5 pl-5">
               <li>Product photos for an online store, isolated onto a clean white or branded background.</li>
               <li>Profile pictures or headshots, dropped onto a new background for a resume or website.</li>
-              <li>Design assets — logos, icons, or cutouts — for use in a slide deck or marketing graphic.</li>
-              <li>Combining a photo with the site's own <Link href="/tools/photo-collage-maker" className="text-amber-400 underline underline-offset-2">Photo Collage Maker</Link> or <Link href="/tools/meme-generator" className="text-amber-400 underline underline-offset-2">Meme Generator</Link> for a cleaner composite.</li>
+              <li>Design assets — logos, icons, or cutouts — for a slide deck or marketing graphic.</li>
+              <li>
+                Combining with the site's own{" "}
+                <Link href="/tools/photo-collage-maker" className="text-amber-400 underline underline-offset-2">
+                  Photo Collage Maker
+                </Link>{" "}
+                or{" "}
+                <Link href="/tools/meme-generator" className="text-amber-400 underline underline-offset-2">
+                  Meme Generator
+                </Link>{" "}
+                for a cleaner composite.
+              </li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Getting the best result</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Your photos never leave your device</h2>
             <p className="mt-2">
-              This tool tends to perform best on photos with good contrast between the subject and the
-              background — a person against a plain wall, a product on a solid-color surface, or an
-              animal against open sky or grass all work well. Busy, cluttered backgrounds or subjects that
-              blend closely in color with what's behind them can sometimes produce a rougher edge, which
-              is worth knowing going in rather than being surprised by.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your photos stay on your device</h2>
-            <p className="mt-2">
-              Because the AI model runs locally, this tool never sees, stores, or has access to the
-              photos you process here. See our{" "}
+              Because the model runs locally, this tool never sees or stores the photos you process here.
+              Full details are in the{" "}
               <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
                 Privacy Policy
-              </Link>{" "}
-              for full details on how QuickZeta handles data.
+              </Link>
+              .
             </p>
           </section>
 
