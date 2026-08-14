@@ -5693,9 +5693,9 @@ export default function Page() {
                 <LogoMark className="h-5 w-5" />
               </div>
               <div>
-                <h1 className="text-lg font-black tracking-tight text-slate-50">
+                <span className="block text-lg font-black tracking-tight text-slate-50">
                   Quick<span className="text-amber-400">Zeta</span>
-                </h1>
+                </span>
                 <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-500">
                   No logins · No uploads · No logs
                 </p>
@@ -5729,6 +5729,43 @@ export default function Page() {
           </div>
         </div>
       </header>
+
+      {/* ---------------------------------------------------------------- */}
+      {/* Intro — genuine explanatory content, not just a tool grid */}
+      {/* ---------------------------------------------------------------- */}
+      <section className="no-print border-b border-slate-900 bg-slate-950">
+        <div className="mx-auto max-w-4xl px-4 py-10 md:px-8">
+          <h1 className="text-xl font-bold tracking-tight text-slate-100 sm:text-2xl">
+            35+ free tools that run entirely on your own device
+          </h1>
+          <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-300">
+            <p>
+              QuickZeta is a collection of free tools for working with PDFs, images, everyday
+              calculations, and small business paperwork — invoices, quotes, receipts, and contract
+              templates among them. What makes it different from most "free" tool sites is where the
+              actual work happens: every single tool here processes your file directly inside your own
+              browser. Nothing is uploaded to a server, not even briefly, because there's no server
+              involved in the processing at all.
+            </p>
+            <p>
+              That distinction matters more than it sounds. Sites like the well-known PDF and image
+              converters typically upload your file to their servers, process it there, and send back a
+              result — often while capping free users at a couple of tasks a day, watermarking the
+              output, or nudging you toward a paid plan. Because QuickZeta's tools run locally, there's
+              nothing to cap, nothing to watermark, and no file of yours ever sitting on a server
+              anywhere, even temporarily.
+            </p>
+            <p>
+              Under the hood, that means real technology doing real work in your browser: a WebAssembly
+              build of FFmpeg trims video and converts audio, an on-device AI model removes photo
+              backgrounds, and PDF pages are re-rendered and rebuilt using pdf.js and pdf-lib for
+              compression and merging. It's not a gimmick — these are the same categories of processing
+              server-based tools use, just relocated to run on your own machine instead of someone
+              else's.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* ---------------------------------------------------------------- */}
       {/* Body layout: left rail / content / right rail */}
@@ -5832,6 +5869,49 @@ export default function Page() {
               </div>
             ))
           )}
+
+          <section className="border-t border-slate-900 pt-10">
+            <h2 className="mb-1 text-lg font-semibold text-slate-100">Frequently asked questions</h2>
+            <p className="mb-4 text-sm text-slate-500">
+              Common questions about how QuickZeta works, answered directly.
+            </p>
+            <div className="divide-y divide-slate-900">
+              {[
+                {
+                  q: "Is QuickZeta actually free, with no hidden limits?",
+                  a: "Yes. Every tool works with no sign-up, no daily usage cap, and no watermark on your output. The site is supported by ads rather than subscriptions, per-file fees, or a freemium paywall.",
+                },
+                {
+                  q: "Do you upload or store my files anywhere?",
+                  a: "No. Every tool processes your file directly inside your own browser. Nothing is uploaded to a server, which means we never see, store, or have access to whatever you're working on.",
+                },
+                {
+                  q: "How is this different from sites like Smallpdf or iLovePDF?",
+                  a: "Those sites upload your file to their servers to process it, even if they delete it shortly afterward. QuickZeta never uploads anything at all — the processing happens locally, on your own device, using the same browser capabilities that power the page itself.",
+                },
+                {
+                  q: "Why do some tools take a moment to load the first time?",
+                  a: "A few of the more advanced tools — background removal, PDF compression, video and audio conversion — load a specialized processing library the first time you open them, rather than bundling it into every page load. It's a one-time download per browser session; your files still never leave your device.",
+                },
+                {
+                  q: "Will these tools work on my phone?",
+                  a: "Yes, the whole site is responsive and works in any modern mobile browser. Heavier tools like video trimming will naturally run slower on an older phone than on a desktop, since your own device is doing all the processing.",
+                },
+                {
+                  q: "Do I need to create an account?",
+                  a: "No. There's no login, no email required, and nothing tied to an account — open any tool and start using it immediately.",
+                },
+              ].map((item) => (
+                <details key={item.q} className="group py-3">
+                  <summary className="cursor-pointer list-none text-sm font-medium text-slate-200 marker:content-none">
+                    <span className="mr-2 inline-block text-amber-400 transition group-open:rotate-45">+</span>
+                    {item.q}
+                  </summary>
+                  <p className="mt-2 pl-5 text-sm text-slate-400">{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </section>
 
           <footer className="border-t border-slate-900 pt-6 text-center text-[11px] text-slate-600">
             <nav className="mb-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-slate-500">
