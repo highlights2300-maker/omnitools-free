@@ -45,6 +45,19 @@ const FAQS = [
   },
 ];
 
+const QUALITY_GUIDE = [
+  { pct: "90–100%", cut: "Little (10–20%)", use: "Print, portfolio work, anything zoomed in closely" },
+  { pct: "75–90%", cut: "Moderate (40–60%)", use: "Blog posts, product photos, general web use" },
+  { pct: "50–75%", cut: "Large (60–80%)", use: "Thumbnails, previews, background images" },
+  { pct: "Under 50%", cut: "Severe (80%+)", use: "Rarely worth it — artifacts usually become visible" },
+];
+
+const FORMAT_TABLE = [
+  { format: "JPG", compression: "Lossy", transparency: "No", bestFor: "Photos, general use" },
+  { format: "WebP", compression: "Lossy or lossless", transparency: "Yes", bestFor: "Best size-to-quality ratio, if supported" },
+  { format: "PNG", compression: "Lossless", transparency: "Yes", bestFor: "Logos, screenshots, sharp text" },
+];
+
 export default function ImageCompressorPage() {
   return (
     <ToolPageShell
@@ -53,66 +66,94 @@ export default function ImageCompressorPage() {
       article={
         <>
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">
-              Compress images online without uploading them anywhere
-            </h2>
+            <h2 className="text-lg font-semibold text-slate-100">A photo you'd never notice was compressed</h2>
             <p className="mt-2">
-              Most free image compressors ask you to upload your photo to their server first, wait for it
-              to process, then download the result — which means your image briefly sits on a computer
-              you have no control over. This tool works differently: the actual compression happens
-              locally, inside your own browser, using the same image-processing capability built into
-              every modern browser. Nothing is uploaded, so there's nothing to wait on and nothing left
-              behind on a server afterward.
+              A typical photo straight off a modern phone camera often lands somewhere between 3–8 MB.
+              Run it through this tool at a sensible quality setting, and that same photo can frequently
+              drop to a few hundred KB — often a 70–90% size reduction — with a difference in sharpness
+              that's genuinely hard to spot at normal viewing size. The gap between "looks identical" and
+              "much smaller file" is bigger than most people expect.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
-            <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Choose an image.</strong> Drag one in or tap to select
-                a JPG, PNG, or WebP file from your device.
-              </li>
-              <li>
-                <strong className="text-slate-200">Adjust quality and format.</strong> Use the quality
-                slider to balance file size against visual detail, and pick the output format that suits
-                your use case.
-              </li>
-              <li>
-                <strong className="text-slate-200">Download the result.</strong> Compare the before-and-
-                after file size live, then download the compressed version whenever it looks right.
-              </li>
-            </ol>
+            <h2 className="text-lg font-semibold text-slate-100">The quality slider, translated into real terms</h2>
+            <div className="mt-2 overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-slate-800 text-left text-slate-400">
+                    <th className="py-2 pr-4 font-medium">Quality setting</th>
+                    <th className="py-2 pr-4 font-medium">Typical size reduction</th>
+                    <th className="py-2 font-medium">Good for</th>
+                  </tr>
+                </thead>
+                <tbody className="text-slate-300">
+                  {QUALITY_GUIDE.map((row) => (
+                    <tr key={row.pct} className="border-b border-slate-900">
+                      <td className="py-2 pr-4 font-mono text-amber-400">{row.pct}</td>
+                      <td className="py-2 pr-4">{row.cut}</td>
+                      <td className="py-2 text-slate-400">{row.use}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">When compressing images actually matters</h2>
+            <h2 className="text-lg font-semibold text-slate-100">JPG, WebP, or PNG?</h2>
+            <div className="mt-2 overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-slate-800 text-left text-slate-400">
+                    <th className="py-2 pr-4 font-medium">Format</th>
+                    <th className="py-2 pr-4 font-medium">Compression</th>
+                    <th className="py-2 pr-4 font-medium">Transparency</th>
+                    <th className="py-2 font-medium">Best for</th>
+                  </tr>
+                </thead>
+                <tbody className="text-slate-300">
+                  {FORMAT_TABLE.map((row) => (
+                    <tr key={row.format} className="border-b border-slate-900">
+                      <td className="py-2 pr-4 font-medium text-slate-100">{row.format}</td>
+                      <td className="py-2 pr-4">{row.compression}</td>
+                      <td className="py-2 pr-4">{row.transparency}</td>
+                      <td className="py-2 text-slate-400">{row.bestFor}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Why heavy compression often goes unnoticed</h2>
             <p className="mt-2">
-              Large, uncompressed images are one of the most common reasons a website loads slowly, an
-              email attachment bounces, or a form upload times out. Compressing before you send or
-              publish an image typically cuts file size substantially with little to no visible quality
-              loss — useful for blog posts, product photos, portfolio sites, or simply keeping your phone's
-              storage from filling up with full-resolution camera photos you don't need at full size.
+              Lossy formats like JPG and WebP work by discarding the color and detail information human
+              eyes are least sensitive to — subtle gradients, fine texture in busy areas, differences a
+              viewer would need to zoom in to actually catch. That's why a photo can shrink dramatically
+              in file size while still looking essentially identical at normal size: the compression is
+              deliberately targeting the parts of the image least likely to be missed, not degrading it
+              evenly across the whole photo.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Choosing the right format</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <p className="mt-2">
-              If you're not sure which output format to pick: use <strong className="text-slate-200">JPG</strong>{" "}
-              for photos where a tiny amount of quality loss is invisible to the eye, use{" "}
-              <strong className="text-slate-200">WebP</strong> if the platform you're uploading to supports
-              it (most modern websites do) for the best size-to-quality ratio, and use{" "}
-              <strong className="text-slate-200">PNG</strong> only when you specifically need transparency
-              or perfectly sharp edges, like a logo or a screenshot with text.
+              Drop in a JPG, PNG, or WebP file, drag the quality slider while watching the live
+              before-and-after size comparison, switch output format if needed, and download once it
+              looks right. Everything updates instantly since there's no upload step to wait through —
+              try a few different quality settings before committing, since the sweet spot between file
+              size and visible quality varies depending on the specific photo and what you're using it
+              for.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your photos stay on your device</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Nothing you compress here is stored</h2>
             <p className="mt-2">
-              Because everything runs locally, this tool never sees, stores, or has access to the images
-              you compress here. See our{" "}
+              Compression happens entirely on your device — see the{" "}
               <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
                 Privacy Policy
               </Link>{" "}
