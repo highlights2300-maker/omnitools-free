@@ -53,40 +53,56 @@ export default function QrCodeGeneratorPage() {
       article={
         <>
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">
-              A QR code generator that doesn't expire
-            </h2>
-            <p className="mt-2">
-              A surprising number of "free" QR code generators create what's called a dynamic code — one
-              that points to a link on their own server, which then redirects to your actual destination.
-              That means if the service shuts down, changes its pricing, or you simply stop paying for a
-              plan, every QR code you've ever printed or shared silently breaks. This generator does the
-              opposite: your link, text, or Wi-Fi details are encoded directly into the QR code image
-              itself, with nothing routed through a third party. Once it's generated, it works forever,
-              independent of this site.
-            </p>
+            <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">
+                The trap a lot of "free" QR generators set
+              </p>
+              <p className="mt-2 text-sm text-slate-300">
+                Many free QR code sites quietly generate what's called a "dynamic" code — instead of your
+                actual link, it points to a redirect on their own server. Print a thousand flyers with one
+                of those, and if that company shuts down, changes pricing, or your free trial lapses,
+                every single code silently stops working. This tool never does that: your link, text, or
+                Wi-Fi details are baked directly into the QR image itself, so it keeps working forever,
+                completely independent of this site.
+              </p>
+            </div>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Pick a type.</strong> Choose Link, Text, or Wi-Fi
-                depending on what you want the code to do when scanned.
-              </li>
-              <li>
-                <strong className="text-slate-200">Fill in the details.</strong> The QR code updates
-                live in the preview as you type.
-              </li>
-              <li>
-                <strong className="text-slate-200">Download the PNG.</strong> Save it and print it,
-                paste it into a document, or share it digitally.
-              </li>
+              <li>Pick a type — Link, Text, or Wi-Fi, depending on what the code should do when scanned.</li>
+              <li>Fill in the details — the preview updates live as you type.</li>
+              <li>Download the PNG — print it, paste it into a document, or share it digitally.</li>
             </ol>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Common uses for a QR code</h2>
+            <h2 className="text-lg font-semibold text-slate-100">What's actually stored inside the code</h2>
+            <p className="mt-2">
+              A QR code isn't a lookup key pointing somewhere else — for the "static" codes this tool
+              creates, the black-and-white pattern itself directly encodes your actual text or link,
+              broken down into binary data with a layer of built-in error correction. That error
+              correction is why a QR code can still scan correctly even if it's partly scratched, faded,
+              or has a small logo placed over the middle — the code carries enough redundancy to
+              reconstruct the missing pieces, up to a point.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Getting a code that scans reliably</h2>
+            <p className="mt-2">
+              A few small choices affect whether a printed code scans on the first try. Keep it larger
+              than roughly an inch square — smaller than that can be hard for a phone camera to focus on
+              from a normal distance. Leave a clear plain margin around the edges rather than crowding it
+              with other design elements, and avoid placing it over a busy photo that reduces contrast. If
+              you're printing a large batch, do one test scan on the actual printed page first — a code
+              that looks fine on screen can sometimes lose contrast on certain paper stocks.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
             <ul className="mt-2 list-disc space-y-1.5 pl-5">
               <li>Linking a printed flyer or business card to a website or social profile.</li>
               <li>Letting guests join your Wi-Fi network without typing a long password.</li>
@@ -96,34 +112,23 @@ export default function QrCodeGeneratorPage() {
                 <Link href="/tools/invoice-generator" className="text-amber-400 underline underline-offset-2">
                   Invoice Generator
                 </Link>{" "}
-                or Business Card Designer to add a scannable link to printed materials.
+                or{" "}
+                <Link href="/tools/business-card-designer" className="text-amber-400 underline underline-offset-2">
+                  Business Card Designer
+                </Link>{" "}
+                to add a scannable link to printed materials.
               </li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your data stays on your device</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Nothing you enter is sent anywhere</h2>
             <p className="mt-2">
-              Because the QR code is generated locally, nothing you type here is ever sent to a server.
-              See our{" "}
+              The QR code is generated entirely on your device — see the{" "}
               <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
                 Privacy Policy
               </Link>{" "}
               for full details.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">Tips for a QR code that scans reliably</h2>
-            <p className="mt-2">
-              A few small choices make a real difference in whether a printed QR code actually scans on
-              the first try. Keep the code at a reasonable size — smaller than about an inch square can
-              be hard for a phone camera to focus on from a normal distance. Make sure there's a clear
-              quiet zone (plain background) around the edges rather than crowding it with other design
-              elements, and avoid placing it over a busy photo or pattern that reduces contrast. If
-              you're printing it, it's worth doing a quick test scan on the actual printed page before
-              running off a large batch — a QR code that looks fine on screen can sometimes lose contrast
-              on certain paper stocks or print settings.
             </p>
           </section>
 
