@@ -101,106 +101,82 @@ export default function InvoiceGeneratorPage() {
         <article className="no-print mt-16 max-w-3xl space-y-8 border-t border-slate-900 pt-10 text-sm leading-relaxed text-slate-300">
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              A free invoice generator with no sign up required
+              The invoice shouldn't be the hard part
             </h2>
             <p className="mt-2">
-              Most "free" invoice tools online aren't quite what they claim — you fill in your details,
-              only to hit a paywall, a watermark, or a login screen right before you can actually
-              download anything. QuickZeta's invoice generator skips all of that. There's no account to
-              create, no email address to hand over, and no limit on how many invoices you build. Open
-              the page, fill in the fields, and export an instant PDF invoice whenever you're ready — the
-              whole thing runs as a genuinely free invoice generator with no sign up, not a lead-capture
-              form disguised as one.
+              You finish a project, and then the momentum stalls at the one administrative step
+              standing between the work and getting paid: the invoice. Most "free" tools make this worse
+              — a signup wall, a watermark, a client's name locked behind a paywall right as you're about
+              to export. This one doesn't. Fill in the fields below, watch the preview build itself, and
+              export a real PDF the moment it looks right — no account, no email address, no catch.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
-            <ol className="mt-2 list-decimal space-y-2 pl-5">
+            <h2 className="text-lg font-semibold text-slate-100">Everything a valid invoice needs, built in</h2>
+            <p className="mt-2">
+              A professional invoice needs a specific handful of details to look legitimate and get paid
+              without back-and-forth — this tool includes all of them by default, so filling in the form
+              is the same thing as covering the checklist:
+            </p>
+            <ul className="mt-2 list-disc space-y-1.5 pl-5">
               <li>
-                <strong className="text-slate-200">Fill in your details.</strong> Add your business
-                information, your client's details, an invoice number, and the date it's due.
+                <strong className="text-slate-200">Your business details</strong> — name, address, and a
+                way to reach you.
               </li>
               <li>
-                <strong className="text-slate-200">Add line items.</strong> List what you're charging
-                for, the quantity, and the rate — the subtotal, tax, and total update automatically as
-                you type.
+                <strong className="text-slate-200">A unique invoice number</strong> — for both sides to
+                reference later, in email or bookkeeping.
               </li>
               <li>
-                <strong className="text-slate-200">Export as PDF.</strong> Click "Print / Save as PDF"
-                and choose "Save as PDF" in your browser's print dialog. That's it — you now have a
-                polished, ready-to-send invoice.
+                <strong className="text-slate-200">Itemized charges</strong> — what was delivered, the
+                quantity, and the rate, filled in as line items.
               </li>
-            </ol>
+              <li>
+                <strong className="text-slate-200">Tax, if applicable</strong> — calculated automatically
+                once you set a rate.
+              </li>
+              <li>
+                <strong className="text-slate-200">A firm due date</strong> — vague terms are one of the
+                most common reasons invoices get paid late.
+              </li>
+            </ul>
+            <p className="mt-2 text-xs text-slate-500">
+              Once every field looks right, click "Print / Save as PDF" and choose "Save as PDF" in your
+              browser's print dialog — the same method works on Windows, Mac, and mobile.
+            </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Built for freelancers and small teams</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Three habits that get invoices paid faster</h2>
             <p className="mt-2">
-              Whether you're a freelance designer sending your first invoice to a new client, a
-              contractor billing for a completed project, or a small business owner who doesn't want to
-              pay for accounting software just to send a bill, this tool covers the essentials: itemized
-              charges, tax calculation, due dates, and a clean layout that looks legitimate the moment a
-              client opens it. It's an instant PDF invoice creator built to be used in the moment,
-              whether you're at a desk or finishing up on your phone between jobs.
+              Beyond the invoice itself, timing and clarity matter more than most people expect. Send it
+              the same day the work wraps up — waiting even a week tends to push payment back just as
+              far. Keep line items specific instead of one vague lump charge; clients pay faster when
+              they can see exactly what they're paying for. And if a payment runs a few days late, a
+              short, friendly follow-up usually resolves it faster than waiting it out silently.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Who this is built for</h2>
+            <p className="mt-2">
+              A freelance designer sending a first invoice to a new client, a contractor billing for a
+              finished job, or a small team that doesn't want to pay for accounting software just to send
+              a bill — this tool is sized for exactly that kind of use: quick, presentable, and done in
+              one sitting rather than requiring a learning curve.
             </p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Your data stays on your device</h2>
             <p className="mt-2">
-              Because this tool runs entirely inside your browser, none of the information you type —
-              your business details, your client's name, the amounts you're charging — is ever sent to a
-              server. The PDF is assembled locally on your device using your browser's own print engine.
-              That means there's nothing to leak, nothing stored on our end, and nothing to clean up
-              afterward. See our{" "}
+              Nothing you type here — your details, your client's name, the amounts — is ever sent to a
+              server; the PDF is assembled locally using your browser's own print engine. See our{" "}
               <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
                 Privacy Policy
               </Link>{" "}
               for the full details.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">What to include on every invoice</h2>
-            <p className="mt-2">
-              A professional invoice needs a handful of specific details to be considered valid and to
-              get paid without back-and-forth. This tool includes all of them by default:
-            </p>
-            <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>
-                <strong className="text-slate-200">Your business details</strong> — name, address, and a
-                way to contact you if the client has a question.
-              </li>
-              <li>
-                <strong className="text-slate-200">A unique invoice number</strong> — makes it easy for
-                both sides to reference the exact bill in emails or bookkeeping later.
-              </li>
-              <li>
-                <strong className="text-slate-200">Clear line items</strong> — what was delivered, the
-                quantity, and the rate, so the client can see exactly what they're being charged for.
-              </li>
-              <li>
-                <strong className="text-slate-200">Tax, if applicable</strong> — calculated automatically
-                here once you set a rate, rather than done by hand.
-              </li>
-              <li>
-                <strong className="text-slate-200">A due date</strong> — vague payment terms are one of
-                the most common reasons invoices get paid late.
-              </li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">A few tips for getting paid faster</h2>
-            <p className="mt-2">
-              Beyond the invoice itself, a few small habits tend to make a real difference in how quickly
-              clients actually pay. Send the invoice the same day the work is finished, while it's still
-              top of mind — waiting a week or two tends to push payment back just as far. Keep line items
-              specific rather than bundling everything into one vague charge; clients pay faster when they
-              can see exactly what they're paying for. Set a firm, explicit due date rather than leaving
-              it open-ended, and if a payment is a few days late, a short, friendly follow-up email
-              usually resolves it faster than waiting it out.
             </p>
           </section>
 
