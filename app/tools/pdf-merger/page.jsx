@@ -49,6 +49,14 @@ const FAQS = [
   },
 ];
 
+const COMPARISON_ROWS = [
+  { label: "Requires an account", them: "Often", us: "Never" },
+  { label: "Files uploaded to a server", them: "Yes", us: "No — stays on your device" },
+  { label: "Daily merge limit", them: "Common (2–3 free/day)", us: "None" },
+  { label: "Watermark on result", them: "Sometimes", us: "Never" },
+  { label: "Reorder pages before merging", them: "Varies", us: "Yes, always" },
+];
+
 export default function PdfMergerPage() {
   return (
     <ToolPageShell
@@ -57,66 +65,85 @@ export default function PdfMergerPage() {
       article={
         <>
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">
-              Merge PDF files online without uploading them
-            </h2>
+            <h2 className="text-lg font-semibold text-slate-100">A quick example</h2>
             <p className="mt-2">
-              Combining a handful of PDFs — a scanned contract, a few reports, or a stack of receipts —
-              is one of the most common small tasks people search for online, and one of the most common
-              places a "free" tool quietly asks for an account or an upload first. This merger works
-              differently: it reads and combines your files directly inside your browser, so nothing
-              leaves your device at any point. There's no server queue to wait behind and no copy of your
-              documents sitting anywhere afterward.
+              Say you've scanned a signed contract as three separate pages, and you need to send it as
+              one file. Drop all three into the box above, drag the signature page to wherever it
+              belongs in the sequence, and click Merge. A few seconds later you have a single PDF —
+              nothing uploaded, no account created, no wait for a server to process it, since your own
+              browser did the work.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">How this compares to a typical online PDF merger</h2>
+            <div className="mt-2 overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-slate-800 text-left text-slate-400">
+                    <th className="py-2 pr-4 font-medium"> </th>
+                    <th className="py-2 pr-4 font-medium">Typical free PDF site</th>
+                    <th className="py-2 font-medium text-amber-400">QuickZeta</th>
+                  </tr>
+                </thead>
+                <tbody className="text-slate-300">
+                  {COMPARISON_ROWS.map((row) => (
+                    <tr key={row.label} className="border-b border-slate-900">
+                      <td className="py-2 pr-4 text-slate-400">{row.label}</td>
+                      <td className="py-2 pr-4">{row.them}</td>
+                      <td className="py-2 font-medium text-slate-100">{row.us}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">What actually happens when you click "Merge"</h2>
+            <p className="mt-2">
+              Your browser reads each PDF's raw page data using an open-source library called pdf-lib,
+              copies every page (unchanged, at full quality) into a brand-new PDF document in the order
+              you set, and hands you the result as a downloadable file — all inside a single browser tab.
+              There's no intermediate upload step because there's nothing to upload to: the entire
+              operation is JavaScript running locally, the same way a spreadsheet formula recalculates
+              instantly on your screen without contacting a server.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Steps</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Add your PDFs.</strong> Drag in two or more files, or
-                tap to select them from your device.
-              </li>
-              <li>
-                <strong className="text-slate-200">Put them in order.</strong> Use the up and down arrows
-                next to each file to arrange them exactly how you want the final document to read.
-              </li>
-              <li>
-                <strong className="text-slate-200">Merge and download.</strong> Click "Merge," then
-                download the single combined PDF — ready to send or print.
-              </li>
+              <li>Drag in two or more PDF files, or tap to select them from your device.</li>
+              <li>Use the up/down arrows to set the exact order pages should appear in the final file.</li>
+              <li>Click "Merge," then download — the result is ready to send or print immediately.</li>
             </ol>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">Common reasons to combine PDFs</h2>
-            <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>Putting together a set of scanned pages into a single document to send or file.</li>
-              <li>Combining several invoices or receipts into one PDF for an expense report.</li>
-              <li>Merging chapters, sections, or reports from different people into one final file.</li>
-              <li>Joining a cover letter and resume into a single attachment for a job application.</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">No quality loss, no watermark</h2>
-            <p className="mt-2">
-              Unlike tools that re-render or compress your document as part of merging, this tool simply
-              copies each original page into the new file exactly as it was — so text stays sharp, images
-              stay full quality, and nothing is added to the output. What you download is your own
-              content, combined, with nothing else attached.
+            <p className="mt-2 text-xs text-slate-500">
+              Tip: if you're combining a large batch, it's often easier to add them roughly in order
+              first, then use the arrows to nudge just the one or two that are out of place.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your files never leave your device</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Who ends up using this</h2>
             <p className="mt-2">
-              Because merging happens locally, this tool never sees, stores, or has access to the
-              documents you combine here. See our{" "}
+              Freelancers combining a signed contract's scattered pages into one file, students merging
+              chapters or group project sections submitted separately, job seekers joining a cover letter
+              and resume into a single attachment, and anyone bundling several receipts into one PDF for
+              an expense report all land on this tool for roughly the same reason: a stack of separate
+              PDFs needs to become exactly one, without losing quality or adding a stray watermark.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Privacy, in one paragraph</h2>
+            <p className="mt-2">
+              This tool never sees your files — merging happens entirely on your device, so there's
+              nothing for us to store, log, or lose. Full details are in the{" "}
               <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
                 Privacy Policy
-              </Link>{" "}
-              for full details on how QuickZeta handles data.
+              </Link>
+              .
             </p>
           </section>
 
