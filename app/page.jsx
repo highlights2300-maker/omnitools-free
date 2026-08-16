@@ -46,6 +46,7 @@ import {
   Timer,
   CaseSensitive,
   Pipette,
+  Braces,
   ImagePlus,
   LayoutGrid,
   Repeat,
@@ -462,6 +463,15 @@ const TOOLS = [
     category: "everyday-tools",
     kind: "instant",
     href: "/tools/color-picker-converter",
+  },
+  {
+    id: "json-formatter",
+    name: "JSON Formatter & Validator",
+    desc: "Beautify, minify, and validate JSON instantly.",
+    icon: Braces,
+    category: "everyday-tools",
+    kind: "instant",
+    href: "/tools/json-formatter",
   },
 ];
 
