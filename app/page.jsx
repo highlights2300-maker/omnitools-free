@@ -47,6 +47,8 @@ import {
   CaseSensitive,
   Pipette,
   Braces,
+  GitCompare,
+  Volume2,
   ImagePlus,
   LayoutGrid,
   Repeat,
@@ -472,6 +474,24 @@ const TOOLS = [
     category: "everyday-tools",
     kind: "instant",
     href: "/tools/json-formatter",
+  },
+  {
+    id: "text-diff-checker",
+    name: "Text Diff Checker",
+    desc: "Compare two texts and see exactly what changed.",
+    icon: GitCompare,
+    category: "everyday-tools",
+    kind: "instant",
+    href: "/tools/text-diff-checker",
+  },
+  {
+    id: "text-to-speech",
+    name: "Text to Speech",
+    desc: "Convert text to spoken audio, right in your browser.",
+    icon: Volume2,
+    category: "everyday-tools",
+    kind: "instant",
+    href: "/tools/text-to-speech",
   },
 ];
 

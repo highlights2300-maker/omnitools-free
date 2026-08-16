@@ -47,6 +47,8 @@ export default function sitemap() {
     { path: "/tools/text-case-converter", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/color-picker-converter", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/json-formatter", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/tools/text-diff-checker", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/tools/text-to-speech", priority: 0.9, changeFrequency: "monthly" },
   ];
 
   const allPages = [...staticPages, ...toolPages];
