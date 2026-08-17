@@ -49,6 +49,7 @@ export default function sitemap() {
     { path: "/tools/json-formatter", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/text-diff-checker", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/text-to-speech", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/tools/hash-generator", priority: 0.9, changeFrequency: "monthly" },
   ];
 
   const allPages = [...staticPages, ...toolPages];

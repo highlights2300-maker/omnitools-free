@@ -49,6 +49,7 @@ import {
   Braces,
   GitCompare,
   Volume2,
+  Hash,
   ImagePlus,
   LayoutGrid,
   Repeat,
@@ -492,6 +493,15 @@ const TOOLS = [
     category: "everyday-tools",
     kind: "instant",
     href: "/tools/text-to-speech",
+  },
+  {
+    id: "hash-generator",
+    name: "Hash Generator",
+    desc: "Generate MD5, SHA-1, SHA-256 & SHA-512 hashes instantly.",
+    icon: Hash,
+    category: "everyday-tools",
+    kind: "instant",
+    href: "/tools/hash-generator",
   },
 ];
 
