@@ -51,6 +51,7 @@ export default function sitemap() {
     { path: "/tools/text-to-speech", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/hash-generator", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/lorem-ipsum-generator", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/tools/screen-recorder", priority: 0.9, changeFrequency: "monthly" },
   ];
 
   const allPages = [...staticPages, ...toolPages];

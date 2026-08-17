@@ -50,6 +50,8 @@ import {
   GitCompare,
   Volume2,
   Hash,
+  AlignLeft,
+  ScreenShare,
   ImagePlus,
   LayoutGrid,
   Repeat,
@@ -502,6 +504,24 @@ const TOOLS = [
     category: "everyday-tools",
     kind: "instant",
     href: "/tools/hash-generator",
+  },
+  {
+    id: "lorem-ipsum-generator",
+    name: "Lorem Ipsum Generator",
+    desc: "Generate placeholder text by paragraphs, sentences, or words.",
+    icon: AlignLeft,
+    category: "everyday-tools",
+    kind: "instant",
+    href: "/tools/lorem-ipsum-generator",
+  },
+  {
+    id: "screen-recorder",
+    name: "Screen Recorder",
+    desc: "Record your screen, a window, or a tab — no install needed.",
+    icon: ScreenShare,
+    category: "everyday-tools",
+    kind: "instant",
+    href: "/tools/screen-recorder",
   },
 ];
 
