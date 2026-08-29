@@ -8,6 +8,11 @@ export default function sitemap() {
     { path: "/privacy", priority: 0.4, changeFrequency: "yearly" },
     { path: "/terms", priority: 0.4, changeFrequency: "yearly" },
     { path: "/contact", priority: 0.4, changeFrequency: "yearly" },
+    { path: "/document-desk", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/media-studio", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/business-kits", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/quick-calculators", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/everyday-tools", priority: 0.8, changeFrequency: "monthly" },
   ];
 
   const toolPages = [

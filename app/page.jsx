@@ -5905,6 +5905,12 @@ export default function Page() {
                       </div>
                       <p className="text-xs text-slate-500">{category.tagline}</p>
                     </div>
+                    <Link
+                      href={`/${category.id}`}
+                      className="text-xs font-medium text-amber-400 underline underline-offset-2 hover:text-amber-300"
+                    >
+                      About this category →
+                    </Link>
                   </div>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
                     {TOOLS.filter((t) => t.category === category.id).map((tool) => (
