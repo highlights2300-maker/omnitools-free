@@ -57,6 +57,9 @@ export default function sitemap() {
     { path: "/tools/hash-generator", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/lorem-ipsum-generator", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/screen-recorder", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/tools/video-slideshow-maker", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/tools/audio-noise-remover", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/tools/audio-transcriber", priority: 0.9, changeFrequency: "monthly" },
   ];
 
   const allPages = [...staticPages, ...toolPages];
