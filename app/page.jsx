@@ -7,6 +7,8 @@ import Link from "next/link";
 import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import JSZip from "jszip";
 import {
+  TrendingUp,
+  History,
   FileText,
   Image as ImageIcon,
   Video,
@@ -16,6 +18,9 @@ import {
   Archive,
   Scissors,
   Wand2,
+  Film,
+  AudioWaveform,
+  Captions,
   Receipt,
   PenTool,
   Briefcase,
@@ -523,9 +528,47 @@ const TOOLS = [
     kind: "instant",
     href: "/tools/screen-recorder",
   },
+  {
+    id: "video-slideshow-maker",
+    name: "Video Slideshow Maker",
+    desc: "Turn photos into a video with transitions and music.",
+    icon: Film,
+    category: "media-studio",
+    kind: "instant",
+    href: "/tools/video-slideshow-maker",
+  },
+  {
+    id: "audio-noise-remover",
+    name: "Audio Noise Remover & Enhancer",
+    desc: "Reduce background hiss and even out volume.",
+    icon: AudioWaveform,
+    category: "media-studio",
+    kind: "instant",
+    href: "/tools/audio-noise-remover",
+  },
+  {
+    id: "audio-transcriber",
+    name: "Audio Transcriber & Subtitle Generator",
+    desc: "Transcribe speech to text and generate SRT subtitles.",
+    icon: Captions,
+    category: "media-studio",
+    kind: "instant",
+    href: "/tools/audio-transcriber",
+  },
 ];
 
 const FAVORITES_KEY = "omnitools:favorites";
+const RECENT_KEY = "omnitools:recent";
+const MAX_RECENT = 6;
+
+const POPULAR_TOOL_IDS = [
+  "pdf-merge",
+  "img-compressor",
+  "bg-remover",
+  "invoice-generator",
+  "password-generator",
+  "qr-generator",
+];
 
 /* -------------------------------------------------------------------------- */
 /*  Small shared pieces                                                        */
@@ -569,7 +612,7 @@ function CategoryBadge({ accent, children }) {
   );
 }
 
-function ToolCard({ tool, category, isFavorite, onToggleFavorite, onOpen }) {
+function ToolCard({ tool, category, isFavorite, onToggleFavorite, onOpen, onRecordRecent }) {
   const a = ACCENT_MAP[category.accent];
   const Icon = tool.icon;
   return (
@@ -592,7 +635,11 @@ function ToolCard({ tool, category, isFavorite, onToggleFavorite, onOpen }) {
       </button>
 
       {tool.href ? (
-        <Link href={tool.href} className="flex flex-1 flex-col items-start text-left">
+        <Link
+          href={tool.href}
+          onClick={() => onRecordRecent?.(tool.id)}
+          className="flex flex-1 flex-col items-start text-left"
+        >
           <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl ${a.bg} ${a.text}`}>
             <Icon className="h-5 w-5" />
           </div>
@@ -605,7 +652,13 @@ function ToolCard({ tool, category, isFavorite, onToggleFavorite, onOpen }) {
           </span>
         </Link>
       ) : (
-        <button onClick={() => onOpen(tool)} className="flex flex-1 flex-col items-start text-left">
+        <button
+          onClick={() => {
+            onRecordRecent?.(tool.id);
+            onOpen(tool);
+          }}
+          className="flex flex-1 flex-col items-start text-left"
+        >
           <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl ${a.bg} ${a.text}`}>
             <Icon className="h-5 w-5" />
           </div>
@@ -5674,6 +5727,7 @@ function ProposalBuilder({ onClose }) {
 
 export default function Page() {
   const [favorites, setFavorites] = useState([]);
+  const [recentIds, setRecentIds] = useState([]);
   const [activeTool, setActiveTool] = useState(null);
   const [query, setQuery] = useState("");
   const [hydrated, setHydrated] = useState(false);
@@ -5685,6 +5739,12 @@ export default function Page() {
     } catch (e) {
       /* ignore corrupted storage */
     }
+    try {
+      const rawRecent = window.localStorage.getItem(RECENT_KEY);
+      if (rawRecent) setRecentIds(JSON.parse(rawRecent));
+    } catch (e) {
+      /* ignore corrupted storage */
+    }
     setHydrated(true);
   }, []);
 
@@ -5693,8 +5753,17 @@ export default function Page() {
     window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
   }, [favorites, hydrated]);
 
+  useEffect(() => {
+    if (!hydrated) return;
+    window.localStorage.setItem(RECENT_KEY, JSON.stringify(recentIds));
+  }, [recentIds, hydrated]);
+
   const toggleFavorite = (id) => {
     setFavorites((prev) => (prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]));
+  };
+
+  const recordRecent = (id) => {
+    setRecentIds((prev) => [id, ...prev.filter((x) => x !== id)].slice(0, MAX_RECENT));
   };
 
   const openTool = (tool) => setActiveTool(tool);
@@ -5707,6 +5776,8 @@ export default function Page() {
   }, [query]);
 
   const favoriteTools = TOOLS.filter((t) => favorites.includes(t.id));
+  const recentTools = recentIds.map((id) => TOOLS.find((t) => t.id === id)).filter(Boolean);
+  const popularTools = POPULAR_TOOL_IDS.map((id) => TOOLS.find((t) => t.id === id)).filter(Boolean);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -5791,43 +5862,6 @@ export default function Page() {
       </header>
 
       {/* ---------------------------------------------------------------- */}
-      {/* Intro — genuine explanatory content, not just a tool grid */}
-      {/* ---------------------------------------------------------------- */}
-      <section className="no-print border-b border-slate-900 bg-slate-950">
-        <div className="mx-auto max-w-4xl px-4 py-10 md:px-8">
-          <h1 className="text-xl font-bold tracking-tight text-slate-100 sm:text-2xl">
-            35+ free tools that run entirely on your own device
-          </h1>
-          <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-300">
-            <p>
-              QuickZeta is a collection of free tools for working with PDFs, images, everyday
-              calculations, and small business paperwork — invoices, quotes, receipts, and contract
-              templates among them. What makes it different from most "free" tool sites is where the
-              actual work happens: every single tool here processes your file directly inside your own
-              browser. Nothing is uploaded to a server, not even briefly, because there's no server
-              involved in the processing at all.
-            </p>
-            <p>
-              That distinction matters more than it sounds. Sites like the well-known PDF and image
-              converters typically upload your file to their servers, process it there, and send back a
-              result — often while capping free users at a couple of tasks a day, watermarking the
-              output, or nudging you toward a paid plan. Because QuickZeta's tools run locally, there's
-              nothing to cap, nothing to watermark, and no file of yours ever sitting on a server
-              anywhere, even temporarily.
-            </p>
-            <p>
-              Under the hood, that means real technology doing real work in your browser: a WebAssembly
-              build of FFmpeg trims video and converts audio, an on-device AI model removes photo
-              backgrounds, and PDF pages are re-rendered and rebuilt using pdf.js and pdf-lib for
-              compression and merging. It's not a gimmick — these are the same categories of processing
-              server-based tools use, just relocated to run on your own machine instead of someone
-              else's.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------------------------------------------------------- */}
       {/* Body layout: left rail / content / right rail */}
       {/* ---------------------------------------------------------------- */}
       <div className="no-print mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-8 md:px-8 lg:grid-cols-[220px_1fr_220px]">
@@ -5840,6 +5874,62 @@ export default function Page() {
 
         {/* Main content */}
         <main className="min-w-0 space-y-10">
+          {/* Popular tools — shown to every visitor, including first-timers with no history */}
+          {!query.trim() && (
+            <section>
+              <div className="mb-3 flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-amber-400" />
+                <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
+                  Popular tools
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                {popularTools.map((tool) => {
+                  const category = CATEGORIES.find((c) => c.id === tool.category);
+                  return (
+                    <ToolCard
+                      key={tool.id}
+                      tool={tool}
+                      category={category}
+                      isFavorite={favorites.includes(tool.id)}
+                      onToggleFavorite={toggleFavorite}
+                      onOpen={openTool}
+                      onRecordRecent={recordRecent}
+                    />
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
+          {/* Recently used — localStorage only, no account needed */}
+          {recentTools.length > 0 && !query.trim() && (
+            <section>
+              <div className="mb-3 flex items-center gap-2">
+                <History className="h-4 w-4 text-sky-400" />
+                <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
+                  Recently used
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                {recentTools.map((tool) => {
+                  const category = CATEGORIES.find((c) => c.id === tool.category);
+                  return (
+                    <ToolCard
+                      key={tool.id}
+                      tool={tool}
+                      category={category}
+                      isFavorite={favorites.includes(tool.id)}
+                      onToggleFavorite={toggleFavorite}
+                      onOpen={openTool}
+                      onRecordRecent={recordRecent}
+                    />
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
           {/* Favorites */}
           {favoriteTools.length > 0 && !query.trim() && (
             <section>
@@ -5860,6 +5950,7 @@ export default function Page() {
                       isFavorite
                       onToggleFavorite={toggleFavorite}
                       onOpen={openTool}
+                      onRecordRecent={recordRecent}
                     />
                   );
                 })}
@@ -5888,6 +5979,7 @@ export default function Page() {
                         isFavorite={favorites.includes(tool.id)}
                         onToggleFavorite={toggleFavorite}
                         onOpen={openTool}
+                        onRecordRecent={recordRecent}
                       />
                     );
                   })}
@@ -5921,6 +6013,7 @@ export default function Page() {
                         isFavorite={favorites.includes(tool.id)}
                         onToggleFavorite={toggleFavorite}
                         onOpen={openTool}
+                        onRecordRecent={recordRecent}
                       />
                     ))}
                   </div>
@@ -5935,6 +6028,42 @@ export default function Page() {
               </div>
             ))
           )}
+
+          {/* ---------------------------------------------------------------- */}
+          {/* Explanation — moved below the tools so visitors reach the actual */}
+          {/* tool grid immediately; still the page's single H1 for SEO.        */}
+          {/* ---------------------------------------------------------------- */}
+          <section className="border-t border-slate-900 pt-10">
+            <h1 className="text-xl font-bold tracking-tight text-slate-100 sm:text-2xl">
+              44+ free tools that run entirely on your own device
+            </h1>
+            <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-300">
+              <p>
+                QuickZeta is a collection of free tools for working with PDFs, images, audio, and
+                everyday business paperwork — invoices, quotes, receipts, and contract templates among
+                them. What makes it different from most "free" tool sites is where the actual work
+                happens: every single tool here processes your file directly inside your own browser.
+                Nothing is uploaded to a server, not even briefly, because there's no server involved in
+                the processing at all.
+              </p>
+              <p>
+                That distinction matters more than it sounds. Sites like the well-known PDF and image
+                converters typically upload your file to their servers, process it there, and send back a
+                result — often while capping free users at a couple of tasks a day, watermarking the
+                output, or nudging you toward a paid plan. Because QuickZeta's tools run locally, there's
+                nothing to cap, nothing to watermark, and no file of yours ever sitting on a server
+                anywhere, even temporarily.
+              </p>
+              <p>
+                Under the hood, that means real technology doing real work in your browser: a WebAssembly
+                build of FFmpeg trims video and converts audio, on-device AI models remove photo
+                backgrounds and transcribe speech to text, and PDF pages are re-rendered and rebuilt using
+                pdf.js and pdf-lib for compression and merging. It's not a gimmick — these are the same
+                categories of processing server-based tools use, just relocated to run on your own machine
+                instead of someone else's.
+              </p>
+            </div>
+          </section>
 
           <section className="border-t border-slate-900 pt-10">
             <h2 className="mb-1 text-lg font-semibold text-slate-100">Frequently asked questions</h2>
