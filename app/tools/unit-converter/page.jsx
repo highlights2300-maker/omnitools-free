@@ -1,22 +1,23 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import UnitConverterClient from "./UnitConverterClient";
 
 export const metadata = {
-  title: "Free Unit Converter Online — Length, Weight & Temperature | QuickZeta",
+  title: "Free Unit Converter Online — Exact, No Sign Up | QuickZeta",
   description:
-    "Convert length, weight, and temperature units instantly and exactly — free, with no sign up. Millimeters to inches, kilograms to pounds, Celsius to Fahrenheit, and more.",
+    "Convert length, weight, and temperature with exact conversion factors, free, with no sign up. Computed instantly in your browser.",
   keywords: [
     "free unit converter online",
-    "length converter no sign up",
-    "weight converter kg to lb",
-    "celsius to fahrenheit converter",
-    "metric to imperial converter",
+    "exact unit conversion no sign up",
+    "length weight temperature converter",
+    "metric to imperial converter free",
+    "precise unit conversion tool",
   ],
   alternates: { canonical: "https://quickzeta.com/tools/unit-converter" },
   openGraph: {
-    title: "Free Unit Converter Online — Length, Weight & Temperature",
-    description: "Convert between metric and imperial units instantly, computed in your browser.",
+    title: "Free Unit Converter Online — Exact, No Sign Up",
+    description: "Convert length, weight, and temperature with exact conversion factors.",
     url: "https://quickzeta.com/tools/unit-converter",
     type: "website",
   },
@@ -25,23 +26,19 @@ export const metadata = {
 const FAQS = [
   {
     q: "Is this unit converter really free, with no sign up?",
-    a: "Yes. There's no account and no limit on how many conversions you can do.",
+    a: "Yes. There's no account and no limit on how many conversions you can run.",
   },
   {
-    q: "Which units does this converter support?",
-    a: "Length (millimeters, centimeters, meters, kilometers, inches, feet, yards, and miles), weight (milligrams, grams, kilograms, ounces, and pounds), and temperature (Celsius, Fahrenheit, and Kelvin).",
+    q: "How precise are the conversions, actually?",
+    a: "They use the internationally defined exact conversion factors, not rounded approximations — for example, one inch is defined as exactly 25.4 millimeters, and this tool uses that exact figure rather than a rounded \"about 25\" shortcut some quick-reference charts use.",
   },
   {
-    q: "How accurate are the conversions?",
-    a: "Exact, using standard conversion factors — for example, 1 inch is defined as precisely 2.54 centimeters, and that's the value used here rather than a rounded approximation.",
+    q: "Why do some online conversions give slightly different answers?",
+    a: "Small discrepancies usually come from a site rounding an intermediate step, or using an older, superseded definition for a unit. Most common units (meter, kilogram, and units derived from them) have internationally agreed, exact definitions, so a correct converter should match another correct converter precisely.",
   },
   {
-    q: "Why do I need three separate categories instead of one converter?",
-    a: "Length, weight, and temperature don't share a common unit to convert through — length is based on distance, weight on mass, and temperature uses different scales entirely (including one, Fahrenheit, that isn't just a multiplied version of Celsius). Keeping them separate avoids any confusing or invalid conversions between incompatible types.",
-  },
-  {
-    q: "Is my data sent anywhere when I use this?",
-    a: "No. Every conversion is calculated directly in your browser — nothing you type is ever uploaded or logged.",
+    q: "Is my data sent anywhere?",
+    a: "No. Every conversion is computed directly in your browser — there's no server involved, so there's nothing to send.",
   },
 ];
 
@@ -49,123 +46,85 @@ export default function UnitConverterPage() {
   return (
     <ToolPageShell
       title="Free Unit Converter"
-      subtitle="Convert length, weight, and temperature instantly and exactly — no sign up, nothing uploaded."
+      subtitle="Convert length, weight, and temperature with exact conversion factors — no sign up."
       article={
         <>
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              An exact unit converter with no sign up
+              Exact conversion factors, not rounded rules of thumb
             </h2>
             <p className="mt-2">
-              Whether you're converting a recipe from metric to imperial, checking a shipping weight in
-              pounds against a kilogram limit, or figuring out what a forecast in Fahrenheit means in
-              Celsius, this tool gives you an instant, exact answer with no account needed. Every
-              calculation happens directly in your browser using standard, precise conversion factors —
-              not rounded approximations.
+              A lot of quick mental-math conversions — "just multiply by two" for kilograms to pounds,
+              for instance — are close enough for a rough estimate but genuinely wrong for anything that
+              needs to be accurate. This tool uses the internationally defined exact conversion factors
+              for each unit, computed instantly in your browser as you type.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Pick a category.</strong> Choose Length, Weight, or
-                Temperature.
-              </li>
-              <li>
-                <strong className="text-slate-200">Enter a value and pick units.</strong> Select what
-                you're converting from and to.
-              </li>
-              <li>
-                <strong className="text-slate-200">Read the result instantly.</strong> The converted
-                value updates as you type, with no need to click a button.
-              </li>
+              <li>Pick the category — length, weight, or temperature.</li>
+              <li>Choose your starting unit and enter a value.</li>
+              <li>Read the converted result instantly in the target unit.</li>
             </ol>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Common conversions people look up</h2>
-            <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>Centimeters to inches, for furniture dimensions or clothing sizes.</li>
-              <li>Kilograms to pounds, for body weight, luggage, or shipping limits.</li>
-              <li>Celsius to Fahrenheit, for weather forecasts or oven temperatures.</li>
-              <li>Miles to kilometers, for travel distances or running routes.</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">Why the categories are kept separate</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Why "close enough" conversions drift</h2>
             <p className="mt-2">
-              Length, weight, and temperature each measure a fundamentally different kind of quantity, so
-              this tool keeps them in separate tabs rather than one long combined list. This also avoids
-              a subtle mistake that's easy to make with temperature specifically: unlike length or weight,
-              converting between Celsius and Fahrenheit isn't just multiplying by a fixed factor — it
-              involves a scale shift too, which is handled correctly here rather than approximated.
+              Most everyday units have a precisely defined relationship to each other — an inch is
+              exactly 25.4 millimeters, a pound is exactly 0.45359237 kilograms — figures fixed by
+              international standards bodies, not approximations. Rough mental shortcuts like "a kilogram
+              is about two pounds" are genuinely useful for a quick gut check, but they compound into real
+              error over larger numbers or when a result gets used in a further calculation. This tool
+              always uses the exact defined figures, so the result is precise regardless of how large or
+              small the input is.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your data stays private</h2>
+            <h2 className="text-lg font-semibold text-slate-100">A note on temperature</h2>
             <p className="mt-2">
-              Nothing you enter into this converter is sent anywhere — every calculation happens locally
-              in your browser. See our{" "}
-              <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
-                Privacy Policy
+              Temperature is a slightly different kind of conversion than length or weight — it's not a
+              simple multiplication, since Celsius and Fahrenheit have different zero points as well as
+              different scale sizes. Celsius to Fahrenheit involves both a multiplication and an offset
+              (multiply by 9/5, then add 32), which is exactly what this tool handles automatically rather
+              than leaving you to remember the formula.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">A couple of conversions people get wrong</h2>
+            <p className="mt-2">
+              Cups, tablespoons, and other cooking measurements sound like straightforward volume
+              conversions, but they actually vary slightly between US customary and imperial
+              definitions — worth double-checking which system a recipe actually intends if precision
+              matters. Similarly, "tons" is genuinely ambiguous without more context: a US short ton, a
+              UK long ton, and a metric tonne are three different weights, close enough to cause real
+              confusion but not identical. Picking the right starting unit, not just the right number,
+              is often where conversion mistakes actually happen.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
+            <p className="mt-2">
+              For splitting a bill or working out a percentage change rather than a unit conversion, the
+              site's{" "}
+              <Link href="/tools/tip-calculator" className="text-amber-400 underline underline-offset-2">
+                Tip Calculator
               </Link>{" "}
-              for full details.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">Quick reference: common conversions</h2>
-            <div className="mt-2 overflow-x-auto">
-              <table className="w-full text-xs">
-                <thead>
-                  <tr className="border-b border-slate-800 text-left text-slate-400">
-                    <th className="py-2 pr-4 font-medium">From</th>
-                    <th className="py-2 pr-4 font-medium">To</th>
-                    <th className="py-2 font-medium">Equals</th>
-                  </tr>
-                </thead>
-                <tbody className="text-slate-300">
-                  <tr className="border-b border-slate-900">
-                    <td className="py-2 pr-4">1 inch</td>
-                    <td className="py-2 pr-4">centimeters</td>
-                    <td className="py-2 font-mono">2.54 cm</td>
-                  </tr>
-                  <tr className="border-b border-slate-900">
-                    <td className="py-2 pr-4">1 mile</td>
-                    <td className="py-2 pr-4">kilometers</td>
-                    <td className="py-2 font-mono">1.609 km</td>
-                  </tr>
-                  <tr className="border-b border-slate-900">
-                    <td className="py-2 pr-4">1 kilogram</td>
-                    <td className="py-2 pr-4">pounds</td>
-                    <td className="py-2 font-mono">2.205 lb</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2 pr-4">0°C</td>
-                    <td className="py-2 pr-4">Fahrenheit</td>
-                    <td className="py-2 font-mono">32°F</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">When precision actually matters</h2>
-            <p className="mt-2">
-              For everyday use — checking a weather forecast or converting a recipe — a rough
-              approximation is usually fine. But for anything more exacting, like engineering
-              measurements, medication dosages, or shipping weight limits with a strict cutoff, using
-              exact conversion factors rather than rounded rules of thumb (like "just multiply by two"
-              for kilograms to pounds) can matter. This tool always uses the precise, standard conversion
-              factor rather than a simplified approximation.
+              and{" "}
+              <Link href="/tools/percentage-calculator" className="text-amber-400 underline underline-offset-2">
+                Percentage Calculator
+              </Link>{" "}
+              cover that kind of everyday math.
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="unit-converter" />
         </>
       }
     >

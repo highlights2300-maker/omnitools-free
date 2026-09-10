@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import ScreenRecorderClient from "./ScreenRecorderClient";
 
 export const metadata = {
@@ -25,27 +26,27 @@ export const metadata = {
 const FAQS = [
   {
     q: "Is this screen recorder really free, with no sign up?",
-    a: "Yes. There's no account, no watermark on the recording, and no time limit imposed by this tool itself (though very long recordings will use more of your device's memory).",
+    a: "Yes. There's no account, no watermark, and no time limit imposed by this tool itself.",
   },
   {
     q: "Do I need to install anything?",
-    a: "No. This uses screen-recording features already built into modern browsers — there's nothing to download or install, and nothing is uploaded to a server either. The recording is captured and saved directly through your browser.",
+    a: "No. This uses screen-recording features already built into modern browsers — nothing to download, and nothing uploaded to a server either.",
+  },
+  {
+    q: "What's that red border or icon my browser shows while recording?",
+    a: "That's your browser's own native indicator, not something this tool adds — it's a deliberate security feature. Browsers are required to show an unmistakable, un-hideable signal whenever a page is capturing your screen, specifically so a malicious website can't secretly record you without your knowledge. Seeing it means the permission is working correctly, not that anything's wrong.",
   },
   {
     q: "What file format do I get?",
-    a: "A .webm video file. This is a modern, widely supported format that plays natively in every major browser and most video players, though a small number of older or specialized editing tools may need it converted to MP4 first.",
+    a: "A .webm video file — a modern, widely supported format that plays natively in every major browser and most video players.",
   },
   {
     q: "Can I record audio too?",
-    a: "It depends on your browser and what you choose to share. When you start recording, most browsers let you separately choose whether to include audio from the tab, window, or your entire system — this tool passes that choice along, but audio capture support and options vary by browser and operating system.",
+    a: "It depends on your browser and what you choose to share. Most browsers let you separately choose whether to include audio from the tab, window, or your entire system when you start recording.",
   },
   {
     q: "Does this work on mobile phones?",
-    a: "No — screen recording through a browser like this is a desktop browser feature. Chrome, Edge, and Firefox on a desktop or laptop all support it; phones generally have their own separate built-in screen recording feature instead.",
-  },
-  {
-    q: "How do I stop recording?",
-    a: "Either click the \"Stop recording\" button on this page, or use your browser's own native \"Stop sharing\" control (usually a small bar or icon that appears while sharing is active) — both end the recording the same way.",
+    a: "No — screen recording through a browser like this is a desktop feature. Phones generally have their own separate built-in screen recording feature instead.",
   },
 ];
 
@@ -62,56 +63,67 @@ export default function ScreenRecorderPage() {
             </h2>
             <p className="mt-2">
               Recording your screen usually means downloading dedicated software first. This tool skips
-              that step entirely by using screen-capture and recording features already built into modern
+              that step by using screen-capture and recording features already built into modern
               browsers — the recording is captured, encoded, and saved to a downloadable file without
               installing anything or sending any video data to a server.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Click "Start recording."</strong> Your browser will
-                ask what to share — your entire screen, a specific window, or a single tab.
-              </li>
-              <li>
-                <strong className="text-slate-200">Do whatever you're recording.</strong> A timer tracks
-                how long you've been going.
-              </li>
-              <li>
-                <strong className="text-slate-200">Stop and download.</strong> Click "Stop recording" (or
-                your browser's own "Stop sharing" control), then download the finished file.
-              </li>
+              <li>Click "Start recording." Your browser will ask what to share — screen, window, or tab.</li>
+              <li>Do whatever you're recording — a timer tracks the duration.</li>
+              <li>Stop and download the finished file.</li>
             </ol>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">
+              What your browser's own permission prompt is actually protecting you from
+            </h2>
+            <p className="mt-2">
+              Screen recording is deliberately treated as a sensitive browser permission, similar to
+              camera or microphone access. When you click "Start recording," your browser itself — not
+              this tool — shows a native prompt asking exactly what to share, and while sharing is active,
+              it displays an unmistakable, persistent indicator (often a colored border or a small icon)
+              that can't be hidden by the website doing the recording. This exists specifically so a
+              malicious page can't secretly capture your screen without you knowing — the visible
+              indicator is a security feature working as intended, not a bug or a sign that something's
+              wrong.
+            </p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-slate-100">About the file format</h2>
             <p className="mt-2">
-              Recordings download as .webm — a real, modern, widely supported video format, not a
-              proprietary one. It plays natively in every major browser and most desktop video players.
-              If you specifically need an MP4 for compatibility with older software, most video editing
-              tools can convert a .webm to MP4 in one step, or you can use a dedicated video converter for
-              that specific conversion.
+              Recordings download as .webm — a real, modern, widely supported video format. It plays
+              natively in every major browser and most desktop video players. If you specifically need an
+              MP4 for compatibility with older software, most video editing tools can convert a .webm to
+              MP4 in one step.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
-            <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>Recording a quick software walkthrough or bug report to share with a colleague.</li>
-              <li>Capturing a video call, presentation, or webinar for later reference.</li>
-              <li>Making a short how-to clip without needing dedicated screen-capture software.</li>
-              <li>Documenting a specific issue happening on screen for a support ticket.</li>
-            </ul>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
+            <p className="mt-2">
+              Need to trim the recording down afterward? The site's{" "}
+              <Link href="/tools/video-trimmer" className="text-amber-400 underline underline-offset-2">
+                Video Trimmer
+              </Link>{" "}
+              cuts a .webm file down to the exact segment you need, and{" "}
+              <Link href="/tools/audio-noise-remover" className="text-amber-400 underline underline-offset-2">
+                Audio Noise Remover
+              </Link>{" "}
+              can clean up a recording's narration track.
+            </p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Nothing is ever uploaded</h2>
             <p className="mt-2">
               The entire recording — capture, encoding, and file creation — happens locally in your
-              browser. This tool never sees or stores what you record. See our{" "}
+              browser. See our{" "}
               <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
                 Privacy Policy
               </Link>{" "}
@@ -120,6 +132,7 @@ export default function ScreenRecorderPage() {
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="screen-recorder" />
         </>
       }
     >
