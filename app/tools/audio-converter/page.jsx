@@ -1,22 +1,23 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import AudioConverterClient from "./AudioConverterClient";
 
 export const metadata = {
-  title: "Free Audio Converter Online — MP3, WAV, OGG, M4A | QuickZeta",
+  title: "Free Audio Converter Online — MP3, WAV, OGG, No Upload | QuickZeta",
   description:
-    "Convert audio between MP3, WAV, OGG, and M4A, free, with no upload and no sign up. Converted entirely in your browser using a real audio engine.",
+    "Convert audio between MP3, WAV, and OGG, free, with no upload and no sign up. Powered by FFmpeg running entirely in your browser.",
   keywords: [
     "free audio converter online",
     "convert mp3 to wav no upload",
-    "audio format converter no sign up",
-    "wav to mp3 converter free",
-    "ogg to mp3 converter online",
+    "audio format converter free",
+    "wav to mp3 online no sign up",
+    "convert ogg audio online",
   ],
   alternates: { canonical: "https://quickzeta.com/tools/audio-converter" },
   openGraph: {
-    title: "Free Audio Converter Online — MP3, WAV, OGG, M4A",
-    description: "Convert audio between common formats, entirely in your browser.",
+    title: "Free Audio Converter Online — MP3, WAV, OGG, No Upload",
+    description: "Convert between MP3, WAV, and OGG entirely in your browser.",
     url: "https://quickzeta.com/tools/audio-converter",
     type: "website",
   },
@@ -25,27 +26,27 @@ export const metadata = {
 const FAQS = [
   {
     q: "Is this audio converter really free, with no sign up?",
-    a: "Yes. There's no account and no limit on how many audio files you can convert.",
+    a: "Yes. There's no account and no limit on how many files you can convert.",
   },
   {
-    q: "Do you upload my audio file to a server?",
-    a: "No. The conversion runs using a real audio-processing engine that loads and runs directly inside your browser — your file is never sent anywhere.",
+    q: "Do you upload my audio to a server?",
+    a: "No. Conversion runs through FFmpeg compiled to WebAssembly, executing directly in your browser — your audio file is never transmitted anywhere.",
   },
   {
-    q: "Why does it take a moment to load the first time?",
-    a: "The first time you use this tool, your browser downloads the audio engine it needs. This is a one-time download per browser session — the actual conversion starts right away afterward.",
+    q: "Which format should I actually use?",
+    a: "MP3 for broad compatibility and small file size when some quality loss is acceptable, WAV when you need lossless quality (like for further editing) and file size doesn't matter, and OGG when you specifically need an open, patent-free format, common in some software and games.",
   },
   {
-    q: "Which formats are supported?",
-    a: "You can convert between MP3, WAV, OGG, and M4A in any direction.",
+    q: "Will converting to MP3 lower the quality?",
+    a: "Yes, if you're converting from a lossless format like WAV — MP3 is a lossy format, meaning it discards some audio data to shrink file size. Converting between two lossy formats (like OGG to MP3) can compound quality loss slightly further, since each lossy encoding step loses a bit more.",
   },
   {
-    q: "Which format should I choose?",
-    a: "MP3 is the most universally compatible compressed format. WAV is uncompressed and lossless, but produces a much larger file — useful for editing or archival. OGG is an open compressed format supported by most modern browsers and apps. M4A is common on Apple devices and services.",
+    q: "Why is my WAV file so much larger than the original?",
+    a: "WAV stores audio uncompressed, so it's inherently large regardless of the source. If you're converting from a compressed format like MP3 to WAV, the file size increases substantially even though no new audio detail is actually being added — it's just stored less efficiently.",
   },
   {
-    q: "Will converting reduce the audio quality?",
-    a: "Converting to a compressed format like MP3 or OGG involves some lossy compression, similar to the original recording format. Converting to WAV is lossless. Converting between two already-compressed formats (like MP3 to OGG) can introduce a small additional quality loss, since the audio is decoded and re-encoded.",
+    q: "Is there a file size or length limit?",
+    a: "No hard limit, though longer audio files naturally take more time to process since your own device's processor handles the conversion.",
   },
 ];
 
@@ -53,94 +54,129 @@ export default function AudioConverterPage() {
   return (
     <ToolPageShell
       title="Free Audio Converter"
-      subtitle="Convert between MP3, WAV, OGG, and M4A — no upload, no sign up."
+      subtitle="Convert between MP3, WAV, and OGG — no upload, no sign up, powered by real FFmpeg."
       article={
         <>
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              Convert audio formats without uploading anywhere
+              Real format conversion, running in your browser
             </h2>
             <p className="mt-2">
-              Different devices, platforms, and software sometimes only accept specific audio formats,
-              which usually means uploading a file to some other website first just to convert it. This
-              tool runs a real audio-processing engine directly inside your browser instead — your audio
-              file is converted entirely on your own device and never sent to a server.
+              A voice memo in the wrong format, an audio file a piece of software won't accept, a
+              recording that needs to be smaller before sharing — audio format mismatches come up
+              constantly. This tool converts between MP3, WAV, and OGG using FFmpeg compiled to
+              WebAssembly, running entirely inside your browser rather than uploading your file to a
+              server first.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Choosing a format</h2>
+            <div className="mt-2 overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-slate-800 text-left text-slate-400">
+                    <th className="py-2 pr-4 font-medium">Format</th>
+                    <th className="py-2 pr-4 font-medium">Compression</th>
+                    <th className="py-2 pr-4 font-medium">File size</th>
+                    <th className="py-2 font-medium">Best for</th>
+                  </tr>
+                </thead>
+                <tbody className="text-slate-300">
+                  <tr className="border-b border-slate-900">
+                    <td className="py-2 pr-4 font-medium text-slate-100">MP3</td>
+                    <td className="py-2 pr-4">Lossy</td>
+                    <td className="py-2 pr-4">Small</td>
+                    <td className="py-2 text-slate-400">Broad compatibility, sharing, general listening</td>
+                  </tr>
+                  <tr className="border-b border-slate-900">
+                    <td className="py-2 pr-4 font-medium text-slate-100">WAV</td>
+                    <td className="py-2 pr-4">Lossless</td>
+                    <td className="py-2 pr-4">Large</td>
+                    <td className="py-2 text-slate-400">Editing, archiving, when quality matters most</td>
+                  </tr>
+                  <tr className="border-b border-slate-900">
+                    <td className="py-2 pr-4 font-medium text-slate-100">OGG</td>
+                    <td className="py-2 pr-4">Lossy</td>
+                    <td className="py-2 pr-4">Small</td>
+                    <td className="py-2 text-slate-400">Open format needs, games, some software</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Choose your audio file.</strong> Drag one in or tap
-                to select it from your device.
-              </li>
-              <li>
-                <strong className="text-slate-200">Pick a target format.</strong> Choose MP3, WAV, OGG,
-                or M4A.
-              </li>
-              <li>
-                <strong className="text-slate-200">Convert and download.</strong> The first run downloads
-                a small audio engine, then processes and exports your converted file.
-              </li>
+              <li>Upload the audio file you want to convert.</li>
+              <li>Choose the target format.</li>
+              <li>Download the converted file once processing finishes.</li>
             </ol>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Choosing the right format</h2>
-            <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>
-                <strong className="text-slate-200">MP3</strong> — the most widely compatible format,
-                good for general listening and sharing.
-              </li>
-              <li>
-                <strong className="text-slate-200">WAV</strong> — uncompressed and lossless, best for
-                editing or archiving, at a much larger file size.
-              </li>
-              <li>
-                <strong className="text-slate-200">OGG</strong> — an open, compressed format supported by
-                most modern browsers and media players.
-              </li>
-              <li>
-                <strong className="text-slate-200">M4A</strong> — common on Apple devices and services
-                like Apple Music and Voice Memos.
-              </li>
-            </ul>
+            <h2 className="text-lg font-semibold text-slate-100">Advantages and limitations</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Real FFmpeg conversion, not a simplified reimplementation</li>
+                  <li>No upload wait, no server queue</li>
+                  <li>No conversion count limit</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Converting lossy-to-lossy compounds quality loss slightly</li>
+                  <li>Converting to WAV doesn't restore detail lost in a prior lossy encode</li>
+                  <li>Longer files take proportionally longer to process</li>
+                </ul>
+              </div>
+            </div>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
+            <h2 className="text-lg font-semibold text-slate-100">A note on bitrate</h2>
             <p className="mt-2">
-              Converting a voice recording to a more universally compatible format before sharing it,
-              turning a WAV export from audio editing software into a smaller MP3 for everyday listening,
-              or preparing a file in the specific format a particular app, podcast platform, or device
-              requires are some of the most common reasons people need an audio converter.
+              When audio is encoded into a lossy format like MP3, its bitrate controls how much detail
+              gets kept — higher bitrates mean better quality and larger files, lower bitrates mean
+              smaller files with more audible compression artifacts, especially in complex music with
+              many instruments. For spoken-word audio like a podcast or a recorded meeting, a fairly
+              modest bitrate is usually perfectly acceptable, since speech doesn't demand the same
+              fidelity music does.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your audio never leaves your device</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
             <p className="mt-2">
-              Because everything runs locally, this tool never sees or stores the audio you convert here.
-              See our{" "}
+              If your audio has background noise, the site's{" "}
+              <Link href="/tools/audio-noise-remover" className="text-amber-400 underline underline-offset-2">
+                Audio Noise Remover & Enhancer
+              </Link>{" "}
+              is worth running before converting, and{" "}
+              <Link href="/tools/audio-transcriber" className="text-amber-400 underline underline-offset-2">
+                Audio Transcriber
+              </Link>{" "}
+              can turn spoken audio into text once it's in a format you're happy with.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Nothing leaves your device</h2>
+            <p className="mt-2">
+              Conversion happens locally — see the{" "}
               <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
                 Privacy Policy
               </Link>{" "}
-              for full details on how QuickZeta handles data.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">A note on file size</h2>
-            <p className="mt-2">
-              WAV files are typically five to ten times larger than an equivalent MP3, since WAV stores
-              audio completely uncompressed. If you're converting to free up storage space or make a file
-              easier to send, MP3 or OGG will produce a noticeably smaller result — WAV is really only
-              worth choosing when you specifically need lossless quality for further editing.
+              for full details.
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="audio-converter" />
         </>
       }
     >

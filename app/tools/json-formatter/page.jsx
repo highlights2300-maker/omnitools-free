@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import JsonFormatterClient from "./JsonFormatterClient";
 
 export const metadata = {
@@ -28,20 +29,16 @@ const FAQS = [
     a: "Yes. There's no account and no limit on how much JSON you can format or validate.",
   },
   {
-    q: "What does 'Beautify' actually do?",
-    a: "It parses your JSON and re-outputs it with consistent indentation and line breaks, making nested objects and arrays easy to read at a glance — useful for JSON that arrived as one long unbroken line from an API response or log file.",
+    q: "Is my JSON data sent anywhere?",
+    a: "No. Every operation uses the browser's own built-in JSON parser, running directly in your browser — nothing you paste is ever uploaded or logged.",
   },
   {
     q: "What's the difference between Beautify and Minify?",
-    a: "Beautify adds indentation and line breaks for readability. Minify does the opposite — it strips all unnecessary whitespace to produce the smallest possible file size, which is what you'd typically want before actually sending JSON over a network or shipping it in production.",
+    a: "Beautify adds indentation and line breaks for readability. Minify strips all unnecessary whitespace to produce the smallest possible file size — what you'd want before actually sending JSON over a network or shipping it in production.",
   },
   {
-    q: "How does the validator find errors?",
-    a: "It uses the browser's own built-in JSON parser, the same one that powers JSON.parse() in JavaScript. If your JSON is invalid, the error message tells you specifically what the parser choked on — often a missing comma, an extra trailing comma, or an unquoted key.",
-  },
-  {
-    q: "Is my JSON data sent anywhere?",
-    a: "No. Every operation happens directly in your browser — nothing you paste is ever uploaded or logged, which matters if your JSON contains real data from an API response, config file, or database export.",
+    q: "Why does my JSON say invalid when it looks fine to me?",
+    a: "JSON's rules are stricter than they look. A trailing comma after the last item, single quotes instead of double quotes, an unquoted object key, or a missing closing brace are the most common causes — all things that are easy to miss scanning by eye but that a parser catches instantly.",
   },
 ];
 
@@ -60,66 +57,96 @@ export default function JsonFormatterPage() {
               JSON that arrives minified — one long unbroken line from an API response, a log file, or a
               config export — is genuinely hard to read or debug by eye. This tool reformats it instantly
               with proper indentation, or does the reverse and strips it down to the smallest possible
-              size, all directly inside your browser. Since JSON frequently contains real data — API
-              keys, user records, configuration — never uploading it anywhere isn't a nice-to-have here,
-              it's the point.
+              size, using the browser's own built-in JSON parser. Since JSON frequently contains real
+              data, never uploading it anywhere isn't a nice-to-have here, it's the point.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Paste your JSON.</strong> Valid or invalid — either
-                way, you'll see immediate feedback.
-              </li>
-              <li>
-                <strong className="text-slate-200">Beautify or minify.</strong> Pick indentation width, or
-                strip it down to a single compact line.
-              </li>
-              <li>
-                <strong className="text-slate-200">Copy the result.</strong> One click grabs the formatted
-                or minified output.
-              </li>
+              <li>Paste your JSON — valid or invalid, either way you'll see immediate feedback.</li>
+              <li>Beautify or minify, picking indentation width if beautifying.</li>
+              <li>Copy the result with one click.</li>
             </ol>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Reading a validation error</h2>
-            <p className="mt-2">
-              When JSON is invalid, the error message points at specifically what the parser couldn't
-              make sense of. The most common culprits: a trailing comma after the last item in an object
-              or array (valid in JavaScript, invalid in strict JSON), an object key that isn't wrapped in
-              double quotes, a stray single quote where JSON requires double quotes, or a missing closing
-              brace or bracket somewhere earlier in the document than the error position might suggest.
-            </p>
+            <h2 className="text-lg font-semibold text-slate-100">Common JSON errors, translated</h2>
+            <ul className="mt-2 list-disc space-y-2 pl-5">
+              <li>
+                <strong className="text-slate-200">Trailing comma:</strong> a comma left after the last
+                item in an object or array — valid in JavaScript, invalid in strict JSON. The single most
+                common cause of "unexpected token" errors.
+              </li>
+              <li>
+                <strong className="text-slate-200">Single quotes instead of double:</strong> JSON strings
+                and keys must use double quotes; single quotes will fail to parse even though they look
+                nearly identical.
+              </li>
+              <li>
+                <strong className="text-slate-200">Unquoted keys:</strong> object keys need quotes around
+                them — <code className="rounded bg-slate-800 px-1 py-0.5 text-[11px]">{`{name: "value"}`}</code> is invalid;{" "}
+                <code className="rounded bg-slate-800 px-1 py-0.5 text-[11px]">{`{"name": "value"}`}</code> is correct.
+              </li>
+              <li>
+                <strong className="text-slate-200">A missing closing brace or bracket:</strong> the error
+                position reported is often further into the document than where the actual missing
+                character is — worth checking backward from the reported line, not just at it.
+              </li>
+            </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">When to beautify, when to minify</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Advantages and limitations</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Uses the browser's own standards-compliant parser</li>
+                  <li>Instant — no size limit that requires an upload</li>
+                  <li>Safe for sensitive data, since nothing leaves your device</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Doesn't validate against a specific JSON Schema, only JSON syntax itself</li>
+                  <li>Error messages reflect the browser's parser wording, not custom explanations</li>
+                  <li>Extremely large JSON documents may feel sluggish in an in-browser textarea</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
             <p className="mt-2">
-              Beautified JSON is for humans — debugging an API response, reviewing a config file, or
-              understanding a data structure someone else wrote. Minified JSON is for machines — smaller
-              payloads transfer faster over a network, and production code has no need for the extra
-              whitespace that only exists to help a person read it. Most workflows use both at different
-              points: beautified while developing and debugging, minified once it's actually being sent
-              or stored.
+              Converting between formats? The site's{" "}
+              <Link href="/tools/csv-json-converter" className="text-amber-400 underline underline-offset-2">
+                CSV ⇄ JSON Converter
+              </Link>{" "}
+              handles that directly, and{" "}
+              <Link href="/tools/hash-generator" className="text-amber-400 underline underline-offset-2">
+                Hash Generator
+              </Link>{" "}
+              is useful if you need a quick fingerprint of a specific JSON payload.
             </p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Your data stays private</h2>
             <p className="mt-2">
-              Nothing you paste into this tool is sent anywhere — every operation happens directly in
-              your browser using the same JSON parser built into JavaScript itself. See our{" "}
+              See our{" "}
               <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
                 Privacy Policy
               </Link>{" "}
-              for full details.
+              for full details on how QuickZeta handles data.
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="json-formatter" />
         </>
       }
     >

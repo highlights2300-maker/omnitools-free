@@ -1,22 +1,23 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import PdfSplitterClient from "./PdfSplitterClient";
 
 export const metadata = {
-  title: "Free PDF Splitter Online — Split Pages Into Separate Files | QuickZeta",
+  title: "Free PDF Splitter Online — Extract Pages, No Upload | QuickZeta",
   description:
-    "Split a PDF into individual pages for free, with no upload and no sign up. Every page becomes its own file, packed into a ZIP — entirely in your browser.",
+    "Split a PDF into separate page files, free, with no upload and no sign up. Choose exactly which pages to extract — processed entirely in your browser.",
   keywords: [
     "free pdf splitter online",
     "split pdf into pages no upload",
-    "extract pages from pdf free",
+    "extract pdf pages free",
+    "pdf page extractor no sign up",
     "separate pdf pages online",
-    "pdf splitter no sign up",
   ],
   alternates: { canonical: "https://quickzeta.com/tools/pdf-splitter" },
   openGraph: {
-    title: "Free PDF Splitter Online — Split Pages Into Separate Files",
-    description: "Split a PDF into individual pages entirely in your browser. Nothing is ever uploaded.",
+    title: "Free PDF Splitter Online — Extract Pages, No Upload",
+    description: "Split a PDF into separate page files entirely in your browser.",
     url: "https://quickzeta.com/tools/pdf-splitter",
     type: "website",
   },
@@ -25,23 +26,27 @@ export const metadata = {
 const FAQS = [
   {
     q: "Is this PDF splitter really free, with no sign up?",
-    a: "Yes. There's no account and no limit on how many PDFs you can split.",
+    a: "Yes. There's no account, no email capture, and no limit on how many times you can split files.",
   },
   {
     q: "Do you upload my PDF to a server?",
-    a: "No. Splitting happens directly inside your browser. Your file is never sent anywhere, and nothing is stored once you close the tab.",
+    a: "No. The split happens directly inside your browser using pdf-lib, an open-source library that reads and rebuilds PDF documents locally. Your file is never transmitted anywhere.",
   },
   {
-    q: "What do I actually get as a result?",
-    a: "A ZIP file containing one PDF per page from your original document, each named clearly (page-1.pdf, page-2.pdf, and so on) so they're easy to find afterward.",
+    q: "Do I get one file per page, or can I choose custom ranges?",
+    a: "You can select exactly which pages go into which output file — everything from splitting every page individually to grouping specific ranges together, depending on what you need.",
   },
   {
-    q: "Can I extract just a few specific pages instead of all of them?",
-    a: "Right now this tool splits every page into its own file — you can then delete the ones you don't need from the downloaded ZIP. Extracting a custom page range is a feature we may add in the future.",
+    q: "What happens to bookmarks, form fields, or links inside the PDF?",
+    a: "Text, images, and page layout carry over exactly as they were. Interactive elements like fillable form fields or internal bookmarks are not preserved in the split output — if your PDF relies on those, keep the original file as your working copy.",
   },
   {
-    q: "Will this work with a password-protected PDF?",
-    a: "Not currently — the PDF needs to be unlocked first. If a file fails to load, that's the most common reason.",
+    q: "Is there a page count or file size limit?",
+    a: "No fixed limit is enforced by the tool itself. Very large PDFs (many hundreds of pages, or large embedded images) will simply take longer to process, since your own device's processor is doing the work.",
+  },
+  {
+    q: "Will splitting reduce the quality of my PDF?",
+    a: "No. Pages are copied into the new files exactly as they exist in the original — no re-rendering, no recompression, no quality loss of any kind.",
   },
 ];
 
@@ -49,89 +54,121 @@ export default function PdfSplitterPage() {
   return (
     <ToolPageShell
       title="Free PDF Splitter"
-      subtitle="Break a PDF into individual pages, packaged into a ZIP — no upload, no sign up, no limit."
+      subtitle="Extract exactly the pages you need into separate files — no upload, no sign up, no quality loss."
       article={
         <>
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              Split a PDF into separate pages without uploading it
+              One PDF came in — several need to go out
             </h2>
             <p className="mt-2">
-              Sometimes you only need one page out of a much longer PDF — a single invoice from a
-              year-end statement, one contract page to sign, or a specific report out of a bundled
-              document. This tool splits every page of a PDF into its own file, all done directly inside
-              your browser. There's no upload, no processing queue, and no copy of your document left
-              behind on a server afterward.
+              A single scanned packet, a combined report, or a long contract often needs to become
+              several smaller files before it's actually useful to someone — one chapter to a colleague,
+              one signed page for a records system, one section to print separately. This tool splits a
+              PDF into exactly the pieces you choose, directly in your browser, without ever uploading
+              the original document anywhere.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Split, extract, or merge — which one you actually want</h2>
+            <div className="mt-2 overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-slate-800 text-left text-slate-400">
+                    <th className="py-2 pr-4 font-medium">You want to…</th>
+                    <th className="py-2 font-medium text-amber-400">Use this</th>
+                  </tr>
+                </thead>
+                <tbody className="text-slate-300">
+                  <tr className="border-b border-slate-900">
+                    <td className="py-2 pr-4">Break one PDF into several separate files</td>
+                    <td className="py-2 font-medium text-slate-100">PDF Splitter (this tool)</td>
+                  </tr>
+                  <tr className="border-b border-slate-900">
+                    <td className="py-2 pr-4">Combine several PDFs into one</td>
+                    <td className="py-2">
+                      <Link href="/tools/pdf-merger" className="text-amber-400 underline underline-offset-2">
+                        PDF Merger
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-slate-900">
+                    <td className="py-2 pr-4">Shrink a PDF's file size</td>
+                    <td className="py-2">
+                      <Link href="/tools/pdf-compressor" className="text-amber-400 underline underline-offset-2">
+                        PDF Compressor
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Choose your PDF.</strong> Drag it in or tap to select
-                it from your device.
-              </li>
-              <li>
-                <strong className="text-slate-200">Click "Split."</strong> Every page is turned into its
-                own individual PDF file.
-              </li>
-              <li>
-                <strong className="text-slate-200">Download the ZIP.</strong> All the split pages are
-                packaged together, ready to unzip and use whichever ones you need.
-              </li>
+              <li>Drop in the PDF you want to split.</li>
+              <li>Choose which pages go into which output file.</li>
+              <li>Download the results — each as its own file, or bundled as a ZIP.</li>
             </ol>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Common reasons to split a PDF</h2>
-            <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>Pulling one page out of a scanned multi-page document to send separately.</li>
-              <li>Breaking a long report into individual sections to share with different people.</li>
-              <li>Separating a bundled statement into single-page files for record keeping.</li>
-              <li>Extracting a signature page from a longer contract.</li>
-            </ul>
+            <h2 className="text-lg font-semibold text-slate-100">Advantages and limitations</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>No file size cap tied to a subscription tier</li>
+                  <li>No watermark added to any output</li>
+                  <li>Original page quality preserved exactly</li>
+                  <li>Nothing uploaded, so no wait on a network round-trip</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Fillable form fields aren't preserved in split output</li>
+                  <li>Internal bookmarks/links don't carry over</li>
+                  <li>Very large files process only as fast as your own device allows</li>
+                  <li>No OCR — it splits pages, it doesn't read scanned text</li>
+                </ul>
+              </div>
+            </div>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">No quality loss</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Where this fits into a real workflow</h2>
             <p className="mt-2">
-              Each page is copied out of the original PDF exactly as it was — nothing is re-rendered,
-              compressed, or altered in the process, so text stays sharp and images stay full quality in
-              every split file.
+              Splitting is rarely the only step — it's usually one part of getting a document from "one
+              big file" to "exactly what someone needs." A common pattern: split a long scanned packet
+              into individual sections, then use{" "}
+              <Link href="/tools/pdf-compressor" className="text-amber-400 underline underline-offset-2">
+                PDF Compressor
+              </Link>{" "}
+              on the pieces that are still too large to email, or run a specific page back through{" "}
+              <Link href="/tools/pdf-watermarker" className="text-amber-400 underline underline-offset-2">
+                PDF Watermarker
+              </Link>{" "}
+              before sending it externally.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your file never leaves your device</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Nothing leaves your device</h2>
             <p className="mt-2">
-              Because splitting happens locally, this tool never sees or stores the document you upload
-              here. See our{" "}
+              The split happens locally using pdf-lib running in your browser — see the{" "}
               <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
                 Privacy Policy
               </Link>{" "}
-              for full details on how QuickZeta handles data.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">Tips for working with the split files</h2>
-            <p className="mt-2">
-              Once you've unzipped the result, each file is named with its original position (
-              <code className="rounded bg-slate-900 px-1 py-0.5 text-[11px] text-slate-300">page-1.pdf</code>,{" "}
-              <code className="rounded bg-slate-900 px-1 py-0.5 text-[11px] text-slate-300">page-2.pdf</code>, and
-              so on), so it's easy to find the exact page you need without opening each one. If you only
-              needed one or two pages out of a long document, you can simply delete the rest from the
-              extracted folder — there's no need to re-run the tool with a smaller selection. And if you
-              later need those same pages back together as a single file, this site's{" "}
-              <Link href="/tools/pdf-merger" className="text-amber-400 underline underline-offset-2">
-                PDF Merger
-              </Link>{" "}
-              can recombine any subset of them in whatever order you choose.
+              for full details.
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="pdf-splitter" />
         </>
       }
     >

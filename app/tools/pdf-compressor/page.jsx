@@ -1,22 +1,23 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import PdfCompressorClient from "./PdfCompressorClient";
 
 export const metadata = {
   title: "Free PDF Compressor Online — Shrink File Size, No Upload | QuickZeta",
   description:
-    "Shrink a PDF's file size, free, with no upload and no sign up. Adjust resolution and quality with a real before-and-after size comparison, in your browser.",
+    "Compress a PDF to a smaller file size, free, with no upload and no sign up. Adjust the quality tradeoff yourself — processed entirely in your browser.",
   keywords: [
     "free pdf compressor online",
     "reduce pdf file size no upload",
-    "compress scanned pdf free",
-    "shrink pdf no sign up",
+    "shrink pdf free no sign up",
+    "compress pdf for email",
     "pdf size reducer online",
   ],
   alternates: { canonical: "https://quickzeta.com/tools/pdf-compressor" },
   openGraph: {
     title: "Free PDF Compressor Online — Shrink File Size, No Upload",
-    description: "Shrink a PDF's file size by re-rendering pages as optimized images, entirely in your browser.",
+    description: "Compress a PDF to a smaller file size entirely in your browser.",
     url: "https://quickzeta.com/tools/pdf-compressor",
     type: "website",
   },
@@ -25,27 +26,27 @@ export const metadata = {
 const FAQS = [
   {
     q: "Is this PDF compressor really free, with no sign up?",
-    a: "Yes. There's no account and no limit on how many PDFs you can compress.",
+    a: "Yes. There's no account and no limit on how many files you can compress.",
   },
   {
     q: "Do you upload my PDF to a server?",
-    a: "No. The entire process — rendering, recompressing, and rebuilding the PDF — happens directly inside your browser.",
+    a: "No. Compression happens entirely inside your browser — nothing is sent anywhere, and there's no upload wait even for larger files.",
   },
   {
-    q: "Will the text in my PDF still be selectable after compressing?",
-    a: "No, and this is important to know upfront. This tool works by re-rendering every page as an image, then rebuilding the PDF from those images. That means any selectable, searchable text in the original becomes part of a flat image instead. If you need to keep selectable text, this tool isn't the right fit for that specific document.",
+    q: "Why does compressing a PDF actually shrink the file?",
+    a: "Most of a PDF's file size usually comes from embedded images, not the text. This tool re-renders each page and re-encodes those images at a lower quality setting, which is where the real size reduction comes from — the text itself was already efficiently stored to begin with.",
   },
   {
-    q: "What kind of PDF is this best suited for?",
-    a: "Scanned documents and image-heavy PDFs, where the file is already effectively a collection of images rather than live text — that's where this technique achieves a real, meaningful size reduction.",
+    q: "Will my text stay sharp, or does compression blur everything?",
+    a: "Text stays sharp in most cases, since it's rendered rather than stored as a raster image. What changes is primarily photo and image quality within the document — the more aggressive the compression, the more visible that becomes.",
   },
   {
-    q: "How much smaller will my file get?",
-    a: "It depends heavily on the original file and the resolution and quality settings you choose. Image-heavy or high-resolution scanned PDFs often see substantial reductions, while a PDF that's mostly live text may see little change or even grow slightly, since it's being converted into images.",
+    q: "Why did my file barely shrink at all?",
+    a: "If your PDF is mostly text with few or no images, there often isn't much size to recover — text-heavy PDFs are already compact. This tool makes the biggest difference on PDFs containing scanned pages or embedded photos.",
   },
   {
-    q: "What do the resolution and quality sliders control?",
-    a: "Resolution (DPI) controls how sharp each rendered page image is — lower values produce a smaller file but softer detail. Quality controls the JPEG compression level applied to each page image — lower values shrink the file further at the cost of some visible compression artifacts.",
+    q: "Is there a file size limit?",
+    a: "No hard limit, though very large PDFs with many pages will take longer to process since your own device is doing the rendering work.",
   },
 ];
 
@@ -53,81 +54,107 @@ export default function PdfCompressorPage() {
   return (
     <ToolPageShell
       title="Free PDF Compressor"
-      subtitle="Shrink a PDF's file size with adjustable resolution and quality — no upload, no sign up."
+      subtitle="Shrink a PDF's file size with a quality tradeoff you control — no upload, no sign up."
       article={
         <>
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              An honest look at how this PDF compressor works
+              When "too large to email" is the actual problem
             </h2>
             <p className="mt-2">
-              Most PDF compressors don't explain what they're actually doing to your file, which can lead
-              to an unpleasant surprise. Here's the honest version: this tool re-renders every page of
-              your PDF as an optimized image, then rebuilds a new PDF from those images. That's a
-              genuinely effective way to shrink a scanned or image-heavy document — but it does mean any
-              selectable text in the original becomes part of a flat image afterward, no longer
-              searchable or copyable. If your PDF is mostly live text rather than scanned pages, this
-              specific technique isn't the right tool for the job.
+              A PDF that's too big to attach to an email, too slow to upload to a form, or simply taking
+              up more storage than it should is one of the most common everyday document annoyances.
+              This tool shrinks a PDF's file size directly in your browser, letting you choose how
+              aggressively to compress it, without ever sending the original file to a server first.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Where a PDF's file size actually comes from</h2>
+            <p className="mt-2">
+              It's a common misconception that a PDF is "just text," but in practice most of a document's
+              file size usually comes from embedded images — scanned pages, photos, screenshots — not the
+              text itself, which is already stored efficiently. This tool works by re-rendering each page
+              and re-encoding its images at a chosen quality level, which is exactly where the real size
+              reduction comes from. A ten-page text memo won't shrink much; a ten-page scanned document
+              often will, substantially.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Choose your PDF.</strong> Drag it in or tap to select
-                it from your device.
-              </li>
-              <li>
-                <strong className="text-slate-200">Adjust resolution and quality.</strong> Lower values
-                produce a smaller file at the cost of sharpness.
-              </li>
-              <li>
-                <strong className="text-slate-200">Compress and compare.</strong> See the real before-and-
-                after file size, then download the result.
-              </li>
+              <li>Upload the PDF you want to shrink.</li>
+              <li>Choose a compression level — higher compression means a smaller file but more visible image quality loss.</li>
+              <li>Download the result and compare the before-and-after file size.</li>
             </ol>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">When this tool is the right fit</h2>
-            <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>A scanned document photographed or scanned at high resolution.</li>
-              <li>A PDF full of large embedded photos that's grown too big to email.</li>
-              <li>An image-heavy report or brochure where searchable text isn't needed.</li>
-              <li>
-                A document you've already run through the site's{" "}
-                <Link href="/tools/image-to-pdf" className="text-amber-400 underline underline-offset-2">
-                  Image to PDF
-                </Link>{" "}
-                tool, where the pages are already images to begin with.
-              </li>
-            </ul>
+            <h2 className="text-lg font-semibold text-slate-100">Advantages and limitations</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>You choose the exact quality-versus-size tradeoff</li>
+                  <li>No file ever uploaded, so no size cap tied to a plan</li>
+                  <li>Works well on scanned or photo-heavy PDFs specifically</li>
+                  <li>Instant — no server queue to wait behind</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Text-only PDFs won't shrink much — there's little to compress</li>
+                  <li>Aggressive compression visibly softens embedded images</li>
+                  <li>Fillable form fields aren't preserved after re-rendering</li>
+                  <li>Large, many-page files take longer on older devices</li>
+                </ul>
+              </div>
+            </div>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Finding the right balance</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Picking a compression level</h2>
             <p className="mt-2">
-              There's no single "correct" setting — it depends on what the PDF is for. For something
-              that just needs to be readable on screen, a lower resolution and quality setting produces a
-              much smaller file with barely noticeable visual difference. For something that might get
-              printed, keeping resolution higher preserves more detail at the cost of a larger file size.
+              For a document that's mostly text with a few images, a lighter setting usually keeps things
+              looking clean while still trimming some size. For a scanned packet or a PDF full of photos
+              where file size matters more than pixel-perfect image quality — attaching to an email,
+              uploading to a form with a size cap — a more aggressive setting is usually the right call.
+              If you're not sure, start moderate and check the result before committing to the most
+              aggressive option.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your document never leaves your device</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
             <p className="mt-2">
-              Because everything runs locally, this tool never sees or stores the document you compress
-              here. See our{" "}
+              If you're compressing a document made up of several parts, it's often easier to{" "}
+              <Link href="/tools/pdf-merger" className="text-amber-400 underline underline-offset-2">
+                merge them first
+              </Link>{" "}
+              and compress the combined file once, rather than compressing each piece separately. Going
+              the other direction, if you need to shrink just part of a larger document, use{" "}
+              <Link href="/tools/pdf-splitter" className="text-amber-400 underline underline-offset-2">
+                PDF Splitter
+              </Link>{" "}
+              first to isolate the pages that actually need it.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Nothing leaves your device</h2>
+            <p className="mt-2">
+              Compression happens locally — see the{" "}
               <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
                 Privacy Policy
               </Link>{" "}
-              for full details on how QuickZeta handles data.
+              for full details.
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="pdf-compressor" />
         </>
       }
     >
