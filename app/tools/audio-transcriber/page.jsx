@@ -33,7 +33,7 @@ const FAQS = [
   },
   {
     q: "Why does it take a moment to load the first time?",
-    a: "The first time you use this tool, it downloads the Whisper model — around 150MB. Your browser caches it afterward, so future transcriptions on the same device start almost instantly, without downloading it again.",
+    a: "The first time you use this tool, it downloads the Whisper model — a few hundred MB, since it uses the full-precision model for reliable loading. Your browser caches it afterward, so future transcriptions on the same device start almost instantly, without downloading it again.",
   },
   {
     q: "Does it support languages other than English?",
@@ -97,7 +97,7 @@ export default function AudioTranscriberPage() {
             <p className="mt-2">
               This is genuine machine learning running on your own hardware, not a server farm built for
               this exact task — so it's worth setting expectations accordingly. The first use downloads
-              roughly 150MB once. Processing speed depends on your device: a short clip on a reasonably
+              roughly a few hundred MB once. Processing speed depends on your device: a short clip on a reasonably
               modern computer finishes quickly, while a long recording on an older laptop will take real
               time. Currently, this tool is built and tuned specifically for English speech; accuracy is
               good for clear audio but will drop with heavy accents, overlapping speakers, or significant

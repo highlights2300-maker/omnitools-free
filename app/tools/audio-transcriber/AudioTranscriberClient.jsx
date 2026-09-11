@@ -107,6 +107,12 @@ export default function AudioTranscriberClient() {
           "automatic-speech-recognition",
           "Xenova/whisper-tiny.en",
           {
+            // Explicitly forcing full precision here — letting the library
+            // auto-select a quantized variant triggered a "missing scale"
+            // ONNX loading error against this specific model repo's file
+            // layout. fp32 sidesteps quantization entirely, trading a
+            // larger one-time download for reliable loading.
+            dtype: "fp32",
             progress_callback: (data) => {
               if (data.status === "progress") {
                 setProgress(Math.round(data.progress));
@@ -164,7 +170,7 @@ export default function AudioTranscriberClient() {
         <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-700 bg-slate-950/40 px-6 py-16 text-center transition hover:border-violet-400/40">
           <Mic className="mb-3 h-9 w-9 text-slate-600" />
           <p className="text-sm font-medium text-slate-300">Drag & drop an audio file, or tap to choose one</p>
-          <p className="mt-1 text-xs text-slate-500">English speech works best · first use downloads a ~150MB model, once</p>
+          <p className="mt-1 text-xs text-slate-500">English speech works best · first use downloads a few hundred MB, once</p>
           <input type="file" accept="audio/*" className="hidden" onChange={(e) => onPickFile(e.target.files?.[0])} />
         </label>
       ) : (
