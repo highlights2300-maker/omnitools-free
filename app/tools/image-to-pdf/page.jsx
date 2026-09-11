@@ -1,22 +1,23 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import ImageToPdfClient from "./ImageToPdfClient";
 
 export const metadata = {
   title: "Free Image to PDF Converter Online — No Upload | QuickZeta",
   description:
-    "Turn JPG or PNG images into a single PDF, free, with no upload and no sign up. Reorder pages and export a clean, print-ready PDF — entirely in your browser.",
+    "Turn photos or scans into a single PDF, free, with no upload and no sign up. Reorder pages before exporting — processed entirely in your browser.",
   keywords: [
     "free image to pdf converter online",
-    "jpg to pdf no upload",
-    "combine photos into one pdf free",
-    "png to pdf no sign up",
-    "convert scanned images to pdf",
+    "photos to pdf no upload",
+    "jpg to pdf free no sign up",
+    "convert scan to pdf online",
+    "combine images into one pdf",
   ],
   alternates: { canonical: "https://quickzeta.com/tools/image-to-pdf" },
   openGraph: {
     title: "Free Image to PDF Converter Online — No Upload",
-    description: "Turn JPG or PNG images into a single PDF, composed entirely in your browser.",
+    description: "Turn photos into a single PDF entirely in your browser.",
     url: "https://quickzeta.com/tools/image-to-pdf",
     type: "website",
   },
@@ -24,28 +25,24 @@ export const metadata = {
 
 const FAQS = [
   {
-    q: "Is this image-to-PDF converter really free, with no sign up?",
-    a: "Yes. There's no account, no watermark, and no limit on how many images or PDFs you can create.",
+    q: "Is this image to PDF converter really free, with no sign up?",
+    a: "Yes. There's no account and no limit on how many images or pages you can combine.",
   },
   {
     q: "Do you upload my photos to a server?",
-    a: "No. Every image is composed into the PDF directly inside your browser — nothing is ever sent anywhere.",
+    a: "No. Each image is embedded directly into a new PDF using pdf-lib, running entirely in your browser — nothing is ever uploaded.",
   },
   {
-    q: "Can I combine multiple images into one PDF?",
-    a: "Yes — add as many images as you need, and each one becomes its own page in the final PDF, in the order you arrange them.",
+    q: "Can I reorder the pages before exporting?",
+    a: "Yes — arrange your images in whatever order you want the final PDF's pages to follow before generating the file.",
   },
   {
-    q: "Can I change the order the images appear in?",
-    a: "Yes, use the up and down arrows next to each image to reorder them before building the PDF.",
+    q: "Will image quality be preserved in the PDF?",
+    a: "Yes — each image is embedded at its original resolution, with no additional recompression applied during the conversion.",
   },
   {
-    q: "What page size does the PDF use?",
-    a: "Every page is standard A4 size, with each image automatically scaled to fit within the page margins while keeping its original proportions — no stretching or distortion.",
-  },
-  {
-    q: "Will this work for scanned documents taken with a phone camera?",
-    a: "Yes — this is one of the most common uses. Photograph each page of a document, add the photos in order, and this tool combines them into a single, shareable PDF.",
+    q: "What image formats can I use?",
+    a: "Common formats like JPG, PNG, and WebP all work as source images for the PDF.",
   },
 ];
 
@@ -53,80 +50,87 @@ export default function ImageToPdfPage() {
   return (
     <ToolPageShell
       title="Free Image to PDF Converter"
-      subtitle="Combine JPG or PNG images into a single, print-ready PDF — no upload, no sign up."
+      subtitle="Turn a batch of photos or scans into one clean PDF — no upload, no sign up."
       article={
         <>
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              Turn images into a PDF without uploading them
+              A phone full of photos, one document at the end
             </h2>
             <p className="mt-2">
-              Photographing a document page by page and needing it as one shareable file, or combining a
-              handful of photos into a single PDF for printing or emailing, is a common small task that
-              usually means uploading files to some other website first. This tool builds the PDF
-              directly inside your browser instead — your images are never sent to a server at any point.
+              Scanned receipts, photographed pages of a document, screenshots that need to become one
+              file — turning a set of images into a proper PDF is one of the most common small document
+              tasks. This tool embeds your images directly into a new PDF, in whatever order you choose,
+              entirely inside your browser.
             </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
-            <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Add your images.</strong> Drag in one or more JPG or
-                PNG files, or tap to select them.
-              </li>
-              <li>
-                <strong className="text-slate-200">Arrange the order.</strong> Use the up and down arrows
-                to set which image becomes which page.
-              </li>
-              <li>
-                <strong className="text-slate-200">Build and download.</strong> Click "Build PDF" and
-                save the finished, combined document.
-              </li>
-            </ol>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
             <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>Turning phone photos of a multi-page document into one shareable PDF.</li>
-              <li>Combining several receipts or invoices photographed separately.</li>
-              <li>Putting together a simple photo-based PDF for printing or archiving.</li>
-              <li>
-                Preparing scanned pages to later combine further using the site's{" "}
-                <Link href="/tools/pdf-merger" className="text-amber-400 underline underline-offset-2">
-                  PDF Merger
-                </Link>{" "}
-                if you need to join them with an existing PDF.
-              </li>
+              <li>Turning photographed pages of a document into one shareable PDF.</li>
+              <li>Combining scanned receipts into a single file for an expense report.</li>
+              <li>Bundling screenshots into one document for review.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your photos stay on your device</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
+            <ol className="mt-2 list-decimal space-y-2 pl-5">
+              <li>Add the images you want to include.</li>
+              <li>Drag to reorder them into the sequence you want.</li>
+              <li>Generate and download the finished PDF.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Advantages and limitations</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Full-resolution images, no automatic recompression</li>
+                  <li>Reorder pages before generating the file</li>
+                  <li>No file count or size limit enforced</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>No automatic perspective correction for angled phone photos</li>
+                  <li>No built-in OCR — the result is a document made of images, not searchable text</li>
+                  <li>Large, uncompressed photos can produce a sizable PDF</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Order matters more than it seems</h2>
             <p className="mt-2">
-              Because the PDF is built locally, this tool never sees, stores, or has access to the images
-              you use here. See our{" "}
-              <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
-                Privacy Policy
-              </Link>{" "}
-              for full details on how QuickZeta handles data.
+              Getting the page order right before generating the PDF saves a re-export later — it's worth
+              taking a moment to arrange images in the exact sequence you want the final document to read
+              in, since the tool builds pages in that order directly.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Tips for photographing documents cleanly</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
             <p className="mt-2">
-              If you're photographing paper pages to convert into a PDF, a few small habits make a real
-              difference in how clean the result looks. Shoot in good, even lighting and avoid casting a
-              shadow over the page with your own body or phone. Hold the camera directly above the
-              document rather than at an angle, to keep text from looking skewed or distorted. And where
-              possible, place the page against a plain, contrasting background, which makes the edges of
-              the document easier to see clearly in the final image.
+              If the resulting PDF is too large to email, run it through{" "}
+              <Link href="/tools/pdf-compressor" className="text-amber-400 underline underline-offset-2">
+                PDF Compressor
+              </Link>{" "}
+              afterward, or combine it with other documents using{" "}
+              <Link href="/tools/pdf-merger" className="text-amber-400 underline underline-offset-2">
+                PDF Merger
+              </Link>
+              .
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="image-to-pdf" />
         </>
       }
     >

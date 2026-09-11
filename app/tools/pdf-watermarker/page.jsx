@@ -1,22 +1,23 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import PdfWatermarkerClient from "./PdfWatermarkerClient";
 
 export const metadata = {
-  title: "Free PDF Watermark Tool Online — No Upload | QuickZeta",
+  title: "Free PDF Watermarker Online — Add Text Watermark, No Upload | QuickZeta",
   description:
-    "Stamp a diagonal text watermark across every page of a PDF, free, with no upload and no sign up. Adjust text, size, and opacity — entirely in your browser.",
+    "Stamp a text watermark across every page of a PDF, free, with no upload and no sign up. Processed entirely in your browser.",
   keywords: [
-    "free pdf watermark tool online",
+    "free pdf watermarker online",
     "add watermark to pdf no upload",
-    "stamp confidential on pdf free",
-    "pdf watermark no sign up",
-    "watermark pdf pages online",
+    "stamp text on pdf free",
+    "pdf watermark tool no sign up",
+    "mark pdf as draft online",
   ],
   alternates: { canonical: "https://quickzeta.com/tools/pdf-watermarker" },
   openGraph: {
-    title: "Free PDF Watermark Tool Online — No Upload",
-    description: "Stamp a diagonal text watermark across every page of a PDF, entirely in your browser.",
+    title: "Free PDF Watermarker Online — Add Text Watermark, No Upload",
+    description: "Stamp a text watermark across every page of a PDF, entirely in your browser.",
     url: "https://quickzeta.com/tools/pdf-watermarker",
     type: "website",
   },
@@ -24,28 +25,24 @@ export const metadata = {
 
 const FAQS = [
   {
-    q: "Is this PDF watermark tool really free, with no sign up?",
+    q: "Is this watermarker really free, with no sign up?",
     a: "Yes. There's no account and no limit on how many PDFs you can watermark.",
   },
   {
     q: "Do you upload my PDF to a server?",
-    a: "No. The watermark is stamped directly inside your browser — your file is never sent anywhere.",
+    a: "No. The watermark is stamped onto each page directly inside your browser using pdf-lib — nothing is uploaded.",
   },
   {
-    q: "Can I customize the watermark text?",
-    a: "Yes — type whatever text you'd like, whether that's \"CONFIDENTIAL,\" \"DRAFT,\" a company name, or anything else.",
+    q: "Does a watermark actually stop someone from copying my document?",
+    a: "Not really — a text watermark is a visual deterrent and a way to clearly mark a document's status (draft, confidential, sample), not a technical protection. It doesn't prevent copying, editing, or redistribution; it just makes unauthorized use more obviously improper and easier to trace back to a source. For genuine access control, this isn't the right tool.",
   },
   {
-    q: "Can I control how visible the watermark is?",
-    a: "Yes — the opacity slider controls how faint or bold the watermark appears, and the font size slider controls how large it renders across the page.",
+    q: "Can I control the watermark's opacity and angle?",
+    a: "Yes — adjust the transparency and rotation so it's visible without overwhelming the underlying content.",
   },
   {
-    q: "Does the watermark cover important content?",
-    a: "The watermark is stamped diagonally across the center of each page at an adjustable opacity, so it's visible as a watermark without necessarily blocking the underlying text — lowering the opacity further makes it subtler if needed.",
-  },
-  {
-    q: "Will this work with a password-protected PDF?",
-    a: "Not currently — the PDF needs to be unlocked first. If a file fails to load, that's usually why.",
+    q: "Does the watermark appear on every page?",
+    a: "Yes, applied consistently across the entire document.",
   },
 ];
 
@@ -53,87 +50,87 @@ export default function PdfWatermarkerPage() {
   return (
     <ToolPageShell
       title="Free PDF Watermarker"
-      subtitle="Stamp a diagonal text watermark across every page — no upload, no sign up."
+      subtitle="Stamp a text watermark across every page — no upload, no sign up."
       article={
         <>
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              Add a watermark to a PDF without uploading it
+              Marking a document's status, clearly
             </h2>
             <p className="mt-2">
-              Marking a document as a draft, confidential, or belonging to a particular business is a
-              common reason to stamp a watermark across a PDF before sharing it. This tool does that
-              directly inside your browser — your document is never sent to a server, and you can adjust
-              the text, size, and visibility before applying it.
+              Labeling a document as a draft, a sample, or confidential before sharing it is a small step
+              that avoids real confusion later. This tool stamps a text watermark diagonally across every
+              page of a PDF, directly in your browser, with the original file never uploaded anywhere.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Choose your PDF.</strong> Drag it in or tap to select
-                it from your device.
-              </li>
-              <li>
-                <strong className="text-slate-200">Set the watermark text.</strong> Type whatever text
-                you want stamped across every page.
-              </li>
-              <li>
-                <strong className="text-slate-200">Adjust size and opacity.</strong> Fine-tune how bold
-                or subtle the watermark appears.
-              </li>
-              <li>
-                <strong className="text-slate-200">Apply and download.</strong> Save the watermarked
-                version of your PDF.
-              </li>
+              <li>Upload the PDF you want to mark.</li>
+              <li>Type the watermark text and adjust its opacity and angle.</li>
+              <li>Download the watermarked file.</li>
             </ol>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Advantages and limitations</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Applied consistently across every page automatically</li>
+                  <li>Adjustable opacity and angle</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Text watermarks only — no logo or image watermark</li>
+                  <li>Not a security measure, as covered below</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">What a watermark actually does — and doesn't</h2>
+            <p className="mt-2">
+              Worth being clear about this: a text watermark is a visual signal, not a technical
+              protection. It makes a document's status obvious at a glance and makes unauthorized copies
+              easier to trace back to a source, but it doesn't lock the file, prevent copying, or stop
+              someone from editing the underlying content. If genuine access control or encryption is
+              what you actually need, a watermark isn't the tool for that — it's for clear labeling, not
+              security.
+            </p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
             <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>Marking a document as "DRAFT" before it's finalized.</li>
-              <li>Stamping "CONFIDENTIAL" across sensitive internal paperwork.</li>
-              <li>Adding a company name or logo text across shared materials.</li>
-              <li>Labeling a sample or preview document before a final version is delivered.</li>
+              <li>Marking a document clearly as "DRAFT" before it's finalized.</li>
+              <li>Labeling a preview or sample before sending it out.</li>
+              <li>Stamping "CONFIDENTIAL" across internal documents.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Choosing the right opacity</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
             <p className="mt-2">
-              A lower opacity (around 10–20%) keeps the underlying document fully readable while still
-              making the watermark clearly visible — a common choice for professional documents. A higher
-              opacity makes the watermark bolder and harder to miss, which can be useful for drafts or
-              internal-only materials where making the status obvious matters more than a clean look.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your document never leaves your device</h2>
-            <p className="mt-2">
-              Because the watermark is applied locally, this tool never sees or stores the document you
-              use here. See our{" "}
-              <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
-                Privacy Policy
+              Once watermarked, use{" "}
+              <Link href="/tools/pdf-merger" className="text-amber-400 underline underline-offset-2">
+                PDF Merger
               </Link>{" "}
-              for full details on how QuickZeta handles data.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">No quality loss to the original document</h2>
-            <p className="mt-2">
-              The watermark is added as an additional layer on top of each page — the original text,
-              images, and formatting underneath are left completely untouched. This means the rest of
-              the document keeps its original quality and remains fully readable, with only the
-              watermark text layered visibly on top at whatever opacity you choose — the file remains a
-              genuine, working PDF afterward, not a flattened image.
+              to combine it with other files, or{" "}
+              <Link href="/tools/pdf-compressor" className="text-amber-400 underline underline-offset-2">
+                PDF Compressor
+              </Link>{" "}
+              to shrink it before sending.
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="pdf-watermarker" />
         </>
       }
     >

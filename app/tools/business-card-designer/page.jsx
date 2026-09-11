@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import BusinessCardDesignerClient from "./BusinessCardDesignerClient";
 
 export const metadata = {
@@ -29,19 +30,15 @@ const FAQS = [
   },
   {
     q: "Is the output actually print-ready?",
-    a: "Yes — both sides render at 1050×600 pixels, a standard print resolution for a 3.5×2 inch business card, so the downloaded PNG files are suitable for sending to a print shop.",
+    a: "Both sides render at 1050×600 pixels — a standard print resolution for a 3.5×2 inch card at 300 DPI. Note this design doesn't include a bleed margin (extra edge content that gets trimmed off during printing); for most standard print shops this works fine, but if a specific printer explicitly requires bleed, mention that to them, since this tool doesn't add it automatically.",
   },
   {
-    q: "Can I design both the front and back of the card?",
-    a: "Yes — the front includes your name, title, company, and contact details, while the back displays your company name and a tagline on a solid accent-colored background. Both download as separate PNG files.",
+    q: "Can I design both the front and back?",
+    a: "Yes — front includes your name, title, company, and contact details; the back shows your company name and a tagline. Both download as separate PNG files.",
   },
   {
     q: "Do you upload my information to a server?",
-    a: "No. Both sides of the card are rendered directly inside your browser using the Canvas feature built into every modern browser — nothing you type is ever sent anywhere.",
-  },
-  {
-    q: "Can I customize the colors?",
-    a: "Yes — the accent, background, and text colors are all adjustable, so you can match your card to your own branding.",
+    a: "No. Both sides are rendered directly inside your browser using Canvas.",
   },
 ];
 
@@ -58,85 +55,60 @@ export default function BusinessCardDesignerPage() {
             </h2>
             <p className="mt-2">
               Getting a simple, professional-looking business card together shouldn't require design
-              software or a subscription. This tool renders both the front and back of a card directly
-              inside your browser at real print resolution, with a live preview that updates as you type
-              — nothing you enter is ever sent to a server.
+              software. This tool renders both the front and back of a card directly inside your browser
+              at real print resolution, updating live as you type.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Fill in your details.</strong> Name, title, company,
-                and contact information for the front of the card.
-              </li>
-              <li>
-                <strong className="text-slate-200">Add a tagline.</strong> A short line for the back of
-                the card, displayed alongside your company name.
-              </li>
-              <li>
-                <strong className="text-slate-200">Adjust the colors.</strong> Set the accent, background,
-                and text colors to match your branding.
-              </li>
-              <li>
-                <strong className="text-slate-200">Download both sides.</strong> Save the front and back
-                as separate print-ready PNG files.
-              </li>
+              <li>Fill in your details for the front of the card.</li>
+              <li>Add a tagline for the back.</li>
+              <li>Adjust colors and download both sides.</li>
             </ol>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">What "print-ready" means here</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
+            <ul className="mt-2 list-disc space-y-1.5 pl-5">
+              <li>Designing a card for a small business or freelance practice.</li>
+              <li>Creating a simple, professional card before a networking event.</li>
+              <li>Refreshing a card's design after a rebrand or contact info change.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">What "print-ready" means — and one thing it doesn't include</h2>
             <p className="mt-2">
-              Each side of the card renders at 1050×600 pixels, which corresponds to a standard 3.5×2
-              inch business card at 300 DPI — the resolution most print shops expect for sharp, non-blurry
-              text and clean edges. You can hand the downloaded PNG files directly to a local or online
-              print service without needing to resize or re-export anything.
+              Each side renders at 1050×600 pixels, matching a standard 3.5×2 inch business card at 300
+              DPI, which most print shops expect for sharp text and clean edges. One honest technical
+              note: this design doesn't include a bleed margin — extra background content extending
+              slightly past the card's final edge, which some printers require so any tiny trimming
+              misalignment doesn't leave a visible white sliver at the border. For most standard,
+              non-edge-to-edge card designs and most print shops, this isn't an issue; if a specific
+              printer explicitly asks for bleed, it's worth checking with them directly, since this tool
+              exports at exact final size without one.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Pairs well with other business tools</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
             <p className="mt-2">
-              Once your card design is set, the same contact details are often useful elsewhere — the
-              site's{" "}
+              The same contact details are often useful elsewhere — the site's{" "}
               <Link href="/tools/invoice-generator" className="text-amber-400 underline underline-offset-2">
                 Invoice Generator
               </Link>{" "}
               and{" "}
-              <Link href="/tools/quote-builder" className="text-amber-400 underline underline-offset-2">
-                Quote Builder
+              <Link href="/tools/qr-code-generator" className="text-amber-400 underline underline-offset-2">
+                QR Code Generator
               </Link>{" "}
-              both use the same kind of business information, so keeping them consistent across documents
-              is easy.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your details stay on your device</h2>
-            <p className="mt-2">
-              Because the card is rendered locally, this tool never sees or stores the information you
-              enter here. See our{" "}
-              <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
-                Privacy Policy
-              </Link>{" "}
-              for full details on how QuickZeta handles data.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">A few design tips</h2>
-            <p className="mt-2">
-              Keep a strong contrast between your text color and background color so the card stays
-              readable from a normal viewing distance, not just up close. A single accent color used
-              consistently — for your title, a border, or the back of the card — tends to look more
-              polished than several competing colors. If your company name is long, watch the back-of-
-              card preview to make sure it doesn't feel cramped against the tagline underneath it.
+              (for a scannable link on the card itself) both pair naturally.
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="business-card-designer" />
         </>
       }
     >

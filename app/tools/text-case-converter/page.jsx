@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import TextCaseConverterClient from "./TextCaseConverterClient";
 
 export const metadata = {
@@ -24,24 +25,16 @@ export const metadata = {
 
 const FAQS = [
   {
-    q: "Is this text case converter really free, with no sign up?",
+    q: "Is this converter really free, with no sign up?",
     a: "Yes. There's no account and no limit on how much text you can convert.",
   },
   {
     q: "What's the difference between camelCase, PascalCase, snake_case, and kebab-case?",
-    a: "These are all common ways to format multi-word names in code, differing only in capitalization and separator. camelCase starts lowercase (myVariableName), PascalCase starts uppercase (MyVariableName), snake_case uses underscores (my_variable_name), and kebab-case uses hyphens (my-variable-name). Different programming languages and style guides tend to favor different ones.",
+    a: "All common ways to format multi-word names in code, differing in capitalization and separator: camelCase starts lowercase (myVariable), PascalCase starts uppercase (MyVariable), snake_case uses underscores (my_variable), kebab-case uses hyphens (my-variable).",
   },
   {
-    q: "Why does Title Case sometimes capitalize words it shouldn't?",
-    a: "This tool capitalizes the first letter of every word, which is a simple, consistent rule. Strict style-guide title case (which keeps certain short words like \"a,\" \"the,\" or \"of\" lowercase unless they start the title) follows more nuanced rules that vary between style guides — this tool uses the simpler, more universally understood version.",
-  },
-  {
-    q: "Is my text sent anywhere when I use this?",
-    a: "No. Every conversion happens directly in your browser — nothing you type or paste is uploaded or stored.",
-  },
-  {
-    q: "Can I convert a full paragraph, or just single words?",
-    a: "Both work. UPPERCASE, lowercase, Title Case, and Sentence case are designed for full sentences and paragraphs. camelCase, PascalCase, snake_case, kebab-case, and CONSTANT_CASE are meant for shorter names or identifiers, and will strip punctuation and spacing to build a single joined name, which is standard behavior for this kind of conversion.",
+    q: "Is my text sent anywhere?",
+    a: "No. Every conversion happens directly in your browser.",
   },
 ];
 
@@ -49,37 +42,56 @@ export default function TextCaseConverterPage() {
   return (
     <ToolPageShell
       title="Free Text Case Converter"
-      subtitle="Convert text between UPPERCASE, lowercase, Title Case, camelCase, and more — instantly, no sign up."
+      subtitle="Convert text between UPPERCASE, lowercase, Title Case, camelCase, and more — no sign up."
       article={
         <>
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              Convert text case instantly, with no sign up
+              Nine case formats, one click each
             </h2>
             <p className="mt-2">
-              Whether you're fixing text that accidentally got typed in all caps, converting a heading
-              into Title Case, or reformatting a variable name into a different coding convention, this
-              tool handles the most common text case conversions instantly, directly in your browser —
-              nothing you type is ever uploaded anywhere.
+              Whether you're fixing text that got typed in all caps, converting a heading to Title Case,
+              or reformatting a variable name for a different coding convention, this tool handles the
+              common conversions instantly, directly in your browser.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
-            <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Paste or type your text.</strong> Any length works,
-                from a single word to a full paragraph.
-              </li>
-              <li>
-                <strong className="text-slate-200">Click a conversion.</strong> The text updates
-                instantly in place.
-              </li>
-              <li>
-                <strong className="text-slate-200">Copy the result.</strong> One click copies the
-                converted text to your clipboard.
-              </li>
-            </ol>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
+            <p className="mt-2">
+              Paste or type your text, click a conversion, and the text updates instantly in place. Copy
+              the result with one click.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Advantages and limitations</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Nine formats covered in one place</li>
+                  <li>Instant, in-place conversion with one click</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Title Case uses a simple rule, not full style-guide-specific exceptions</li>
+                  <li>Code-case conversions strip punctuation by design</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
+            <p className="mt-2">
+              Fixing text that was accidentally typed with Caps Lock on, converting a heading into
+              consistent Title Case, renaming a variable to match a different coding style guide, or
+              cleaning up a list of names or file names into a consistent format are some of the most
+              common reasons people reach for a case converter.
+            </p>
           </section>
 
           <section>
@@ -88,46 +100,34 @@ export default function TextCaseConverterPage() {
               <li><strong className="text-slate-200">UPPERCASE / lowercase</strong> — the two most basic conversions.</li>
               <li><strong className="text-slate-200">Title Case</strong> — capitalizes the first letter of every word.</li>
               <li><strong className="text-slate-200">Sentence case</strong> — capitalizes only the start of each sentence.</li>
-              <li><strong className="text-slate-200">camelCase / PascalCase</strong> — common naming conventions in programming.</li>
-              <li><strong className="text-slate-200">snake_case / kebab-case</strong> — underscore- and hyphen-separated naming, common in file names and code.</li>
-              <li><strong className="text-slate-200">CONSTANT_CASE</strong> — all-uppercase with underscores, typically used for constants in code.</li>
+              <li><strong className="text-slate-200">camelCase / PascalCase / snake_case / kebab-case / CONSTANT_CASE</strong> — common naming conventions in code.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Which coding case convention to actually use</h2>
             <p className="mt-2">
-              Fixing text that was accidentally typed with Caps Lock on, converting a heading or title
-              into consistent Title Case, renaming a variable to match a different coding style guide, or
-              cleaning up a list of names or file names into a consistent format are some of the most
-              common reasons people reach for a case converter.
+              There's no single universal standard — it depends on the language and project. JavaScript
+              and Java commonly use camelCase for variables and PascalCase for class names. Python
+              typically favors snake_case. CSS class names and URL slugs commonly use kebab-case. When in
+              doubt, matching whatever convention a project already uses is more important than picking a
+              personal favorite.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your text stays private</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
             <p className="mt-2">
-              Nothing you type or paste into this tool is sent anywhere — every conversion happens
-              directly in your browser. See our{" "}
-              <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
-                Privacy Policy
+              Comparing two versions of converted text? The site's{" "}
+              <Link href="/tools/text-diff-checker" className="text-amber-400 underline underline-offset-2">
+                Text Diff Checker
               </Link>{" "}
-              for full details.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">Which coding case convention to use</h2>
-            <p className="mt-2">
-              There's no single universal standard — it depends on the language and project you're
-              working in. JavaScript and Java commonly use camelCase for variables and PascalCase for
-              class names. Python typically favors snake_case. CSS class names and URL slugs commonly use
-              kebab-case. When in doubt, matching whatever convention the rest of a codebase or project
-              already uses is generally more important than picking a personal favorite.
+              shows exactly what changed.
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="text-case-converter" />
         </>
       }
     >

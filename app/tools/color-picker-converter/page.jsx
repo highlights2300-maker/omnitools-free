@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import ColorPickerConverterClient from "./ColorPickerConverterClient";
 
 export const metadata = {
@@ -28,20 +29,12 @@ const FAQS = [
     a: "Yes. There's no account and no limit on how many colors you can convert.",
   },
   {
-    q: "What's the difference between HEX, RGB, and HSL?",
-    a: "HEX represents a color as a six-digit code (like #fbbf24) commonly used in web design and CSS. RGB expresses the same color as separate red, green, and blue values from 0–255. HSL describes a color by hue (its position on a color wheel), saturation (how vivid it is), and lightness — often more intuitive for adjusting a color's shade or intensity without changing its underlying hue.",
-  },
-  {
-    q: "Can I type values directly instead of using the color picker?",
-    a: "Yes — the HEX field, and the individual RGB and HSL number fields, are all directly editable. Changing any one of them updates all the others to match.",
-  },
-  {
-    q: "Why would I use HSL instead of RGB?",
-    a: "HSL makes certain adjustments more intuitive — for example, keeping the hue and saturation the same while only changing lightness to get a lighter or darker version of the same color is straightforward in HSL, but requires recalculating all three RGB values by hand.",
+    q: "What's the actual difference between HEX, RGB, and HSL?",
+    a: "HEX is a six-digit code common in CSS and design tools. RGB expresses red, green, and blue intensities from 0–255. HSL describes hue, saturation, and lightness — often more intuitive for adjusting a color's shade without changing its underlying tone.",
   },
   {
     q: "Is my color data sent anywhere?",
-    a: "No. Every conversion happens directly in your browser — nothing is uploaded or logged.",
+    a: "No. Every conversion happens directly in your browser.",
   },
 ];
 
@@ -49,91 +42,90 @@ export default function ColorPickerConverterPage() {
   return (
     <ToolPageShell
       title="Free Color Picker & Converter"
-      subtitle="Pick a color and convert instantly between HEX, RGB, and HSL — no sign up, nothing uploaded."
+      subtitle="Pick a color and convert instantly between HEX, RGB, and HSL — no sign up."
       article={
         <>
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              A color converter with no sign up required
+              Three formats, always in sync
             </h2>
             <p className="mt-2">
-              Whether you're matching a brand color across a design tool and a codebase, converting a
-              color picked from an image into CSS-ready code, or just need to translate a color code from
-              one format to another, this tool handles HEX, RGB, and HSL conversions instantly — pick a
-              color visually, or type a value directly into any of the three formats.
+              Matching a brand color across a design tool and a codebase, or translating a color picked
+              from an image into CSS-ready code, is a small but constant need. This tool handles HEX,
+              RGB, and HSL conversions instantly — edit any one and the others update automatically.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
-            <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Pick a color.</strong> Use the color picker, or type a
-                value directly into the HEX, RGB, or HSL fields.
-              </li>
-              <li>
-                <strong className="text-slate-200">See all formats update live.</strong> Editing any one
-                format automatically recalculates the other two.
-              </li>
-              <li>
-                <strong className="text-slate-200">Copy what you need.</strong> Each format has its own
-                one-click copy button.
-              </li>
-            </ol>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
+            <p className="mt-2">
+              Pick a color visually, or type a value directly into the HEX, RGB, or HSL fields — all
+              three stay in sync as you edit any one of them.
+            </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">HEX, RGB, and HSL explained</h2>
-            <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>
-                <strong className="text-slate-200">HEX</strong> — a compact six-digit code, the most
-                common format in CSS and design tools.
-              </li>
-              <li>
-                <strong className="text-slate-200">RGB</strong> — separate red, green, and blue
-                intensity values from 0 to 255, matching how screens actually mix light to produce color.
-              </li>
-              <li>
-                <strong className="text-slate-200">HSL</strong> — hue, saturation, and lightness, often
-                more intuitive for adjusting a color's shade while keeping its underlying tone consistent.
-              </li>
-            </ul>
+            <h2 className="text-lg font-semibold text-slate-100">Advantages and limitations</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>All three formats stay in sync automatically</li>
+                  <li>Live color swatch preview as you edit</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>No named-color lookup (like "cornflowerblue")</li>
+                  <li>No palette generation from a single color</li>
+                </ul>
+              </div>
+            </div>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
             <p className="mt-2">
               Developers converting a designer-provided HEX code into the RGB or HSL format their code
-              needs, designers checking exactly what color a hex code actually represents, and anyone
-              matching a brand color consistently across different tools and platforms are some of the
-              most common reasons to reach for a color converter like this one.
+              needs, designers checking exactly what color a hex code represents, and anyone matching a
+              brand color consistently across different tools and platforms are common reasons to reach
+              for a color converter like this one.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your colors stay private</h2>
+            <h2 className="text-lg font-semibold text-slate-100">HEX, RGB, and HSL explained</h2>
+            <ul className="mt-2 list-disc space-y-1.5 pl-5">
+              <li><strong className="text-slate-200">HEX</strong> — a compact six-digit code, the most common format in CSS and design tools.</li>
+              <li><strong className="text-slate-200">RGB</strong> — separate red, green, and blue intensity values, matching how screens mix light to produce color.</li>
+              <li><strong className="text-slate-200">HSL</strong> — hue, saturation, and lightness, often more intuitive for adjusting a color's shade.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">A genuinely useful HSL trick</h2>
             <p className="mt-2">
-              Nothing you enter into this tool is sent anywhere — every conversion happens directly in
-              your browser. See our{" "}
-              <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
-                Privacy Policy
+              If you need a lighter or darker version of the same brand color — for a hover state or a
+              subtle background tint — adjusting only the lightness value in HSL while leaving hue and
+              saturation untouched keeps the color family consistent. Doing the same thing in RGB usually
+              means recalculating all three channels by hand, which is far more error-prone.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
+            <p className="mt-2">
+              Building a QR code in a specific brand color? The site's{" "}
+              <Link href="/tools/qr-code-generator" className="text-amber-400 underline underline-offset-2">
+                QR Code Generator
               </Link>{" "}
-              for full details.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">A quick trick with HSL</h2>
-            <p className="mt-2">
-              One genuinely useful reason to work in HSL rather than RGB: if you need a lighter or darker
-              version of the same brand color — say, for a hover state or a subtle background tint —
-              simply adjusting the lightness value while leaving hue and saturation untouched keeps the
-              color family consistent. Doing the same thing in RGB usually means recalculating all three
-              channels by hand, which is far more error-prone.
+              is a natural companion.
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="color-picker-converter" />
         </>
       }
     >

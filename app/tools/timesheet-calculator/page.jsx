@@ -1,22 +1,23 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import TimesheetCalculatorClient from "./TimesheetCalculatorClient";
 
 export const metadata = {
-  title: "Free Timesheet Calculator Online — Hours & Pay | QuickZeta",
+  title: "Free Timesheet Calculator Online — Hours & Pay, No Sign Up | QuickZeta",
   description:
-    "Add up hours worked and calculate pay for the week, free, with no sign up. Add as many days as you need and see the total update instantly.",
+    "Add up hours worked and pay for the week instantly, free, with no sign up. Computed entirely in your browser.",
   keywords: [
     "free timesheet calculator online",
     "hours worked calculator no sign up",
-    "weekly pay calculator from hours",
-    "hourly wage calculator free",
-    "add up work hours calculator",
+    "weekly pay calculator free",
+    "time card calculator online",
+    "hourly pay calculator",
   ],
   alternates: { canonical: "https://quickzeta.com/tools/timesheet-calculator" },
   openGraph: {
-    title: "Free Timesheet Calculator Online — Hours & Pay",
-    description: "Add up hours worked and calculate pay for the week, computed instantly in your browser.",
+    title: "Free Timesheet Calculator Online — Hours & Pay, No Sign Up",
+    description: "Add up hours worked and pay for the week instantly, in your browser.",
     url: "https://quickzeta.com/tools/timesheet-calculator",
     type: "website",
   },
@@ -28,20 +29,16 @@ const FAQS = [
     a: "Yes. There's no account and no limit on how many times you can use it.",
   },
   {
-    q: "Can I add more than a standard 5- or 7-day week?",
-    a: "Yes — click \"Add day\" to add as many rows as you need, whether that's tracking a shorter week, a two-week pay period, or hours across multiple projects in a single day.",
+    q: "Does it handle overtime automatically?",
+    a: "This tool totals hours and applies your hourly rate to what you enter — it doesn't automatically apply a specific overtime multiplier, since overtime rules vary significantly by jurisdiction, employer policy, and employment type. If overtime applies, calculate the regular and overtime hours as separate entries at their respective rates.",
   },
   {
-    q: "Does this handle overtime pay?",
-    a: "This calculator applies a single hourly rate across all hours entered. If your overtime rate differs from your regular rate, you can calculate the regular and overtime hours separately using two passes, or simply add the overtime hours as their own row at an adjusted effective rate.",
+    q: "How should I handle rounding — like clocking in at 9:07?",
+    a: "Rounding conventions (to the nearest 15 minutes, 6 minutes, or not at all) vary by workplace policy. Enter the actual times or hours your specific situation calls for; this tool computes exactly what you enter without applying its own rounding rules on top.",
   },
   {
-    q: "Can I use decimal hours, like 7.5?",
-    a: "Yes — the hours field accepts decimal values, so partial hours (like 30 minutes as 0.5) can be entered directly.",
-  },
-  {
-    q: "Is my timesheet data sent anywhere?",
-    a: "No. Everything is calculated directly in your browser — nothing you enter is uploaded, logged, or stored.",
+    q: "Is my data sent anywhere?",
+    a: "No. Everything is computed directly in your browser.",
   },
 ];
 
@@ -49,91 +46,83 @@ export default function TimesheetCalculatorPage() {
   return (
     <ToolPageShell
       title="Free Timesheet Calculator"
-      subtitle="Add up hours worked and calculate pay for the week, instantly — no sign up, nothing stored."
+      subtitle="Add up hours worked and pay for the week instantly — no sign up."
       article={
         <>
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              A simple timesheet calculator for hourly pay
+              Adding up a week's hours, without a spreadsheet
             </h2>
             <p className="mt-2">
-              Whether you're a freelancer tallying billable hours, an hourly employee double-checking a
-              paycheck, or a small business owner working out what to pay part-time staff, adding up hours
-              across several days and multiplying by a rate is a small task that's still easy to fumble by
-              hand. This calculator does it instantly — add a row per day, enter the hours, set an hourly
-              rate, and see the total hours and total pay update live.
+              Totaling hours across several days and multiplying by an hourly rate is simple in theory
+              but easy to fumble by hand, especially across multiple days with different start and end
+              times. This tool computes it instantly, directly in your browser.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Set your hourly rate.</strong> Enter the pay rate that
-                applies to the hours you're tracking.
-              </li>
-              <li>
-                <strong className="text-slate-200">Add each day.</strong> Label the day and enter the
-                hours worked — add as many rows as needed.
-              </li>
-              <li>
-                <strong className="text-slate-200">Read the totals.</strong> Total hours and total pay
-                update automatically as you add or edit rows.
-              </li>
+              <li>Enter start and end times for each day.</li>
+              <li>Set the hourly rate.</li>
+              <li>Read the total hours and pay instantly.</li>
             </ol>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Advantages and limitations</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Instant totals across multiple days</li>
+                  <li>No account needed to track a week's hours</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>No automatic overtime multiplier applied</li>
+                  <li>Doesn't save data between sessions — it's a calculator, not a time-tracking system</li>
+                </ul>
+              </div>
+            </div>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
             <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>Freelancers totaling billable hours for a client invoice.</li>
-              <li>Hourly employees double-checking a paycheck against hours actually worked.</li>
-              <li>Small business owners estimating payroll for part-time or shift staff.</li>
-              <li>
-                Feeding the total straight into the site's{" "}
-                <Link href="/tools/invoice-generator" className="text-amber-400 underline underline-offset-2">
-                  Invoice Generator
-                </Link>{" "}
-                as a line item for hours billed.
-              </li>
+              <li>Adding up hours across a work week before payday.</li>
+              <li>Checking pay for freelance or contract hours worked.</li>
+              <li>Cross-checking a paycheck against hours actually logged.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">A note on overtime</h2>
+            <h2 className="text-lg font-semibold text-slate-100">A note on overtime and rounding</h2>
             <p className="mt-2">
-              This calculator applies one flat hourly rate across every row, which covers most simple
-              tracking needs. If part of your hours are paid at a different overtime rate, a common
-              approach is to run the calculation twice — once for regular hours at the standard rate, and
-              once for overtime hours at the higher rate — then add the two totals together for the final
-              pay figure.
+              This tool totals the hours and pay you enter directly — it doesn't apply an automatic
+              overtime multiplier or a specific clock-rounding convention on top, since both vary
+              significantly by jurisdiction, employer policy, and employment type. If overtime applies to
+              your situation, entering regular and overtime hours as separate line items at their
+              respective rates gives an accurate total without the tool needing to guess at rules that
+              differ from one workplace to the next.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your hours stay private</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
             <p className="mt-2">
-              Nothing you enter into this calculator is sent anywhere — every calculation runs directly
-              in your browser. See our{" "}
-              <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
-                Privacy Policy
-              </Link>{" "}
-              for full details.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">Converting minutes to decimal hours</h2>
-            <p className="mt-2">
-              A common source of small errors in manual timesheet math is mixing up minutes and decimal
-              hours — 7 hours and 30 minutes isn't 7.3 hours, it's 7.5. To convert minutes to a decimal,
-              divide the minutes by 60: 15 minutes is 0.25, 30 minutes is 0.5, and 45 minutes is 0.75.
-              Entering the correct decimal value in the hours field here avoids that rounding mistake
-              carrying through into the total pay calculation.
+              Once totaled, bill a client for the hours with the site's{" "}
+              <Link href="/tools/invoice-generator" className="text-amber-400 underline underline-offset-2">
+                Invoice Generator
+              </Link>
+              .
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="timesheet-calculator" />
         </>
       }
     >

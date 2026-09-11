@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import CountdownTimerStopwatchClient from "./CountdownTimerStopwatchClient";
 
 export const metadata = {
@@ -28,20 +29,12 @@ const FAQS = [
     a: "Yes. There's no account, no app to install, and no limit on how many times you can use it.",
   },
   {
-    q: "Will the alert sound work even if I switch to another browser tab?",
-    a: "The sound plays as long as the browser tab stays open in the background — most browsers continue running the timer and audio even when a tab isn't actively focused. Closing the tab entirely will stop it, the same as any browser-based timer.",
-  },
-  {
-    q: "Can I use quick presets instead of typing a time?",
-    a: "Yes — the timer includes one-tap presets for 1, 5, 10, 15, and 25 minutes (the last one being a common length for Pomodoro-style focus sessions), or you can type any custom duration.",
+    q: "Will the alert sound work if I switch tabs?",
+    a: "Yes, as long as the tab stays open in the background — most browsers continue running the timer and audio even when a tab isn't actively focused.",
   },
   {
     q: "Does the stopwatch support lap times?",
-    a: "Yes — while the stopwatch is running, tap \"Lap\" to record a split time without stopping the clock. Laps are listed with the most recent one at the top.",
-  },
-  {
-    q: "Is my timer or stopwatch data saved anywhere?",
-    a: "No. Nothing about how you use this tool is saved, logged, or sent anywhere — closing or refreshing the page simply resets it.",
+    a: "Yes — tap \"Lap\" while it's running to record a split time without stopping the clock.",
   },
 ];
 
@@ -57,75 +50,85 @@ export default function CountdownTimerStopwatchPage() {
               A timer and stopwatch with no app to install
             </h2>
             <p className="mt-2">
-              Whether you need a quick countdown for cooking, a workout interval, a focused work session,
-              or just want to time how long something takes, this tool covers both a countdown timer and
-              a stopwatch in one place — no app store download, no account, and no ads interrupting a
-              simple timer.
+              Whether you need a countdown for cooking, a workout interval, or a focused work session, or
+              just want to time how long something takes, this tool covers both a countdown timer and a
+              stopwatch in one place, with no account and no ads.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How the timer works</h2>
-            <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Set a duration.</strong> Type minutes and seconds, or
-                tap a quick preset.
-              </li>
-              <li>
-                <strong className="text-slate-200">Start it.</strong> The countdown runs down to zero.
-              </li>
-              <li>
-                <strong className="text-slate-200">Get alerted.</strong> A sound plays and the display
-                changes color once time is up.
-              </li>
-            </ol>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">How the stopwatch works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <p className="mt-2">
-              Switch to the Stopwatch tab to count up instead of down. Start, pause, and resume as needed,
-              and tap "Lap" at any point while it's running to record a split time without interrupting
-              the count — useful for timing multiple stages of an activity, like intervals in a workout or
-              legs of a task.
+              Switch between the Timer and Stopwatch tabs. For the timer, set a duration or tap a preset
+              and start it — a sound plays and the display changes color when it hits zero. For the
+              stopwatch, start, pause, resume, and tap "Lap" to record split times along the way.
             </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Timer versus stopwatch — which to use</h2>
+            <p className="mt-2">
+              Use the timer when you know the exact duration in advance and want to be alerted when it's
+              up — cooking, a work sprint, a rest period. Use the stopwatch when you're timing something
+              of unknown length and want to track how long it actually took, optionally recording laps
+              along the way.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Advantages and limitations</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Works entirely in the browser tab, no app needed</li>
+                  <li>Lap tracking on the stopwatch without stopping the clock</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Alert sound requires the tab to stay open</li>
+                  <li>No multiple simultaneous timers</li>
+                </ul>
+              </div>
+            </div>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
             <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>Timing a Pomodoro-style focused work session (25 minutes is a common default).</li>
+              <li>Timing a Pomodoro-style focused work session.</li>
               <li>Setting a quick countdown for cooking or baking.</li>
               <li>Timing workout intervals or rest periods between sets.</li>
-              <li>Tracking lap times during practice runs or timed drills with the stopwatch.</li>
+              <li>Tracking lap times during practice runs with the stopwatch.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Nothing about your session is saved</h2>
+            <h2 className="text-lg font-semibold text-slate-100">A note on the Pomodoro Technique</h2>
             <p className="mt-2">
-              This tool doesn't track or store anything about how you use it — everything resets the
-              moment you refresh or close the page, and no usage history is kept anywhere. See our{" "}
-              <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
-                Privacy Policy
-              </Link>{" "}
-              for full details on how QuickZeta handles data.
+              The 25-minute preset exists specifically for the Pomodoro Technique, a popular time
+              management method built around short, focused work intervals followed by a brief break —
+              typically 25 minutes of focused work, a 5-minute break, and a longer break after four
+              cycles. It works well because it turns a large, vague task into a series of short,
+              manageable sprints rather than one long, unbroken stretch of effort.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">A quick note on the Pomodoro Technique</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
             <p className="mt-2">
-              The 25-minute preset exists specifically for the Pomodoro Technique, a popular time
-              management method built around short, focused work intervals followed by a brief break.
-              The typical pattern is 25 minutes of focused work, a 5-minute break, and after four such
-              cycles, a longer break of 15–30 minutes. The method works well because it turns a large,
-              vague task into a series of short, manageable sprints rather than one long, unbroken stretch
-              of effort.
+              Timing your typing specifically? The site's{" "}
+              <Link href="/tools/typing-speed-test" className="text-amber-400 underline underline-offset-2">
+                Typing Speed Test
+              </Link>{" "}
+              has its own built-in timer for that.
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="countdown-timer-stopwatch" />
         </>
       }
     >

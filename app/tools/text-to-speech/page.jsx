@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import TextToSpeechClient from "./TextToSpeechClient";
 
 export const metadata = {
@@ -25,23 +26,19 @@ export const metadata = {
 const FAQS = [
   {
     q: "Is this text-to-speech tool really free, with no sign up?",
-    a: "Yes. There's no account and no limit on how much text you can convert to speech.",
+    a: "Yes. There's no account and no limit on how much text you can convert.",
   },
   {
-    q: "Do you upload my text to a server to generate the voice?",
-    a: "No. This tool uses your browser's own built-in speech synthesis feature, the same technology behind screen readers and voice assistants on your device. Your text never leaves your browser to be processed.",
+    q: "Do you upload my text to a server?",
+    a: "No. This uses your browser's own built-in speech synthesis feature, the same technology behind screen readers on your device.",
   },
   {
-    q: "Why do the available voices look different on different devices?",
-    a: "The voice list comes directly from your operating system and browser, not from this tool. A Mac, Windows PC, iPhone, and Android phone all ship with different built-in voices, so the options you see will vary depending on what you're using.",
+    q: "Why do the available voices differ between my devices?",
+    a: "The voice list comes from your operating system and browser, not from this tool. A Mac, Windows PC, and Android phone all ship with different built-in voices, so options genuinely vary by device.",
   },
   {
     q: "Can I download the speech as an audio file?",
-    a: "Not with this tool — it reads text aloud live rather than generating a downloadable file. If you need an audio file specifically, that requires a different kind of service that renders and exports the audio, rather than speaking it through your device's speakers in real time.",
-  },
-  {
-    q: "Why does a voice sound robotic or unnatural?",
-    a: "Voice quality depends entirely on what's built into your device — some systems ship with quite natural-sounding voices, while others are more clearly synthetic. If multiple voices are available in the dropdown, it's worth trying a few, since quality can vary a lot between them even on the same device.",
+    a: "Not with this tool — it reads text aloud live rather than exporting a file.",
   },
 ];
 
@@ -54,42 +51,20 @@ export default function TextToSpeechPage() {
         <>
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              Text to speech powered by your own device
+              Speech powered by your own device
             </h2>
             <p className="mt-2">
-              Rather than sending your text to a server to generate audio, this tool uses a feature
-              already built into your browser — the same underlying technology that powers screen
-              readers and voice assistants. That means speech starts instantly, with no upload or
-              processing delay, and your text never leaves your device to be converted.
+              Rather than sending text to a server to generate audio, this tool uses a feature already
+              built into your browser — the same technology behind screen readers. Speech starts
+              instantly, with no upload or processing delay.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
-            <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Type or paste text.</strong> Any length works, from a
-                sentence to a full paragraph.
-              </li>
-              <li>
-                <strong className="text-slate-200">Pick a voice.</strong> Choose from whichever voices
-                your device and browser have available, and adjust speed and pitch if you like.
-              </li>
-              <li>
-                <strong className="text-slate-200">Press Play.</strong> Pause, resume, or stop playback
-                at any point.
-              </li>
-            </ol>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">Why the voice list looks different everywhere</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <p className="mt-2">
-              This tool doesn't ship its own voices — it hands your text off to whichever speech engine
-              your operating system and browser already provide. That means the exact list of available
-              voices, and how natural they sound, depends entirely on your device. A recent Mac or iPhone
-              often includes quite polished-sounding voices by default; older systems or certain browsers
-              may offer fewer, more clearly synthetic-sounding options.
+              Type or paste text, pick a voice, adjust speed and pitch if you like, then press Play.
+              Pause, resume, or stop at any point.
             </p>
           </section>
 
@@ -98,24 +73,56 @@ export default function TextToSpeechPage() {
             <ul className="mt-2 list-disc space-y-1.5 pl-5">
               <li>Proofreading writing by ear — hearing awkward phrasing is often easier than spotting it visually.</li>
               <li>Listening to an article or document while doing something else.</li>
-              <li>Checking how a script or line of dialogue actually sounds spoken aloud.</li>
+              <li>Checking how a script or line of dialogue sounds spoken aloud.</li>
               <li>A quick accessibility aid for anyone who finds listening easier than reading on screen.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Nothing you type is stored</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Advantages and limitations</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Instant — no server round-trip needed to start speaking</li>
+                  <li>Adjustable speed and pitch</li>
+                  <li>Works offline once the page has loaded</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Voice quality varies significantly by device</li>
+                  <li>No downloadable audio file — playback only</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Why the voice list looks different everywhere</h2>
             <p className="mt-2">
-              Because the speech is generated locally by your own device, this tool never sees or stores
-              the text you convert here. See our{" "}
-              <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
-                Privacy Policy
+              This tool hands your text off to whichever speech engine your operating system and browser
+              already provide, rather than shipping its own voices. That means the exact list of
+              available voices, and how natural they sound, depends entirely on your device — a recent
+              Mac or iPhone often includes quite polished-sounding voices by default; older systems or
+              certain browsers may offer fewer, more clearly synthetic-sounding options.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
+            <p className="mt-2">
+              Going the other direction — audio to text? The site's{" "}
+              <Link href="/tools/audio-transcriber" className="text-amber-400 underline underline-offset-2">
+                Audio Transcriber
               </Link>{" "}
-              for full details.
+              handles that.
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="text-to-speech" />
         </>
       }
     >

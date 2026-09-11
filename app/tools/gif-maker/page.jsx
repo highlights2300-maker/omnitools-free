@@ -1,22 +1,23 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import GifMakerClient from "./GifMakerClient";
 
 export const metadata = {
   title: "Free GIF Maker Online — Photos to Looping GIF, No Upload | QuickZeta",
   description:
-    "Turn a sequence of photos into a smooth looping GIF, free, with no upload and no sign up. Reorder frames, set the speed, and export — entirely in your browser.",
+    "Turn a sequence of photos into a looping GIF, free, with no upload and no sign up. Processed entirely in your browser.",
   keywords: [
     "free gif maker online",
     "photos to gif no upload",
-    "create looping gif free",
-    "gif maker no sign up",
-    "make a gif from pictures",
+    "create looping gif free no sign up",
+    "gif creator online browser",
+    "make gif from images",
   ],
   alternates: { canonical: "https://quickzeta.com/tools/gif-maker" },
   openGraph: {
     title: "Free GIF Maker Online — Photos to Looping GIF, No Upload",
-    description: "Turn a sequence of photos into a looping GIF, encoded entirely in your browser.",
+    description: "Turn a sequence of photos into a looping GIF, entirely in your browser.",
     url: "https://quickzeta.com/tools/gif-maker",
     type: "website",
   },
@@ -25,27 +26,19 @@ export const metadata = {
 const FAQS = [
   {
     q: "Is this GIF maker really free, with no sign up?",
-    a: "Yes. There's no account, no watermark on the result, and no limit on how many GIFs you can create.",
+    a: "Yes. There's no account and no limit on how many GIFs you can create.",
   },
   {
     q: "Do you upload my photos to a server?",
-    a: "No. The GIF is encoded entirely inside your browser — your photos are never sent anywhere.",
+    a: "No. Frames are assembled into a GIF directly in your browser — nothing is ever uploaded.",
   },
   {
-    q: "Can I use a video clip instead of photos?",
-    a: "This tool is built specifically for turning a sequence of separate photos into a GIF. If you want to convert an existing video clip into a GIF, that requires extracting frames from video first, which is a different, heavier process — worth keeping in mind if that's what you're after.",
+    q: "Why do some GIFs look a bit grainy or banded compared to the source photos?",
+    a: "GIF is a genuinely old format with a real technical limit: each frame can use at most 256 colors, chosen from a much larger palette. Photos, which often contain millions of subtly different colors, have to be reduced down to fit that limit — this reduction is where slight graininess or color banding in smooth gradients (like a sky) comes from. It's an inherent property of the GIF format itself, not a flaw in how it was made.",
   },
   {
-    q: "How many photos can I use?",
-    a: "There's no fixed limit, though more photos and a longer frame delay will produce a larger file. For a smooth, reasonably sized GIF, somewhere between 3 and 15 photos tends to work well.",
-  },
-  {
-    q: "Can I change the order the photos play in?",
-    a: "Yes — use the up and down arrows next to each photo to reorder them before building the GIF.",
-  },
-  {
-    q: "Does the GIF loop automatically?",
-    a: "Yes, the GIF format naturally supports looping, and this tool always builds it to loop continuously once played.",
+    q: "How many photos can I turn into a GIF?",
+    a: "There's no fixed limit, though more frames means a larger file and longer processing time.",
   },
 ];
 
@@ -53,84 +46,90 @@ export default function GifMakerPage() {
   return (
     <ToolPageShell
       title="Free GIF Maker"
-      subtitle="Turn a sequence of photos into a smooth looping GIF — no upload, no sign up, no watermark."
+      subtitle="Turn a sequence of photos into a looping GIF — no upload, no sign up."
       article={
         <>
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              Turn photos into a GIF without uploading them
+              A handful of photos, one looping animation
             </h2>
             <p className="mt-2">
-              Whether it's a burst of photos from a trip, a simple stop-motion effect, or a quick
-              before-and-after comparison, turning a handful of images into an animated GIF is normally
-              something you'd need dedicated software for. This tool does it entirely in your browser —
-              add your photos, set the order and timing, and export a real, working GIF with nothing
-              ever uploaded to a server.
+              Turning a burst of photos into a simple looping animation is a lightweight, genuinely fun
+              use case that doesn't need dedicated video editing software. This tool assembles your images
+              into a GIF directly in your browser, with nothing ever uploaded.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Add your photos.</strong> Drag in two or more images,
-                or tap to select them from your device.
-              </li>
-              <li>
-                <strong className="text-slate-200">Set the order.</strong> Use the up and down arrows to
-                arrange them in the sequence you want them to play.
-              </li>
-              <li>
-                <strong className="text-slate-200">Adjust the speed.</strong> The frame delay slider
-                controls how long each photo stays on screen before the next one appears.
-              </li>
-              <li>
-                <strong className="text-slate-200">Build and download.</strong> Click "Build GIF" and
-                save the finished, looping animation.
-              </li>
+              <li>Add your photos in the order you want them to play.</li>
+              <li>Set the frame delay and looping.</li>
+              <li>Generate and download the GIF.</li>
             </ol>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Common uses for a GIF</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
             <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>Turning a short photo burst into a simple animated moment to share.</li>
-              <li>Showing a before-and-after comparison that flips back and forth.</li>
-              <li>Building a basic stop-motion effect from a sequence of staged photos.</li>
-              <li>
-                Combining with the site's own{" "}
-                <Link href="/tools/image-cropper" className="text-amber-400 underline underline-offset-2">
-                  Image Cropper
-                </Link>{" "}
-                first, to make sure every frame lines up the same way before building the GIF.
-              </li>
+              <li>Turning a burst of action photos into a simple looping animation.</li>
+              <li>Creating a short reaction or expression GIF from a few frames.</li>
+              <li>Making a lightweight, easily shareable animated image without video hosting.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Getting a smooth result</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Advantages and limitations</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Widely compatible — GIFs play everywhere without a video player</li>
+                  <li>Small, easily shareable file for short animations</li>
+                  <li>No upload, instant generation</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>256-color limit per frame, unlike full-color video or images</li>
+                  <li>No audio track — GIFs are silent by definition</li>
+                  <li>Larger frame counts produce noticeably bigger files</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Why GIFs look slightly different from the source photo</h2>
             <p className="mt-2">
-              For the cleanest-looking GIF, it helps if your source photos are reasonably similar in
-              framing and lighting, especially for a stop-motion or comparison effect — a big jump in
-              zoom or angle between frames can look jarring once it's looping. A shorter frame delay (a
-              few hundred milliseconds) gives a quick, snappy animation, while a longer delay works better
-              for a slideshow-style GIF where each image needs a moment to actually register.
+              GIF is a genuinely old image format, and it comes with a real, fixed technical limitation:
+              each individual frame can use at most 256 distinct colors, selected from a broader palette.
+              A typical photo often contains many thousands or millions of subtly different colors, so
+              fitting it into GIF's format means those colors get reduced down — this is exactly where
+              slight graininess or visible banding in smooth areas like a sky or a gradient comes from.
+              It's a property of the format itself, not something specific to how any particular tool
+              builds the GIF.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your photos stay on your device</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
             <p className="mt-2">
-              Because the GIF is built locally, this tool never sees, stores, or has access to the photos
-              you use here. See our{" "}
-              <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
-                Privacy Policy
+              For a higher-quality result without GIF's color limitations, the{" "}
+              <Link href="/tools/video-slideshow-maker" className="text-amber-400 underline underline-offset-2">
+                Video Slideshow Maker
               </Link>{" "}
-              for full details on how QuickZeta handles data.
+              produces an actual video file instead, and{" "}
+              <Link href="/tools/video-trimmer" className="text-amber-400 underline underline-offset-2">
+                Video Trimmer
+              </Link>{" "}
+              can cut a clip down before turning it into frames.
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="gif-maker" />
         </>
       }
     >

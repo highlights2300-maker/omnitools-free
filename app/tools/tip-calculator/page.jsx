@@ -1,22 +1,23 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import TipCalculatorClient from "./TipCalculatorClient";
 
 export const metadata = {
-  title: "Free Tip Calculator Online — Split the Bill Instantly | QuickZeta",
+  title: "Free Tip Calculator Online — Split the Bill, No Sign Up | QuickZeta",
   description:
-    "Work out the tip and split a bill between any number of people, instantly — free, with no sign up. Adjust the tip percentage and see the total update live.",
+    "Calculate a tip and split a bill between any number of people, free, with no sign up. Computed instantly in your browser.",
   keywords: [
     "free tip calculator online",
-    "bill splitter no sign up",
-    "how much to tip calculator",
-    "split bill between friends calculator",
-    "restaurant tip calculator",
+    "split bill calculator no sign up",
+    "tip percentage calculator free",
+    "restaurant tip calculator online",
+    "bill splitter tool",
   ],
   alternates: { canonical: "https://quickzeta.com/tools/tip-calculator" },
   openGraph: {
-    title: "Free Tip Calculator Online — Split the Bill Instantly",
-    description: "Work out the tip and split a bill between any number of people, instantly.",
+    title: "Free Tip Calculator Online — Split the Bill, No Sign Up",
+    description: "Calculate a tip and split a bill instantly, in your browser.",
     url: "https://quickzeta.com/tools/tip-calculator",
     type: "website",
   },
@@ -28,20 +29,16 @@ const FAQS = [
     a: "Yes. There's no account and no limit on how many times you can use it.",
   },
   {
-    q: "How do I split a bill evenly between a group?",
-    a: "Enter the total bill amount, set the tip percentage, and change \"Number of people\" to however many are splitting it — the per-person amount updates instantly.",
+    q: "How does splitting the bill actually work?",
+    a: "The total bill plus tip is divided evenly across the number of people you specify — a straightforward even split, not itemized per person's individual order.",
   },
   {
     q: "What's a typical tip percentage?",
-    a: "It varies by country and situation, but in the US, 15–20% is common for restaurant table service, with 20% often considered standard for good service. Many other countries have little to no tipping culture at all, so it's worth going with local custom rather than a fixed rule.",
+    a: "This varies a lot by country and context — commonly somewhere between 15–20% at US restaurants for standard service, though local norms differ significantly elsewhere and this tool doesn't assume any particular default is \"correct\" for your situation.",
   },
   {
-    q: "Does the calculator round the per-person amount?",
-    a: "It shows the exact mathematical split to the cent. If you're paying in cash and want a cleaner round number per person, you can adjust the tip percentage slightly until the total divides evenly.",
-  },
-  {
-    q: "Is my bill information sent anywhere?",
-    a: "No. Every calculation happens directly in your browser — nothing you enter is uploaded or stored.",
+    q: "Is my data sent anywhere?",
+    a: "No. Everything is computed directly in your browser.",
   },
 ];
 
@@ -49,81 +46,81 @@ export default function TipCalculatorPage() {
   return (
     <ToolPageShell
       title="Free Tip Calculator"
-      subtitle="Work out the tip and split a bill between any number of people, instantly — no sign up."
+      subtitle="Calculate a tip and split a bill between any number of people — no sign up."
       article={
         <>
           <section>
             <h2 className="text-lg font-semibold text-slate-100">
-              A quick tip calculator for splitting the bill
+              Quick math at the table
             </h2>
             <p className="mt-2">
-              Working out a tip and dividing a bill fairly between a group is a small but common piece of
-              mental math that's easy to get wrong, especially with an odd number of people or an
-              unfamiliar currency. This calculator handles it instantly — enter the bill, set a tip
-              percentage, and see the total and per-person amount update live as you adjust either one.
+              Splitting a bill fairly between several people while also working out a tip is exactly the
+              kind of small math that's easy to get wrong doing it in your head. This tool computes both
+              instantly, directly in your browser.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">How it works</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>
-                <strong className="text-slate-200">Enter the bill amount.</strong> Type in the total
-                before tip.
-              </li>
-              <li>
-                <strong className="text-slate-200">Adjust the tip percentage.</strong> Drag the slider to
-                whatever percentage you'd like to leave.
-              </li>
-              <li>
-                <strong className="text-slate-200">Set the number of people.</strong> The total splits
-                evenly across however many people you enter.
-              </li>
-              <li>
-                <strong className="text-slate-200">Read the results.</strong> Tip amount, grand total, and
-                per-person share all update instantly.
-              </li>
+              <li>Enter the bill total.</li>
+              <li>Set the tip percentage and number of people splitting it.</li>
+              <li>Read the per-person total instantly.</li>
             </ol>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Tipping guidelines, roughly</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Advantages and limitations</h2>
+            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Instant, exact results — no mental rounding needed</li>
+                  <li>Splits evenly across any number of people</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
+                  <li>Even split only — doesn't itemize per person's individual order</li>
+                  <li>Doesn't account for tax being calculated before or after tip, which varies locally</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
+            <ul className="mt-2 list-disc space-y-1.5 pl-5">
+              <li>Splitting a restaurant bill evenly among a group.</li>
+              <li>Working out a tip amount before paying.</li>
+              <li>Checking each person's fair share on a shared order.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">A note on tipping norms</h2>
             <p className="mt-2">
-              Tipping customs vary widely by country and even by type of service, so there's no single
-              universal answer. In the US, 15% is often considered a baseline for adequate table service,
-              with 18–20% common for good service and higher for exceptional service. Many countries in
-              Europe and Asia have little to no tipping expectation at all, or fold a service charge
-              directly into the bill already. When in doubt, it's worth going with local custom rather
-              than a fixed percentage.
+              Appropriate tip percentages vary significantly by country, and even by context within the
+              same country — restaurant service, delivery, and other situations often carry different
+              expectations. This tool doesn't assume a "correct" default, since there genuinely isn't a
+              universal one; it simply computes whatever percentage you enter accurately.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Your numbers stay private</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Pairs well with</h2>
             <p className="mt-2">
-              Nothing you enter into this calculator is sent anywhere — every calculation runs directly
-              in your browser. See our{" "}
-              <Link href="/privacy" className="text-amber-400 underline underline-offset-2">
-                Privacy Policy
+              For working out a discount or a percentage change instead, the site's{" "}
+              <Link href="/tools/percentage-calculator" className="text-amber-400 underline underline-offset-2">
+                Percentage Calculator
               </Link>{" "}
-              for full details.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-slate-100">Splitting a bill fairly when orders differ</h2>
-            <p className="mt-2">
-              An even split works well when everyone ordered roughly the same amount, but it can feel
-              unfair if one person had a starter, dessert, and a couple of drinks while another just had
-              a coffee. In cases like that, some groups prefer to first divide up who owes what for their
-              own items, then use a calculator like this one on just the shared portion — appetizers,
-              a bottle of wine, or a service charge — before adding each person's individual share back
-              on top. There's no universally "correct" approach; it comes down to what feels fair to the
-              group.
+              covers that directly.
             </p>
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="tip-calculator" />
         </>
       }
     >
