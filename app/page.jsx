@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import QRCode from "qrcode";
 import LogoMark from "./components/Logo";
+import AdSlot from "./components/AdSlot";
 import Link from "next/link";
 import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import JSZip from "jszip";
@@ -574,31 +575,10 @@ const POPULAR_TOOL_IDS = [
 /*  Small shared pieces                                                        */
 /* -------------------------------------------------------------------------- */
 
-function AdSlot({ variant = "rail", className = "" }) {
-  const sizeClasses =
-    variant === "rail"
-      ? "w-full h-[600px]"
-      : variant === "banner"
-      ? "w-full h-24 md:h-28"
-      : "w-full h-40";
-
-  return (
-    <div
-      className={`no-print ${sizeClasses} ${className} rounded-xl border border-dashed border-slate-700 bg-slate-900/40 flex flex-col items-center justify-center gap-2 text-slate-600`}
-      aria-hidden="true"
-    >
-      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-slate-600">
-        Advertisement
-      </span>
-      <div className="h-8 w-8 rounded-md border border-slate-700 flex items-center justify-center text-slate-700">
-        <Zap className="h-4 w-4" />
-      </div>
-      <span className="text-[10px] font-mono text-slate-700">
-        {variant === "rail" ? "300 × 600" : variant === "banner" ? "728 × 90" : "336 × 280"}
-      </span>
-    </div>
-  );
-}
+// AdSlot is now imported from ./components/AdSlot — a single shared
+// implementation that renders nothing until ADS_ENABLED is flipped to
+// true there, instead of this file's own separate, always-visible
+// placeholder. See that file to enable real ads once AdSense is approved.
 
 function CategoryBadge({ accent, children }) {
   const a = ACCENT_MAP[accent];
