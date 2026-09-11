@@ -22,7 +22,7 @@
 // network response to the page — every cache.put() is wrapped so a
 // caching failure can never break or corrupt the real fetch.
 
-const CACHE_NAME = "quickzeta-v2";
+const CACHE_NAME = "quickzeta-v3";
 const OFFLINE_URL = "/offline.html";
 const PRECACHE_URLS = [OFFLINE_URL, "/icon-192.png", "/icon-512.png"];
 
@@ -84,8 +84,23 @@ self.addEventListener("fetch", (event) => {
           return response;
         })
         .catch(async () => {
+          // Belt-and-suspenders: try a cached copy of this exact page,
+          // then the offline fallback page, and if genuinely neither
+          // exists yet (e.g. right after a service worker version bump,
+          // before the new cache has finished populating), fall back to
+          // a minimal inline response — this branch must never resolve
+          // to undefined, which is what caused the "Failed to convert
+          // value to 'Response'" error.
           const cachedResponse = await caches.match(request);
-          return cachedResponse || caches.match(OFFLINE_URL);
+          if (cachedResponse) return cachedResponse;
+
+          const offlinePage = await caches.match(OFFLINE_URL);
+          if (offlinePage) return offlinePage;
+
+          return new Response(
+            "<!DOCTYPE html><html><body><p>You're offline, and this page hasn't been cached yet. Please reconnect and try again.</p></body></html>",
+            { status: 503, headers: { "Content-Type": "text/html" } }
+          );
         })
     );
     return;
@@ -100,7 +115,11 @@ self.addEventListener("fetch", (event) => {
           caches.open(CACHE_NAME).then((cache) => safeCachePut(cache, request, copy));
           return response;
         })
-        .catch(() => cachedResponse);
+        .catch(
+          () =>
+            cachedResponse ||
+            new Response("", { status: 504, statusText: "Network error and no cached copy available" })
+        );
       return cachedResponse || networkFetch;
     })
   );
