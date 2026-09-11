@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
 import RelatedTools from "../../components/RelatedTools";
-import PhotoCollageMakerClient from "./PhotoCollageMakerClient";
+import PhotoCollageClient from "./PhotoCollageClient";
 
 export const metadata = {
   title: "Free Photo Collage Maker Online — No Upload, No Watermark | QuickZeta",
@@ -140,7 +140,7 @@ export default function PhotoCollageMakerPage() {
         </>
       }
     >
-      <PhotoCollageMakerClient />
+      <PhotoCollageClient />
     </ToolPageShell>
   );
 }
