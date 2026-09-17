@@ -5,6 +5,7 @@ export const metadata = {
   title: "About — QuickZeta",
   description:
     "Why QuickZeta exists, how it's built, and the philosophy behind running everything in your browser instead of on a server.",
+  alternates: { canonical: "https://quickzeta.com/about" },
 };
 
 function H2({ children }) {

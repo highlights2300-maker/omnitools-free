@@ -4,6 +4,7 @@ export const metadata = {
   title: "Privacy Policy — QuickZeta",
   description:
     "How QuickZeta handles your data: what we don't collect, what our advertising and analytics partners do, and your choices.",
+  alternates: { canonical: "https://quickzeta.com/privacy" },
 };
 
 function H2({ children }) {

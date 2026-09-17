@@ -3,6 +3,7 @@ import StaticPageShell from "../components/StaticPageShell";
 export const metadata = {
   title: "Terms of Service — QuickZeta",
   description: "The terms for using QuickZeta's browser-based tools.",
+  alternates: { canonical: "https://quickzeta.com/terms" },
 };
 
 function H2({ children }) {
