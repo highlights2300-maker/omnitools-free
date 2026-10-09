@@ -4,20 +4,21 @@ import RelatedTools from "../../components/RelatedTools";
 import ESignatureClient from "./ESignatureClient";
 
 export const metadata = {
-  title: "Free E-Signature Pad Online — Draw & Export PNG | QuickZeta",
+  title: "Free Signature Pad Online – Draw & Export PNG | QuickZeta",
   description:
-    "Draw a signature and export it as a transparent PNG, free, with no upload and no sign up. Processed entirely in your browser.",
+    "Draw a digital signature on this free signature pad — no upload, no sign up. Export as a transparent PNG, ready for any document, right in your browser.",
   keywords: [
-    "free e-signature pad online",
+    "free signature pad online",
+    "digital signature pad",
+    "online signature pad",
     "draw signature no upload",
     "signature generator free no sign up",
     "transparent signature png maker",
-    "digital signature online free",
   ],
   alternates: { canonical: "https://quickzeta.com/tools/e-signature-pad" },
   openGraph: {
-    title: "Free E-Signature Pad Online — Draw & Export PNG",
-    description: "Draw a signature and export it as a transparent PNG, entirely in your browser.",
+    title: "Free Signature Pad Online – Draw & Export PNG",
+    description: "Draw a digital signature and export it as a transparent PNG, entirely in your browser.",
     url: "https://quickzeta.com/tools/e-signature-pad",
     type: "website",
   },
@@ -49,7 +50,7 @@ const FAQS = [
 export default function ESignaturePadPage() {
   return (
     <ToolPageShell
-      title="Free E-Signature Pad"
+      title="Free Signature Pad"
       subtitle="Draw a signature and export it as a transparent PNG — no upload, no sign up."
       article={
         <>
@@ -60,8 +61,8 @@ export default function ESignaturePadPage() {
             <p className="mt-2">
               Signing something without a printer nearby usually means an awkward workaround — a photo of
               a paper signature, or third-party signing software you didn't want to sign up for. This
-              tool draws a clean signature directly onto a canvas in your browser and exports it as a
-              transparent PNG, ready to drop into whatever document actually needs it.
+              signature pad draws a clean signature directly onto a canvas in your browser and exports it
+              as a transparent PNG, ready to drop into whatever document actually needs it.
             </p>
           </section>
 

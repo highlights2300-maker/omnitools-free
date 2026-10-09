@@ -33,6 +33,10 @@ const FAQS = [
     a: "It's based on an average adult silent-reading speed, commonly cited as roughly 200–250 words per minute. It's a genuine estimate, not a precise measurement — dense technical text reads slower than casual prose, so treat it as a rough guide rather than an exact figure.",
   },
   {
+    q: "How do I convert a word count into reading time?",
+    a: "Divide the word count by an average reading speed — roughly 200–225 words per minute for most adult readers — to get the reading time in minutes. This tool does that calculation automatically and shows it live alongside the word count as you type, so there's no need to work it out by hand.",
+  },
+  {
     q: "Is my text sent anywhere?",
     a: "No. Everything is counted directly in your browser as you type — nothing is uploaded or logged.",
   },
