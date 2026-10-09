@@ -4,20 +4,22 @@ import RelatedTools from "../../components/RelatedTools";
 import ImageCropperClient from "./ImageCropperClient";
 
 export const metadata = {
-  title: "Free Image Cropper & Resizer Online — No Upload | QuickZeta",
+  title: "Free Photo & Image Cropper Online – No Upload | QuickZeta",
   description:
-    "Crop and resize an image to exact dimensions, free, with no upload and no sign up. Preset ratios for social media, avatars, and more — processed entirely in your browser.",
+    "Crop and resize a photo or image to exact dimensions, free, with no upload and no sign up. Preset ratios for social media, avatars, and more — processed entirely in your browser.",
   keywords: [
     "free image cropper online",
+    "photo cropper online free",
+    "crop photo online",
     "resize image no upload",
     "crop image to exact size free",
-    "image resizer no sign up",
+    "online photo cropper",
     "crop for instagram profile picture",
   ],
   alternates: { canonical: "https://quickzeta.com/tools/image-cropper" },
   openGraph: {
-    title: "Free Image Cropper & Resizer Online — No Upload",
-    description: "Crop and resize an image to exact dimensions entirely in your browser.",
+    title: "Free Photo & Image Cropper Online – No Upload",
+    description: "Crop and resize a photo or image to exact dimensions entirely in your browser.",
     url: "https://quickzeta.com/tools/image-cropper",
     type: "website",
   },
@@ -53,7 +55,7 @@ const FAQS = [
 export default function ImageCropperPage() {
   return (
     <ToolPageShell
-      title="Free Image Cropper & Resizer"
+      title="Free Photo & Image Cropper"
       subtitle="Crop to any ratio and resize to exact dimensions — no upload, no sign up."
       article={
         <>

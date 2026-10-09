@@ -26,7 +26,7 @@ export default function sitemap() {
     { path: "/tools/pdf-watermarker", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/csv-json-converter", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/image-compressor", priority: 0.9, changeFrequency: "monthly" },
-    { path: "/tools/image-cropper", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/tools/image-cropper", priority: 1.0, changeFrequency: "weekly" },
     { path: "/tools/video-trimmer", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/audio-converter", priority: 0.9, changeFrequency: "monthly" },
     { path: "/tools/qr-code-generator", priority: 0.9, changeFrequency: "monthly" },
