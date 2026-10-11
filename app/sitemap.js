@@ -66,7 +66,6 @@ export default function sitemap() {
 
   return allPages.map((page) => ({
     url: `${baseUrl}${page.path}`,
-    lastModified: new Date(),
     changeFrequency: page.changeFrequency,
     priority: page.priority,
   }));

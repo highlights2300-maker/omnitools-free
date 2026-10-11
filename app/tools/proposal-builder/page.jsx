@@ -68,10 +68,10 @@ export default function ProposalBuilderPage() {
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Everything a proposal needs, built in</h2>
             <p className="mt-2">
-              A professional invoice needs a handful of specific details to be considered valid and get
-              paid without back-and-forth — this tool includes all of them by default: an overview
-              section for the pitch, a scope-of-work list for deliverables, itemized pricing, and a
-              timeline field, so filling in the form covers the essentials automatically.
+              A proposal that gets approved without back-and-forth usually covers a handful of specific
+              things — this tool includes each of them by default: an overview section for the pitch, a
+              scope-of-work list for deliverables, itemized pricing, and a timeline field, so filling in
+              the form covers the essentials automatically.
             </p>
           </section>
 
