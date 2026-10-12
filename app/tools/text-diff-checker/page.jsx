@@ -6,7 +6,7 @@ import TextDiffCheckerClient from "./TextDiffCheckerClient";
 export const metadata = {
   title: "Free Text Diff Checker Online — Compare Two Texts | QuickZeta",
   description:
-    "Compare two blocks of text and see exactly what changed, free, with no sign up. Added and removed lines highlighted instantly — computed entirely in your browser.",
+    "Paste two versions of a text and see added and removed lines, with changed words highlighted. Free, no sign up, runs in your browser.",
   keywords: [
     "free text diff checker online",
     "compare two texts no sign up",
@@ -30,7 +30,7 @@ const FAQS = [
   },
   {
     q: "Does it compare word-by-word or line-by-line?",
-    a: "Line-by-line. If a single word changes in an otherwise identical line, that whole line shows as one removed line and one added line, rather than highlighting just the changed word — this makes it easy to spot which lines changed at a glance in longer documents.",
+    a: "It compares line by line first. A line that changed shows as one removed line and one added line, and the words that differ inside those two lines are highlighted, so you can see the exact edit. Very long lines skip the word highlighting to keep the page fast.",
   },
   {
     q: "Can I compare code, not just prose?",
@@ -66,7 +66,7 @@ export default function TextDiffCheckerPage() {
             <ol className="mt-2 list-decimal space-y-2 pl-5">
               <li>Paste the original text into the left box.</li>
               <li>Paste the changed version into the right box.</li>
-              <li>Read the result instantly — no button to click, it updates as you type.</li>
+              <li>Read the result instantly. It updates as you type. Optionally ignore upper/lower case or extra spaces, show only the changed lines, or swap the two sides.</li>
             </ol>
           </section>
 
@@ -93,17 +93,18 @@ export default function TextDiffCheckerPage() {
               <li>Checking two versions of an essay or article before submitting the final one.</li>
               <li>Reviewing a small code change without a full version control setup.</li>
               <li>Confirming a copy-paste or find-and-replace didn't alter more than intended.</li>
+              <li>Checking whether two texts differ only by capital letters or extra spaces, using the ignore options.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-slate-100">Why line-level, not word-level</h2>
+            <h2 className="text-lg font-semibold text-slate-100">Lines first, then words</h2>
             <p className="mt-2">
-              Comparing at the line level rather than highlighting individual changed words is a
-              deliberate choice, not a limitation — it mirrors how most people actually think about
-              document changes. Seeing "this whole line was replaced" is usually more useful at a glance
-              than a scattering of highlighted words mid-sentence, especially across a long document where
-              you're scanning for which paragraphs changed rather than proofreading every word one by one.
+              Changes are found at the line level first, because that is how most people think about
+              edits to a document: "this paragraph was rewritten". Inside a line that was changed, the
+              words that differ are then highlighted, so a one-word edit is easy to spot without
+              proofreading the whole line. If the pasted texts are very large and very different, the
+              tool asks you to compare a smaller section instead of freezing your browser.
             </p>
           </section>
 

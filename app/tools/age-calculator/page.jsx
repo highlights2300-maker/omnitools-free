@@ -6,7 +6,7 @@ import AgeCalculatorClient from "./AgeCalculatorClient";
 export const metadata = {
   title: "Free Age Calculator Online — Exact Age & Duration | QuickZeta",
   description:
-    "Find the exact age or duration between two dates, free, with no sign up. Accounts for leap years and varying month lengths — computed entirely in your browser.",
+    "Exact age in years, months and days, plus total days and weeks and days to the next birthday. Free, no sign up, runs in your browser.",
   keywords: [
     "free age calculator online",
     "date duration calculator no sign up",
@@ -63,8 +63,9 @@ export default function AgeCalculatorPage() {
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <p className="mt-2">
-              Enter a start date and an end date (or leave the end date as today) — the exact duration in
-              years, months, and days appears instantly.
+              Enter a start date (a birth date, for example) and an end date, or leave the end date as
+              today. The duration appears as years, months and days, along with total months, weeks and
+              days, and how many days remain until the next birthday or anniversary.
             </p>
           </section>
 
@@ -81,7 +82,7 @@ export default function AgeCalculatorPage() {
               <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
                 <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
                 <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
-                  <li>Doesn't account for time zone differences on the exact date boundary</li>
+                  <li>Works with calendar dates only, not times of day or time zones</li>
                   <li>Assumes the standard Gregorian calendar</li>
                 </ul>
               </div>
@@ -91,7 +92,7 @@ export default function AgeCalculatorPage() {
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
             <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>Finding someone's exact current age.</li>
+              <li>Finding someone's exact current age and when their next birthday falls.</li>
               <li>Counting down the exact days until a deadline or event.</li>
               <li>Working out the duration between two historical dates.</li>
             </ul>

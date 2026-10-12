@@ -6,7 +6,7 @@ import PercentageCalculatorClient from "./PercentageCalculatorClient";
 export const metadata = {
   title: "Free Percentage & Markup Calculator Online — No Sign Up | QuickZeta",
   description:
-    "Calculate percentages, percentage changes, and markups instantly, free, with no sign up. Computed entirely in your browser.",
+    "Work out X% of a number, percentage change, discounts, markup and profit margin. Free, no sign up, runs in your browser.",
   keywords: [
     "free percentage calculator online",
     "markup calculator no sign up",
@@ -58,18 +58,20 @@ export default function PercentageCalculatorPage() {
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <p className="mt-2">
-              Enter your numbers into whichever calculation mode fits what you need — percentage of a
-              number, percentage change between two values, or markup on a cost — and read the result
-              instantly.
+              Five calculators sit on the page, each with its own boxes: X% of a number, X as a percent
+              of Y, percentage change between an old and a new value, a price with a percentage taken off
+              or added, and markup on a cost (which also shows the profit margin). Type in the one you
+              need and read the result as you type.
             </p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Common uses</h2>
             <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>Working out a discount at checkout.</li>
+              <li>Working out a discount at checkout, and how much it saves you.</li>
               <li>Calculating a price increase or decrease year over year.</li>
-              <li>Setting a markup on a product's cost.</li>
+              <li>Setting a markup on a product's cost and checking the margin it leaves.</li>
+              <li>Finding what percent one number is of another, such as a score or a share of a budget.</li>
             </ul>
           </section>
 
