@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import PdfMergerClient from "./PdfMergerClient";
 
 export const metadata = {
@@ -148,6 +149,7 @@ export default function PdfMergerPage() {
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="pdf-merger" />
         </>
       }
     >

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import ImageCompressorClient from "./ImageCompressorClient";
 
 export const metadata = {
@@ -162,6 +163,7 @@ export default function ImageCompressorPage() {
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="image-compressor" />
         </>
       }
     >

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import AudioNoiseRemoverClient from "./AudioNoiseRemoverClient";
 
 export const metadata = {
@@ -125,6 +126,7 @@ export default function AudioNoiseRemoverPage() {
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="audio-noise-remover" />
         </>
       }
     >

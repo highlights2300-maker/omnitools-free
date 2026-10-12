@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import AudioTranscriberClient from "./AudioTranscriberClient";
 
 export const metadata = {
@@ -140,6 +141,7 @@ export default function AudioTranscriberPage() {
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="audio-transcriber" />
         </>
       }
     >

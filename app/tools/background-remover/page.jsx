@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import BackgroundRemoverClient from "./BackgroundRemoverClient";
 
 export const metadata = {
@@ -151,6 +152,7 @@ export default function BackgroundRemoverPage() {
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="background-remover" />
         </>
       }
     >

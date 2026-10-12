@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, ShieldCheck, Lock, Zap } from "lucide-react";
 import LogoMark from "../../components/Logo";
+import RelatedTools from "../../components/RelatedTools";
 import InvoiceGeneratorClient from "./InvoiceGeneratorClient";
 
 export const metadata = {
@@ -194,6 +195,7 @@ export default function InvoiceGeneratorPage() {
               ))}
             </div>
           </section>
+          <RelatedTools currentTool="invoice-generator" />
         </article>
 
         <footer className="no-print mt-12 border-t border-slate-900 pt-6 text-center text-[11px] text-slate-600">

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import QrCodeGeneratorClient from "./QrCodeGeneratorClient";
 
 export const metadata = {
@@ -133,6 +134,7 @@ export default function QrCodeGeneratorPage() {
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="qr-code-generator" />
         </>
       }
     >

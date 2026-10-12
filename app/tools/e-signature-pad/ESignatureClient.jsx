@@ -1,30 +1,66 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { FileOutput } from "lucide-react";
+import { FileOutput, Undo2 } from "lucide-react";
+
+const W = 1000;
+const H = 400;
+const MAX_UNDO = 30;
 
 export default function ESignatureClient() {
   const canvasRef = useRef(null);
   const drawingRef = useRef(false);
   const lastPointRef = useRef(null);
+  const historyRef = useRef([]);
   const [color, setColor] = useState("#0f172a");
   const [thickness, setThickness] = useState(3);
   const [hasStroke, setHasStroke] = useState(false);
+  const [undoCount, setUndoCount] = useState(0);
 
+  // Map pointer position to canvas pixels, and report the CSS->canvas scale
+  // so line width looks the same on every screen size.
   const getPos = (canvas, e) => {
     const rect = canvas.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    const scale = canvas.width / rect.width;
     return {
-      x: ((clientX - rect.left) / rect.width) * canvas.width,
-      y: ((clientY - rect.top) / rect.height) * canvas.height,
+      x: (e.clientX - rect.left) * scale,
+      y: (e.clientY - rect.top) * (canvas.height / rect.height),
+      scale,
     };
   };
 
+  const applyStyle = (ctx, scale) => {
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = thickness * scale;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+  };
+
   const start = (e) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
     e.preventDefault();
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    try {
+      canvas.setPointerCapture(e.pointerId);
+    } catch {
+      /* capture is optional */
+    }
+    // snapshot for undo
+    historyRef.current.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+    if (historyRef.current.length > MAX_UNDO) historyRef.current.shift();
+    setUndoCount(historyRef.current.length);
+
     drawingRef.current = true;
-    lastPointRef.current = getPos(canvasRef.current, e);
+    const pos = getPos(canvas, e);
+    lastPointRef.current = pos;
+    // a tap leaves a dot
+    applyStyle(ctx, pos.scale);
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, (thickness * pos.scale) / 2, 0, Math.PI * 2);
+    ctx.fill();
+    setHasStroke(true);
   };
 
   const move = (e) => {
@@ -33,27 +69,53 @@ export default function ESignatureClient() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const pos = getPos(canvas, e);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = thickness;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
+    applyStyle(ctx, pos.scale);
     ctx.beginPath();
     ctx.moveTo(lastPointRef.current.x, lastPointRef.current.y);
     ctx.lineTo(pos.x, pos.y);
     ctx.stroke();
     lastPointRef.current = pos;
-    setHasStroke(true);
   };
 
-  const end = () => {
+  const end = (e) => {
     drawingRef.current = false;
+    try {
+      if (e && canvasRef.current.hasPointerCapture(e.pointerId)) {
+        canvasRef.current.releasePointerCapture(e.pointerId);
+      }
+    } catch {
+      /* ignore */
+    }
   };
 
   const clear = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
+    historyRef.current = [];
+    setUndoCount(0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     setHasStroke(false);
+  };
+
+  const undo = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const prev = historyRef.current.pop();
+    if (!prev) return;
+    ctx.putImageData(prev, 0, 0);
+    setUndoCount(historyRef.current.length);
+    if (historyRef.current.length === 0) {
+      // back to the very first snapshot: blank unless something is still drawn
+      const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      let any = false;
+      for (let i = 3; i < data.length; i += 4) {
+        if (data[i] > 0) {
+          any = true;
+          break;
+        }
+      }
+      setHasStroke(any);
+    }
   };
 
   const download = () => {
@@ -62,12 +124,11 @@ export default function ESignatureClient() {
     const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let minX = width,
       minY = height,
-      maxX = 0,
-      maxY = 0;
+      maxX = -1,
+      maxY = -1;
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
-        const alpha = data[(y * width + x) * 4 + 3];
-        if (alpha > 0) {
+        if (data[(y * width + x) * 4 + 3] > 0) {
           if (x < minX) minX = x;
           if (x > maxX) maxX = x;
           if (y < minY) minY = y;
@@ -103,17 +164,18 @@ export default function ESignatureClient() {
       <div className="overflow-hidden rounded-xl border-2 border-dashed border-slate-700 bg-white">
         <canvas
           ref={canvasRef}
-          width={800}
-          height={280}
-          className="h-56 w-full cursor-crosshair touch-none"
+          width={W}
+          height={H}
+          aria-label="Signature drawing area"
+          className="block aspect-[5/2] w-full cursor-crosshair touch-none"
           onPointerDown={start}
           onPointerMove={move}
           onPointerUp={end}
-          onPointerLeave={end}
+          onPointerCancel={end}
         />
       </div>
       {!hasStroke && (
-        <p className="mt-2 text-center text-xs text-slate-500">Sign above with your mouse, trackpad, or finger</p>
+        <p className="mt-2 text-center text-xs text-slate-500">Sign above with your mouse, trackpad, finger or stylus</p>
       )}
 
       <div className="mt-4 flex flex-wrap items-center gap-4">
@@ -147,6 +209,14 @@ export default function ESignatureClient() {
         >
           <FileOutput className="h-4 w-4" />
           Download signature.png
+        </button>
+        <button
+          onClick={undo}
+          disabled={undoCount === 0}
+          className="inline-flex h-12 items-center gap-2 rounded-lg border border-slate-700 px-5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <Undo2 className="h-4 w-4" />
+          Undo
         </button>
         <button
           onClick={clear}

@@ -43,7 +43,7 @@ const FAQS = [
   },
   {
     q: "Can I use a mouse, or does this need a touchscreen?",
-    a: "Either works — the pad captures mouse movement on a desktop and touch input on a phone or tablet, though a touchscreen or stylus typically produces a more natural-looking signature than a mouse.",
+    a: "Either works — the pad accepts mouse, touch and stylus input on desktop, phone and tablet, though a touchscreen or stylus typically produces a more natural-looking signature than a mouse.",
   },
 ];
 
@@ -70,7 +70,7 @@ export default function ESignaturePadPage() {
             <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
               <li>Draw your signature using a mouse, finger, or stylus.</li>
-              <li>Adjust and redo it until it looks right.</li>
+              <li>Pick an ink colour and thickness; use Undo to remove the last stroke, or Clear to start over.</li>
               <li>Download as a transparent PNG.</li>
             </ol>
           </section>
@@ -82,7 +82,7 @@ export default function ESignaturePadPage() {
                 <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
                 <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
                   <li>Transparent PNG output, ready to drop into any document</li>
-                  <li>Works with mouse, finger, or stylus input</li>
+                  <li>Works with mouse, finger, or stylus input, with Undo and Clear</li>
                   <li>No account, instant download</li>
                 </ul>
               </div>

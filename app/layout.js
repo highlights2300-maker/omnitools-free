@@ -5,9 +5,13 @@ import NetworkTrustWidget from "./components/NetworkTrustWidget";
 
 export const metadata = {
   metadataBase: new URL("https://quickzeta.com"),
+  // Self-referencing canonical for any page that doesn't declare its own
+  // (the homepage is a client component and can't export metadata itself).
+  // Pages that set their own alternates.canonical override this.
+  alternates: { canonical: "./" },
   title: "QuickZeta — Free Online Tools, No Uploads, No Logins",
   description:
-    "41+ free document, image, and business tools that run entirely in your browser. No accounts, no file uploads, no daily limits, no watermarks — everything processes on your own device.",
+    "44 free document, image, and business tools that run entirely in your browser. No accounts, no file uploads, no daily limits, no watermarks — everything processes on your own device.",
   keywords: [
     "free online tools",
     "pdf merger",
@@ -20,7 +24,7 @@ export const metadata = {
   openGraph: {
     title: "QuickZeta — Free Online Tools, No Uploads, No Logins",
     description:
-      "41+ free document, image, and business tools that run entirely in your browser. Nothing is ever uploaded to a server.",
+      "44 free document, image, and business tools that run entirely in your browser. Nothing is ever uploaded to a server.",
     url: "https://quickzeta.com",
     siteName: "QuickZeta",
     type: "website",
@@ -28,7 +32,7 @@ export const metadata = {
   twitter: {
     card: "summary",
     title: "QuickZeta",
-    description: "41+ free tools that run entirely in your browser. No uploads, no logins, no logs.",
+    description: "44 free tools that run entirely in your browser. No uploads, no logins, no logs.",
   },
   icons: {
     icon: [

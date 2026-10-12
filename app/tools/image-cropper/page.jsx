@@ -6,7 +6,7 @@ import ImageCropperClient from "./ImageCropperClient";
 export const metadata = {
   title: "Free Photo & Image Cropper Online – No Upload | QuickZeta",
   description:
-    "Crop and resize a photo or image to exact dimensions, free, with no upload and no sign up. Preset ratios for social media, avatars, and more — processed entirely in your browser.",
+    "Crop a photo to 1:1, 4:5, 16:9 or any ratio, set exact pixel size, rotate and download as JPG, PNG or WebP. Free, no upload, no sign up.",
   keywords: [
     "free image cropper online",
     "photo cropper online free",
@@ -43,12 +43,12 @@ const FAQS = [
     a: "Yes, unavoidably — enlarging an image beyond its original resolution means the tool has to invent new pixel detail that wasn't there to begin with, which softens the result. Resizing down (shrinking a large image) doesn't have this problem, since there's genuine detail to work with.",
   },
   {
-    q: "Do the preset ratios match real platform requirements?",
-    a: "Yes — the presets are based on commonly used, current dimensions for profile pictures, cover photos, and post formats on major platforms. Platforms occasionally adjust their exact specs, so it's worth a quick check if pixel-perfect precision matters for a specific upload.",
+    q: "Do the presets match Instagram, YouTube or other platform sizes?",
+    a: "The presets are aspect ratios (for example 1:1 for a square avatar, 4:5 for a portrait post, 16:9 for video thumbnails), not exact platform pixel sizes. Pick the ratio, then type the width you need. Platforms change their specs from time to time, so check the current size for your upload.",
   },
   {
     q: "What format does the cropped image download as?",
-    a: "The output keeps your original format by default (JPG stays JPG, PNG stays PNG), preserving transparency for PNG images. If you need a different format afterward, the site's Image Format Converter handles that conversion.",
+    a: "By default it matches your original (JPG stays JPG, PNG stays PNG, WebP stays WebP), and you can switch to JPG, PNG or WebP before downloading. JPG has no transparency, so transparent areas are filled white; PNG and WebP keep it.",
   },
 ];
 
@@ -66,9 +66,9 @@ export default function ImageCropperPage() {
             <p className="mt-2">
               A photo that's the wrong aspect ratio for a profile picture, a screenshot that needs
               trimming before it makes sense in a document, an image too large to attach anywhere — these
-              are small, constant annoyances. This tool crops to any ratio and resizes to exact pixel
-              dimensions directly in your browser, with common social media and avatar presets built in,
-              so nothing needs to be uploaded just to fix a size problem.
+              are small, constant annoyances. This tool crops to a free-form area or a fixed ratio and sets the
+              exact output size directly in your browser, so nothing needs to be uploaded just to fix a
+              size problem.
             </p>
           </section>
 
@@ -76,8 +76,8 @@ export default function ImageCropperPage() {
             <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
               <li>Upload the image you want to crop or resize.</li>
-              <li>Drag the crop area, or pick a preset ratio for a specific platform.</li>
-              <li>Set the exact output dimensions, then download the result.</li>
+              <li>Pick a ratio (Free, 1:1, 4:5, 3:2, 4:3, 16:9, 9:16 or a custom one), then drag the photo to position it and use zoom to frame it. Rotate it if it's sideways.</li>
+              <li>Optionally set the exact output width and height, choose JPG, PNG or WebP, and download.</li>
             </ol>
           </section>
 
@@ -99,8 +99,8 @@ export default function ImageCropperPage() {
                 <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
                 <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
                   <li>Exact pixel-dimension control, not just rough dragging</li>
-                  <li>Built-in presets for common platform requirements</li>
-                  <li>Preserves PNG transparency through the crop</li>
+                  <li>Common aspect-ratio presets plus a custom ratio</li>
+                  <li>Keeps transparency when you export PNG or WebP</li>
                   <li>Instant preview, no upload wait</li>
                 </ul>
               </div>
@@ -108,9 +108,9 @@ export default function ImageCropperPage() {
                 <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
                 <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
                   <li>Enlarging a small image beyond its resolution will look soft</li>
-                  <li>Platform preset dimensions can change over time</li>
+                  <li>Presets set the shape, not a platform's pixel size — enter the size you need</li>
                   <li>No content-aware fill — cropping simply removes, it doesn't extend</li>
-                  <li>Very high-resolution source images take a moment longer to process</li>
+                  <li>Output is limited to about 16,000 px per side by browser canvas limits</li>
                 </ul>
               </div>
             </div>

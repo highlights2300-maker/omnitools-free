@@ -6,7 +6,7 @@ import PhotoCollageClient from "./PhotoCollageClient";
 export const metadata = {
   title: "Free Photo Collage Maker Online — No Upload, No Watermark | QuickZeta",
   description:
-    "Arrange several photos into one grid layout, free, with no upload, no sign up, and no watermark. Processed entirely in your browser.",
+    "Combine up to 9 photos into a grid, row or column. Adjust spacing, rounded corners and background. Free, no watermark, no upload.",
   keywords: [
     "free photo collage maker online",
     "collage maker no watermark",
@@ -17,7 +17,7 @@ export const metadata = {
   alternates: { canonical: "https://quickzeta.com/tools/photo-collage-maker" },
   openGraph: {
     title: "Free Photo Collage Maker Online — No Upload, No Watermark",
-    description: "Arrange several photos into one grid layout, entirely in your browser.",
+    description: "Combine up to 9 photos into one image, entirely in your browser.",
     url: "https://quickzeta.com/tools/photo-collage-maker",
     type: "website",
   },
@@ -34,11 +34,11 @@ const FAQS = [
   },
   {
     q: "What happens if my photos are different sizes or aspect ratios?",
-    a: "Each photo is automatically cropped to fit its grid cell without distorting or stretching it — the tool crops the excess rather than squeezing the image to match, which is what would happen if it simply scaled each photo to fit.",
+    a: "Each photo is centre-cropped to a square cell without stretching or squeezing it, so anything outside the centre square is cut off. Crop a photo first with the Image Cropper if you want to choose which part is kept.",
   },
   {
     q: "How many photos can I combine?",
-    a: "Enough for the available grid layouts — from a simple two-photo side-by-side up to larger multi-photo grids.",
+    a: "Up to 9 photos per collage, from two side by side up to a 3×3 grid.",
   },
 ];
 
@@ -46,7 +46,7 @@ export default function PhotoCollageMakerPage() {
   return (
     <ToolPageShell
       title="Free Photo Collage Maker"
-      subtitle="Arrange several photos into one grid layout — no upload, no watermark, no sign up."
+      subtitle="Combine up to 9 photos into a grid, row or column — no upload, no watermark, no sign up."
       article={
         <>
           <section>
@@ -56,26 +56,26 @@ export default function PhotoCollageMakerPage() {
             <p className="mt-2">
               Turning a handful of separate photos into one shareable image — a before-and-after, a set
               of event photos, a product from multiple angles — usually means dedicated design software.
-              This tool arranges photos into a grid layout directly in your browser, with no watermark
-              stamped across the result.
+              This tool arranges photos into a grid, a single row or a single column directly in your
+              browser, with no watermark stamped across the result.
             </p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>Choose a grid layout.</li>
-              <li>Add your photos into each cell.</li>
-              <li>Download the finished collage.</li>
+              <li>Add 2 to 9 photos (JPG, PNG or WebP).</li>
+              <li>Choose Grid, One row or One column, and use the arrows to reorder photos.</li>
+              <li>Adjust spacing, rounded corners, background, size and format, then download.</li>
             </ol>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Choosing a layout</h2>
             <p className="mt-2">
-              Simpler two- or three-photo layouts tend to work best when each individual photo needs to
-              stay clearly readable — a before-and-after, for instance. Larger grid layouts suit a broader
-              set of photos where the overall impression matters more than any single image standing out.
+              One row or one column works well for a before-and-after or a short sequence, where each
+              photo should stay clearly readable. Grid suits larger sets where the overall impression
+              matters more than any single image; if the last row isn't full, it is centred.
             </p>
           </section>
 
@@ -95,15 +95,15 @@ export default function PhotoCollageMakerPage() {
                 <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
                 <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
                   <li>No watermark, ever</li>
-                  <li>Automatic smart cropping handles mismatched photo sizes</li>
+                  <li>Spacing, rounded corners, background colour and output size controls</li>
                   <li>Instant — no account, no upload wait</li>
                 </ul>
               </div>
               <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
                 <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
                 <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
-                  <li>Fixed grid layouts, not fully freeform positioning</li>
-                  <li>Cropping means some parts of a photo may not appear in the final collage</li>
+                  <li>Three fixed layouts, not freeform positioning; up to 9 photos</li>
+                  <li>Each photo is centre-cropped to a square, so edges may be cut off</li>
                 </ul>
               </div>
             </div>

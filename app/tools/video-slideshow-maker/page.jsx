@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolPageShell, { FaqBlock } from "../../components/ToolPageShell";
+import RelatedTools from "../../components/RelatedTools";
 import VideoSlideshowMakerClient from "./VideoSlideshowMakerClient";
 
 export const metadata = {
@@ -138,6 +139,7 @@ export default function VideoSlideshowMakerPage() {
           </section>
 
           <FaqBlock items={FAQS} />
+          <RelatedTools currentTool="video-slideshow-maker" />
         </>
       }
     >
