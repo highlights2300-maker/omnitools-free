@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import CountdownTimerStopwatchClient from "./CountdownTimerStopwatchClient";
 
 export const metadata = {
-  title: "Free Online Timer & Stopwatch — No Sign Up, No App | QuickZeta",
+  title: "Free Online Timer & Stopwatch — No Sign Up | QuickZeta",
   description:
     "A free countdown timer and stopwatch with lap tracking and a sound alert, free, with no sign up and no app to install. Runs entirely in your browser.",
   keywords: [
@@ -41,6 +41,8 @@ const FAQS = [
 export default function CountdownTimerStopwatchPage() {
   return (
     <ToolPageShell
+      slug="countdown-timer-stopwatch"
+      description={metadata.description}
       title="Free Online Timer & Stopwatch"
       subtitle="A countdown timer with a sound alert, and a stopwatch with lap tracking — no sign up, no app."
       article={

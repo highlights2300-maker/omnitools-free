@@ -4,9 +4,9 @@ import RelatedTools from "../../components/RelatedTools";
 import VideoSlideshowMakerClient from "./VideoSlideshowMakerClient";
 
 export const metadata = {
-  title: "Free Video Slideshow Maker Online — Photos to Video | QuickZeta",
+  title: "Free Video Slideshow Maker — Photos to Video | QuickZeta",
   description:
-    "Turn photos into a video slideshow with crossfade transitions, a title, and optional music — free, with no upload and no sign up. Built entirely in your browser.",
+    "Turn photos into a video slideshow with crossfade transitions, a title and optional music. Free, no upload, no sign up, in your browser.",
   keywords: [
     "free video slideshow maker online",
     "photos to video no upload",
@@ -53,6 +53,8 @@ const FAQS = [
 export default function VideoSlideshowMakerPage() {
   return (
     <ToolPageShell
+      slug="video-slideshow-maker"
+      description={metadata.description}
       title="Free Video Slideshow Maker"
       subtitle="Turn photos into a video with crossfade transitions, a title, and optional music — no upload, no sign up."
       article={

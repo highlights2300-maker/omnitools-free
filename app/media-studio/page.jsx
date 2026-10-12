@@ -4,7 +4,7 @@ import CategoryHubShell from "../components/CategoryHubShell";
 export const metadata = {
   title: "Free Image, Video & Audio Tools Online | QuickZeta",
   description:
-    "Compress, crop, and convert images, trim video, convert audio, remove backgrounds, and more — all free, with no upload and no sign up. Every tool runs entirely in your browser.",
+    "Compress, crop and convert images, trim video, convert audio, remove backgrounds and more. Free, no upload, no sign up, in your browser.",
   keywords: [
     "free image tools online",
     "free video audio tools no upload",

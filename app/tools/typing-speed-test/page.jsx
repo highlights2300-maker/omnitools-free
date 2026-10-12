@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import TypingSpeedTestClient from "./TypingSpeedTestClient";
 
 export const metadata = {
-  title: "Free Typing Speed Test Online — WPM & Accuracy, No Sign Up | QuickZeta",
+  title: "Free Typing Speed Test — WPM & Accuracy | QuickZeta",
   description:
     "Test your typing speed in words per minute, free, with no sign up. Live accuracy tracking and instant results — computed entirely in your browser.",
   keywords: [
@@ -45,6 +45,8 @@ const FAQS = [
 export default function TypingSpeedTestPage() {
   return (
     <ToolPageShell
+      slug="typing-speed-test"
+      description={metadata.description}
       title="Free Typing Speed Test"
       subtitle="Test your typing speed in words per minute, with live accuracy tracking — no sign up."
       article={

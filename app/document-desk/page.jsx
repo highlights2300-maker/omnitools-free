@@ -2,9 +2,9 @@ import { FileStack } from "lucide-react";
 import CategoryHubShell from "../components/CategoryHubShell";
 
 export const metadata = {
-  title: "Free Document Tools Online — PDF, Word Count & More | QuickZeta",
+  title: "Free PDF & Document Tools — Merge, Split, Count | QuickZeta",
   description:
-    "Merge, split, compress, and watermark PDFs, plus word counting and file archiving — all free, with no upload and no sign up. Every tool runs entirely in your browser.",
+    "Merge, split, compress and watermark PDFs, count words and archive files. Free, no upload, no sign up. Every tool runs in your browser.",
   keywords: [
     "free document tools online",
     "pdf tools no upload",

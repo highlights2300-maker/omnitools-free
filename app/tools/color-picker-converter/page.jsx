@@ -41,6 +41,8 @@ const FAQS = [
 export default function ColorPickerConverterPage() {
   return (
     <ToolPageShell
+      slug="color-picker-converter"
+      description={metadata.description}
       title="Free Color Picker & Converter"
       subtitle="Pick a color and convert instantly between HEX, RGB, and HSL — no sign up."
       article={

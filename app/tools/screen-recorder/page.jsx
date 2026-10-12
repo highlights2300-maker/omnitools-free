@@ -4,9 +4,9 @@ import RelatedTools from "../../components/RelatedTools";
 import ScreenRecorderClient from "./ScreenRecorderClient";
 
 export const metadata = {
-  title: "Free Screen Recorder Online — No Download, No Sign Up | QuickZeta",
+  title: "Free Screen Recorder — No Download, No Sign Up | QuickZeta",
   description:
-    "Record your screen, a window, or a browser tab for free, with no software to install and no sign up. Download the recording instantly — nothing is ever uploaded.",
+    "Record your screen, a window or a browser tab free, with nothing to install and no sign up. Download the recording; nothing is uploaded.",
   keywords: [
     "free screen recorder online",
     "screen recorder no download",
@@ -53,6 +53,8 @@ const FAQS = [
 export default function ScreenRecorderPage() {
   return (
     <ToolPageShell
+      slug="screen-recorder"
+      description={metadata.description}
       title="Free Screen Recorder"
       subtitle="Record your screen, a window, or a tab and download it instantly — no download, no sign up."
       article={

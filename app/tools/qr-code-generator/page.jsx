@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import QrCodeGeneratorClient from "./QrCodeGeneratorClient";
 
 export const metadata = {
-  title: "Free QR Code Generator Online — No Sign Up, No Expiry | QuickZeta",
+  title: "Free QR Code Generator — No Sign Up, No Expiry | QuickZeta",
   description:
     "Generate a QR code for a link, plain text, or Wi-Fi login — free, with no sign up and no expiration date. Created and downloaded entirely in your browser.",
   keywords: [
@@ -49,6 +49,8 @@ const FAQS = [
 export default function QrCodeGeneratorPage() {
   return (
     <ToolPageShell
+      slug="qr-code-generator"
+      description={metadata.description}
       title="Free QR Code Generator"
       subtitle="Create a QR code for a link, text, or Wi-Fi network — no sign up, no expiry date, nothing uploaded."
       article={

@@ -45,6 +45,8 @@ const FAQS = [
 export default function CsvJsonConverterPage() {
   return (
     <ToolPageShell
+      slug="csv-json-converter"
+      description={metadata.description}
       title="Free CSV ⇄ JSON Converter"
       subtitle="Convert spreadsheet data to JSON, or JSON back to CSV — no upload, no sign up."
       article={

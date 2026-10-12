@@ -41,6 +41,8 @@ const FAQS = [
 export default function ProposalBuilderPage() {
   return (
     <ToolPageShell
+      slug="proposal-builder"
+      description={metadata.description}
       title="Free Proposal Builder"
       subtitle="Draft a clean project proposal and export an instant PDF — no sign up."
       article={

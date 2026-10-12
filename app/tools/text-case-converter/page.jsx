@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import TextCaseConverterClient from "./TextCaseConverterClient";
 
 export const metadata = {
-  title: "Free Text Case Converter Online — UPPERCASE, camelCase & More | QuickZeta",
+  title: "Free Text Case Converter — UPPER, camelCase, More | QuickZeta",
   description:
     "Convert text between UPPERCASE, lowercase, Title Case, camelCase, snake_case, and more, free, with no sign up. Instant conversion in your browser.",
   keywords: [
@@ -41,6 +41,8 @@ const FAQS = [
 export default function TextCaseConverterPage() {
   return (
     <ToolPageShell
+      slug="text-case-converter"
+      description={metadata.description}
       title="Free Text Case Converter"
       subtitle="Convert text between UPPERCASE, lowercase, Title Case, camelCase, and more — no sign up."
       article={

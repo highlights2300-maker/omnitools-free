@@ -55,6 +55,8 @@ const FAQS = [
 export default function ImageCropperPage() {
   return (
     <ToolPageShell
+      slug="image-cropper"
+      description={metadata.description}
       title="Free Photo & Image Cropper"
       subtitle="Crop to any ratio and resize to exact dimensions — no upload, no sign up."
       article={

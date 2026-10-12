@@ -41,6 +41,8 @@ const FAQS = [
 export default function LoremIpsumGeneratorPage() {
   return (
     <ToolPageShell
+      slug="lorem-ipsum-generator"
+      description={metadata.description}
       title="Free Lorem Ipsum Generator"
       subtitle="Generate placeholder text by paragraphs, sentences, or words — no sign up."
       article={

@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import WordCounterClient from "./WordCounterClient";
 
 export const metadata = {
-  title: "Free Word Counter Online — Words, Characters & Reading Time | QuickZeta",
+  title: "Free Word Counter — Words, Chars & Reading Time | QuickZeta",
   description:
     "Count words, characters, sentences, and estimated reading time instantly, free, with no sign up. Computed entirely in your browser as you type.",
   keywords: [
@@ -49,6 +49,8 @@ const FAQS = [
 export default function WordCounterPage() {
   return (
     <ToolPageShell
+      slug="word-counter"
+      description={metadata.description}
       title="Free Word Counter"
       subtitle="Count words, characters, sentences, and reading time instantly — no sign up."
       article={

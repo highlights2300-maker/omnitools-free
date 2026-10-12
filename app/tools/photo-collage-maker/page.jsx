@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import PhotoCollageClient from "./PhotoCollageClient";
 
 export const metadata = {
-  title: "Free Photo Collage Maker Online — No Upload, No Watermark | QuickZeta",
+  title: "Free Photo Collage Maker — No Watermark | QuickZeta",
   description:
     "Combine up to 9 photos into a grid, row or column. Adjust spacing, rounded corners and background. Free, no watermark, no upload.",
   keywords: [
@@ -45,6 +45,8 @@ const FAQS = [
 export default function PhotoCollageMakerPage() {
   return (
     <ToolPageShell
+      slug="photo-collage-maker"
+      description={metadata.description}
       title="Free Photo Collage Maker"
       subtitle="Combine up to 9 photos into a grid, row or column — no upload, no watermark, no sign up."
       article={

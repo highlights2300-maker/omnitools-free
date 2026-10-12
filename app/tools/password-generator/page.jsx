@@ -4,9 +4,9 @@ import RelatedTools from "../../components/RelatedTools";
 import PasswordGeneratorClient from "./PasswordGeneratorClient";
 
 export const metadata = {
-  title: "Free Password Generator Online — Strong & Secure, No Sign Up | QuickZeta",
+  title: "Free Password Generator — Strong & Secure | QuickZeta",
   description:
-    "Generate a strong, random password instantly, free, with no sign up. Adjust length and character types, with a real strength indicator — computed entirely in your browser.",
+    "Generate a strong, random password instantly. Adjust length and character types, with a strength indicator. Free, no sign up, in your browser.",
   keywords: [
     "free password generator online",
     "strong password generator no sign up",
@@ -53,6 +53,8 @@ const FAQS = [
 export default function PasswordGeneratorPage() {
   return (
     <ToolPageShell
+      slug="password-generator"
+      description={metadata.description}
       title="Free Password Generator"
       subtitle="Generate a strong, random password instantly, with adjustable length and character types — no sign up."
       article={

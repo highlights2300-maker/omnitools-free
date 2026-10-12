@@ -45,6 +45,8 @@ const FAQS = [
 export default function QuoteBuilderPage() {
   return (
     <ToolPageShell
+      slug="quote-builder"
+      description={metadata.description}
       title="Free Quote Builder"
       subtitle="Put together a polished price quote and export an instant PDF — no sign up."
       article={

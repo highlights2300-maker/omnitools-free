@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import GifMakerClient from "./GifMakerClient";
 
 export const metadata = {
-  title: "Free GIF Maker Online — Photos to Looping GIF, No Upload | QuickZeta",
+  title: "Free GIF Maker — Photos to Looping GIF | QuickZeta",
   description:
     "Turn a sequence of photos into a looping GIF, free, with no upload and no sign up. Processed entirely in your browser.",
   keywords: [
@@ -45,6 +45,8 @@ const FAQS = [
 export default function GifMakerPage() {
   return (
     <ToolPageShell
+      slug="gif-maker"
+      description={metadata.description}
       title="Free GIF Maker"
       subtitle="Turn a sequence of photos into a looping GIF — no upload, no sign up."
       article={

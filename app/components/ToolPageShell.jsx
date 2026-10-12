@@ -2,9 +2,52 @@ import Link from "next/link";
 import { ArrowLeft, ShieldCheck, Lock, Zap } from "lucide-react";
 import LogoMark from "./Logo";
 
-export default function ToolPageShell({ title, subtitle, badges, children, article }) {
+const SITE = "https://quickzeta.com";
+
+// Structured data (JSON-LD) so search engines know each tool page is a free web app.
+// Only facts that are true for every tool: free to use, runs in the browser. No ratings or reviews.
+function toolJsonLd({ slug, title, description }) {
+  const url = `${SITE}/tools/${slug}`;
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: title,
+      url,
+      description,
+      applicationCategory: "UtilitiesApplication",
+      operatingSystem: "Any (runs in a web browser)",
+      isAccessibleForFree: true,
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      publisher: { "@type": "Organization", name: "QuickZeta", url: SITE },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "QuickZeta", item: SITE },
+        { "@type": "ListItem", position: 2, name: title, item: url },
+      ],
+    },
+  ];
+}
+
+export function ToolJsonLd({ slug, title, description }) {
+  return (
+    <script
+      type="application/ld+json"
+      // "<" is escaped so the JSON can never close the script tag early.
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(toolJsonLd({ slug, title, description })).replace(/</g, "\\u003c"),
+      }}
+    />
+  );
+}
+
+export default function ToolPageShell({ title, subtitle, badges, children, article, slug, description }) {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
+      {slug && <ToolJsonLd slug={slug} title={title} description={description} />}
       <header className="no-print border-b border-slate-900 bg-slate-950/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-8">
           <Link href="/" className="flex items-center gap-3">

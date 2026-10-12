@@ -50,6 +50,8 @@ const FAQS = [
 export default function ESignaturePadPage() {
   return (
     <ToolPageShell
+      slug="e-signature-pad"
+      description={metadata.description}
       title="Free Signature Pad"
       subtitle="Draw a signature and export it as a transparent PNG — no upload, no sign up."
       article={

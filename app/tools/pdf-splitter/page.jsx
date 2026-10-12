@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import PdfSplitterClient from "./PdfSplitterClient";
 
 export const metadata = {
-  title: "Free PDF Splitter Online — Extract Pages, No Upload | QuickZeta",
+  title: "Free PDF Splitter — Extract Pages, No Upload | QuickZeta",
   description:
     "Split a PDF into separate page files, free, with no upload and no sign up. Choose exactly which pages to extract — processed entirely in your browser.",
   keywords: [
@@ -53,6 +53,8 @@ const FAQS = [
 export default function PdfSplitterPage() {
   return (
     <ToolPageShell
+      slug="pdf-splitter"
+      description={metadata.description}
       title="Free PDF Splitter"
       subtitle="Extract exactly the pages you need into separate files — no upload, no sign up, no quality loss."
       article={

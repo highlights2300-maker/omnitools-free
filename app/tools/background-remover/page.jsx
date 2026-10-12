@@ -4,9 +4,9 @@ import RelatedTools from "../../components/RelatedTools";
 import BackgroundRemoverClient from "./BackgroundRemoverClient";
 
 export const metadata = {
-  title: "Free Background Remover Online — No Upload, AI-Powered | QuickZeta",
+  title: "Free Background Remover — No Upload, AI-Powered | QuickZeta",
   description:
-    "Remove the background from any photo for free, with no upload and no sign up. An AI model runs directly in your browser to cut out the subject — nothing is ever sent to a server.",
+    "Remove the background from any photo free, with no upload and no sign up. An AI model runs in your browser to cut out the subject.",
   keywords: [
     "free background remover online",
     "remove image background no upload",
@@ -53,6 +53,8 @@ const FAQS = [
 export default function BackgroundRemoverPage() {
   return (
     <ToolPageShell
+      slug="background-remover"
+      description={metadata.description}
       title="Free Background Remover"
       subtitle="Cut the background out of any photo using an AI model that runs on your own device — no upload, no sign up."
       article={

@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import ContractTemplateClient from "./ContractTemplateClient";
 
 export const metadata = {
-  title: "Free Service Agreement Template — No Sign Up, Instant PDF | QuickZeta",
+  title: "Free Service Agreement Template — Instant PDF | QuickZeta",
   description:
     "Fill in a simple service agreement template free, with no sign up. Add the parties, services, payment, and terms, then export an instant PDF in your browser.",
   keywords: [
@@ -49,6 +49,8 @@ const FAQS = [
 export default function ContractTemplateKitPage() {
   return (
     <ToolPageShell
+      slug="contract-template-kit"
+      description={metadata.description}
       title="Free Contract Template Kit"
       subtitle="Fill in a simple service agreement, export an instant PDF — no sign up."
       article={

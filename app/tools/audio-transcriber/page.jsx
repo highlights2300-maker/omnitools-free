@@ -4,9 +4,9 @@ import RelatedTools from "../../components/RelatedTools";
 import AudioTranscriberClient from "./AudioTranscriberClient";
 
 export const metadata = {
-  title: "Free Audio Transcriber & Subtitle Generator Online | QuickZeta",
+  title: "Free Audio Transcriber & Subtitle Maker | QuickZeta",
   description:
-    "Transcribe speech to text and generate SRT subtitles, free, with no upload and no sign up. A real AI model runs directly in your browser — nothing is ever sent to a server.",
+    "Transcribe speech to text and generate SRT subtitles. Free, no upload, no sign up. An AI model runs in your browser, not on a server.",
   keywords: [
     "free audio transcriber online",
     "speech to text no upload",
@@ -57,6 +57,8 @@ const FAQS = [
 export default function AudioTranscriberPage() {
   return (
     <ToolPageShell
+      slug="audio-transcriber"
+      description={metadata.description}
       title="Free Audio Transcriber & Subtitle Generator"
       subtitle="Transcribe speech to text and generate SRT subtitles using a real AI model — no upload, no sign up."
       article={

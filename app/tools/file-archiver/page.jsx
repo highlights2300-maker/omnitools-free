@@ -45,6 +45,8 @@ const FAQS = [
 export default function FileArchiverPage() {
   return (
     <ToolPageShell
+      slug="file-archiver"
+      description={metadata.description}
       title="Free File Archiver"
       subtitle="Bundle several files into one ZIP archive — no upload, no sign up."
       article={

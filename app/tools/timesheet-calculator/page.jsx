@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import TimesheetCalculatorClient from "./TimesheetCalculatorClient";
 
 export const metadata = {
-  title: "Free Timesheet Calculator Online — Hours & Pay, No Sign Up | QuickZeta",
+  title: "Free Timesheet Calculator — Hours & Pay | QuickZeta",
   description:
     "Add up hours worked and pay for the week instantly, free, with no sign up. Computed entirely in your browser.",
   keywords: [
@@ -45,6 +45,8 @@ const FAQS = [
 export default function TimesheetCalculatorPage() {
   return (
     <ToolPageShell
+      slug="timesheet-calculator"
+      description={metadata.description}
       title="Free Timesheet Calculator"
       subtitle="Add up hours worked and pay for the week instantly — no sign up."
       article={

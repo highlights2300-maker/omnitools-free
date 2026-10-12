@@ -53,6 +53,8 @@ const FAQS = [
 export default function VideoTrimmerPage() {
   return (
     <ToolPageShell
+      slug="video-trimmer"
+      description={metadata.description}
       title="Free Video Trimmer"
       subtitle="Cut a video down to the moment that matters — no upload, no sign up, powered by real FFmpeg."
       article={

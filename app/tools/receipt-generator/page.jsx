@@ -45,6 +45,8 @@ const FAQS = [
 export default function ReceiptGeneratorPage() {
   return (
     <ToolPageShell
+      slug="receipt-generator"
+      description={metadata.description}
       title="Free Receipt Generator"
       subtitle="Fill in your details, preview instantly, export a clean PDF receipt — no sign up."
       article={

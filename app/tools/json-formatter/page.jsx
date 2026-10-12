@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import JsonFormatterClient from "./JsonFormatterClient";
 
 export const metadata = {
-  title: "Free JSON Formatter & Validator Online — No Sign Up | QuickZeta",
+  title: "Free JSON Formatter & Validator — No Sign Up | QuickZeta",
   description:
     "Format, validate, and minify JSON instantly, free, with no sign up. See exactly what's wrong with invalid JSON — computed entirely in your browser.",
   keywords: [
@@ -45,6 +45,8 @@ const FAQS = [
 export default function JsonFormatterPage() {
   return (
     <ToolPageShell
+      slug="json-formatter"
+      description={metadata.description}
       title="Free JSON Formatter & Validator"
       subtitle="Format, validate, and minify JSON instantly — no sign up, nothing uploaded."
       article={

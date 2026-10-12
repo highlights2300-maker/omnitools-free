@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import PdfCompressorClient from "./PdfCompressorClient";
 
 export const metadata = {
-  title: "Free PDF Compressor Online — Shrink File Size, No Upload | QuickZeta",
+  title: "Free PDF Compressor — Shrink Size, No Upload | QuickZeta",
   description:
     "Compress a PDF to a smaller file size, free, with no upload and no sign up. Adjust the quality tradeoff yourself — processed entirely in your browser.",
   keywords: [
@@ -53,6 +53,8 @@ const FAQS = [
 export default function PdfCompressorPage() {
   return (
     <ToolPageShell
+      slug="pdf-compressor"
+      description={metadata.description}
       title="Free PDF Compressor"
       subtitle="Shrink a PDF's file size with a quality tradeoff you control — no upload, no sign up."
       article={

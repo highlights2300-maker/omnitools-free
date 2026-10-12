@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import AudioConverterClient from "./AudioConverterClient";
 
 export const metadata = {
-  title: "Free Audio Converter Online — MP3, WAV, OGG, No Upload | QuickZeta",
+  title: "Free Audio Converter — MP3, WAV, OGG, No Upload | QuickZeta",
   description:
     "Convert audio between MP3, WAV, and OGG, free, with no upload and no sign up. Powered by FFmpeg running entirely in your browser.",
   keywords: [
@@ -53,6 +53,8 @@ const FAQS = [
 export default function AudioConverterPage() {
   return (
     <ToolPageShell
+      slug="audio-converter"
+      description={metadata.description}
       title="Free Audio Converter"
       subtitle="Convert between MP3, WAV, and OGG — no upload, no sign up, powered by real FFmpeg."
       article={

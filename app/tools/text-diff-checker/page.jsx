@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import TextDiffCheckerClient from "./TextDiffCheckerClient";
 
 export const metadata = {
-  title: "Free Text Diff Checker Online — Compare Two Texts | QuickZeta",
+  title: "Free Text Diff Checker — Compare Two Texts | QuickZeta",
   description:
     "Paste two versions of a text and see added and removed lines, with changed words highlighted. Free, no sign up, runs in your browser.",
   keywords: [
@@ -45,6 +45,8 @@ const FAQS = [
 export default function TextDiffCheckerPage() {
   return (
     <ToolPageShell
+      slug="text-diff-checker"
+      description={metadata.description}
       title="Free Text Diff Checker"
       subtitle="Compare two blocks of text and see exactly what changed — no sign up, nothing uploaded."
       article={

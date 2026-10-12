@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import PercentageCalculatorClient from "./PercentageCalculatorClient";
 
 export const metadata = {
-  title: "Free Percentage & Markup Calculator Online — No Sign Up | QuickZeta",
+  title: "Free Percentage & Markup Calculator | QuickZeta",
   description:
     "Work out X% of a number, percentage change, discounts, markup and profit margin. Free, no sign up, runs in your browser.",
   keywords: [
@@ -41,6 +41,8 @@ const FAQS = [
 export default function PercentageCalculatorPage() {
   return (
     <ToolPageShell
+      slug="percentage-calculator"
+      description={metadata.description}
       title="Free Percentage & Markup Calculator"
       subtitle="Work out percentages, changes, and markups instantly — no sign up."
       article={

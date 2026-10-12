@@ -4,9 +4,9 @@ import RelatedTools from "../../components/RelatedTools";
 import HashGeneratorClient from "./HashGeneratorClient";
 
 export const metadata = {
-  title: "Free Hash Generator Online — MD5, SHA-1, SHA-256, SHA-512 | QuickZeta",
+  title: "Free Hash Generator — MD5, SHA-1, SHA-256 | QuickZeta",
   description:
-    "Generate MD5, SHA-1, SHA-256, and SHA-512 hashes instantly, free, with no sign up. Computed entirely in your browser using the same engine that powers browser security.",
+    "Generate MD5, SHA-1, SHA-256 and SHA-512 hashes instantly. Free, no sign up. Computed entirely in your browser.",
   keywords: [
     "free hash generator online",
     "md5 generator no sign up",
@@ -45,6 +45,8 @@ const FAQS = [
 export default function HashGeneratorPage() {
   return (
     <ToolPageShell
+      slug="hash-generator"
+      description={metadata.description}
       title="Free Hash Generator"
       subtitle="Generate MD5, SHA-1, SHA-256, and SHA-512 hashes instantly — no sign up, nothing uploaded."
       article={

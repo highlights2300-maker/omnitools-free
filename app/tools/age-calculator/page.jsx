@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import AgeCalculatorClient from "./AgeCalculatorClient";
 
 export const metadata = {
-  title: "Free Age Calculator Online — Exact Age & Duration | QuickZeta",
+  title: "Free Age Calculator — Exact Age & Duration | QuickZeta",
   description:
     "Exact age in years, months and days, plus total days and weeks and days to the next birthday. Free, no sign up, runs in your browser.",
   keywords: [
@@ -45,6 +45,8 @@ const FAQS = [
 export default function AgeCalculatorPage() {
   return (
     <ToolPageShell
+      slug="age-calculator"
+      description={metadata.description}
       title="Free Age Calculator"
       subtitle="Find the exact age or duration between two dates — no sign up."
       article={

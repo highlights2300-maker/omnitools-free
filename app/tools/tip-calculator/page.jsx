@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import TipCalculatorClient from "./TipCalculatorClient";
 
 export const metadata = {
-  title: "Free Tip Calculator Online — Split the Bill, No Sign Up | QuickZeta",
+  title: "Free Tip Calculator — Split the Bill | QuickZeta",
   description:
     "Calculate a tip and split a bill between any number of people, free, with no sign up. Computed instantly in your browser.",
   keywords: [
@@ -45,6 +45,8 @@ const FAQS = [
 export default function TipCalculatorPage() {
   return (
     <ToolPageShell
+      slug="tip-calculator"
+      description={metadata.description}
       title="Free Tip Calculator"
       subtitle="Calculate a tip and split a bill between any number of people — no sign up."
       article={

@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import MemeGeneratorClient from "./MemeGeneratorClient";
 
 export const metadata = {
-  title: "Free Meme Generator Online — No Upload, No Watermark | QuickZeta",
+  title: "Free Meme Generator — No Upload, No Watermark | QuickZeta",
   description:
     "Add top and bottom captions to any image, free, with no upload, no sign up, and no watermark. Processed entirely in your browser.",
   keywords: [
@@ -49,6 +49,8 @@ const FAQS = [
 export default function MemeGeneratorPage() {
   return (
     <ToolPageShell
+      slug="meme-generator"
+      description={metadata.description}
       title="Free Meme Generator"
       subtitle="Add top and bottom captions to any image — no upload, no watermark, no sign up."
       article={

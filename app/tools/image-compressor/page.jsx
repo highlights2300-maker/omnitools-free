@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import ImageCompressorClient from "./ImageCompressorClient";
 
 export const metadata = {
-  title: "Free Image Compressor Online — No Upload, Instant Results | QuickZeta",
+  title: "Free Image Compressor — No Upload, Instant | QuickZeta",
   description:
     "Compress JPG, PNG, or WebP images online for free, with no upload and no sign up. Reduce file size while previewing the quality live, right in your browser.",
   keywords: [
@@ -62,6 +62,8 @@ const FORMAT_TABLE = [
 export default function ImageCompressorPage() {
   return (
     <ToolPageShell
+      slug="image-compressor"
+      description={metadata.description}
       title="Free Image Compressor"
       subtitle="Shrink JPG, PNG, or WebP files instantly, with a live before-and-after preview — no upload, no sign up."
       article={

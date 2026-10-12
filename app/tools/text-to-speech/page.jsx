@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import TextToSpeechClient from "./TextToSpeechClient";
 
 export const metadata = {
-  title: "Free Text to Speech Online — No Sign Up, No Download | QuickZeta",
+  title: "Free Text to Speech — No Sign Up, No Download | QuickZeta",
   description:
     "Convert text to natural speech instantly, free, with no sign up. Choose a voice, adjust speed and pitch — powered by your browser's own speech engine.",
   keywords: [
@@ -45,6 +45,8 @@ const FAQS = [
 export default function TextToSpeechPage() {
   return (
     <ToolPageShell
+      slug="text-to-speech"
+      description={metadata.description}
       title="Free Text to Speech"
       subtitle="Convert text to spoken audio instantly, with adjustable voice, speed, and pitch — no sign up."
       article={

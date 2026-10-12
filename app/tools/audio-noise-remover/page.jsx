@@ -4,9 +4,9 @@ import RelatedTools from "../../components/RelatedTools";
 import AudioNoiseRemoverClient from "./AudioNoiseRemoverClient";
 
 export const metadata = {
-  title: "Free Audio Noise Remover & Enhancer Online — No Upload | QuickZeta",
+  title: "Free Audio Noise Remover Online — No Upload | QuickZeta",
   description:
-    "Reduce background hiss and even out volume in an audio recording, free, with no upload and no sign up. Processed entirely in your browser using real audio engineering techniques.",
+    "Reduce background hiss and even out volume in an audio recording. Free, no upload, no sign up. Processed entirely in your browser.",
   keywords: [
     "free audio noise remover online",
     "remove background noise audio no upload",
@@ -53,6 +53,8 @@ const FAQS = [
 export default function AudioNoiseRemoverPage() {
   return (
     <ToolPageShell
+      slug="audio-noise-remover"
+      description={metadata.description}
       title="Free Audio Noise Remover & Enhancer"
       subtitle="Reduce background hiss and even out volume in a recording — no upload, no sign up."
       article={

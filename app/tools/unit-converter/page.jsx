@@ -45,6 +45,8 @@ const FAQS = [
 export default function UnitConverterPage() {
   return (
     <ToolPageShell
+      slug="unit-converter"
+      description={metadata.description}
       title="Free Unit Converter"
       subtitle="Convert length, weight, and temperature with exact conversion factors — no sign up."
       article={

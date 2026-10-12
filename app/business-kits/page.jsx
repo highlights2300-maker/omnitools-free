@@ -2,9 +2,9 @@ import { Briefcase } from "lucide-react";
 import CategoryHubShell from "../components/CategoryHubShell";
 
 export const metadata = {
-  title: "Free Business Templates Online — Invoice, Quote & More | QuickZeta",
+  title: "Free Business Templates — Invoice, Quote & More | QuickZeta",
   description:
-    "Create invoices, quotes, receipts, proposals, contracts, and business cards — all free, with no sign up. Fill in your details and export an instant PDF, right in your browser.",
+    "Create invoices, quotes, receipts, proposals, contracts and business cards free, with no sign up. Fill in your details and export a PDF in your browser.",
   keywords: [
     "free business templates online",
     "invoice quote generator no sign up",

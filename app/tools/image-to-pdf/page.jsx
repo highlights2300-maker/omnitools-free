@@ -49,6 +49,8 @@ const FAQS = [
 export default function ImageToPdfPage() {
   return (
     <ToolPageShell
+      slug="image-to-pdf"
+      description={metadata.description}
       title="Free Image to PDF Converter"
       subtitle="Turn a batch of photos or scans into one clean PDF — no upload, no sign up."
       article={

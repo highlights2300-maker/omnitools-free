@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import ImageFormatConverterClient from "./ImageFormatConverterClient";
 
 export const metadata = {
-  title: "Free Image Format Converter Online — JPG, PNG, WebP | QuickZeta",
+  title: "Free Image Converter — JPG, PNG, WebP Online | QuickZeta",
   description:
     "Convert between JPG, PNG, and WebP, free, with no upload and no sign up. Processed entirely in your browser.",
   keywords: [
@@ -45,6 +45,8 @@ const FAQS = [
 export default function ImageFormatConverterPage() {
   return (
     <ToolPageShell
+      slug="image-format-converter"
+      description={metadata.description}
       title="Free Image Format Converter"
       subtitle="Convert between JPG, PNG, and WebP — no upload, no sign up."
       article={

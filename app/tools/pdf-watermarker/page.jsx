@@ -4,7 +4,7 @@ import RelatedTools from "../../components/RelatedTools";
 import PdfWatermarkerClient from "./PdfWatermarkerClient";
 
 export const metadata = {
-  title: "Free PDF Watermarker Online — Add Text Watermark, No Upload | QuickZeta",
+  title: "Free PDF Watermarker — Add Text, No Upload | QuickZeta",
   description:
     "Stamp a text watermark across every page of a PDF, free, with no upload and no sign up. Processed entirely in your browser.",
   keywords: [
@@ -49,6 +49,8 @@ const FAQS = [
 export default function PdfWatermarkerPage() {
   return (
     <ToolPageShell
+      slug="pdf-watermarker"
+      description={metadata.description}
       title="Free PDF Watermarker"
       subtitle="Stamp a text watermark across every page — no upload, no sign up."
       article={

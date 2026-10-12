@@ -2,9 +2,9 @@ import { Sparkles } from "lucide-react";
 import CategoryHubShell from "../components/CategoryHubShell";
 
 export const metadata = {
-  title: "Free Everyday Utilities — Password Generator, Screen Recorder & More | QuickZeta",
+  title: "Free Everyday Tools — Passwords, Timer & More | QuickZeta",
   description:
-    "Generate passwords, hashes, and placeholder text, test typing speed, record your screen, and more — all free, with no sign up. Every tool runs entirely in your browser.",
+    "Generate passwords, hashes and placeholder text, test typing speed, record your screen and more. Free, no sign up, all in your browser.",
   keywords: [
     "free everyday tools online",
     "password generator screen recorder free",

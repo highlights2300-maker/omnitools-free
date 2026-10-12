@@ -61,6 +61,8 @@ const COMPARISON_ROWS = [
 export default function PdfMergerPage() {
   return (
     <ToolPageShell
+      slug="pdf-merger"
+      description={metadata.description}
       title="Free PDF Merger"
       subtitle="Combine multiple PDF files into one, in the order you choose — no upload, no sign up, no watermark."
       article={

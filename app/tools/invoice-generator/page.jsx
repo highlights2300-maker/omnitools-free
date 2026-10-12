@@ -2,12 +2,13 @@ import Link from "next/link";
 import { ArrowLeft, ShieldCheck, Lock, Zap } from "lucide-react";
 import LogoMark from "../../components/Logo";
 import RelatedTools from "../../components/RelatedTools";
+import { ToolJsonLd } from "../../components/ToolPageShell";
 import InvoiceGeneratorClient from "./InvoiceGeneratorClient";
 
 export const metadata = {
   title: "Free Invoice Generator — No Sign Up, Instant PDF | QuickZeta",
   description:
-    "Create a professional invoice free, with no sign up and no software to install. Fill in your details, preview it live, and export an instant PDF invoice creator — right in your browser.",
+    "Create a professional invoice free, with no sign up and nothing to install. Fill in your details, preview it live and export a PDF in your browser.",
   keywords: [
     "free invoice generator no sign up",
     "instant pdf invoice creator",
@@ -51,6 +52,7 @@ const FAQS = [
 export default function InvoiceGeneratorPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
+      <ToolJsonLd slug="invoice-generator" title="Free Invoice Generator" description={metadata.description} />
       <header className="no-print border-b border-slate-900 bg-slate-950/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-8">
           <Link href="/" className="flex items-center gap-3">

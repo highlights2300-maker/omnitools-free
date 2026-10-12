@@ -45,6 +45,8 @@ const FAQS = [
 export default function BusinessCardDesignerPage() {
   return (
     <ToolPageShell
+      slug="business-card-designer"
+      description={metadata.description}
       title="Free Business Card Designer"
       subtitle="Design a print-ready, double-sided business card with a live preview — no upload, no sign up."
       article={
