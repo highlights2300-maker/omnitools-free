@@ -105,7 +105,7 @@ export default function TextToSpeechClient() {
           {voices.length === 0 && <option>Loading voices…</option>}
           {voices.map((v, i) => (
             <option key={`${v.name}-${i}`} value={i}>
-              {v.name} ({v.lang})
+              {v.name} ({v.lang}) — {v.localService ? "on this device" : "online voice"}
             </option>
           ))}
         </select>

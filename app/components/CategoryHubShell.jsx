@@ -82,7 +82,7 @@ export default function CategoryHubShell({ title, subtitle, icon: Icon, accentCl
             <Link href="/terms" className="hover:text-slate-300">Terms</Link>
             <Link href="/contact" className="hover:text-slate-300">Contact</Link>
           </nav>
-          QuickZeta — no accounts, no file uploads, no tracking. Everything above runs on your own device.
+          QuickZeta — no accounts and no file uploads. Your files and text stay on your own device.
         </footer>
       </main>
     </div>

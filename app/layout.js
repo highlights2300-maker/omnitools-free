@@ -11,7 +11,7 @@ export const metadata = {
   alternates: { canonical: "./" },
   title: "QuickZeta — Free Online Tools, No Uploads, No Logins",
   description:
-    "44 free document, image, and business tools that run entirely in your browser. No accounts, no file uploads, no daily limits, no watermarks — everything processes on your own device.",
+    "44 free document, image and business tools that run in your browser. No accounts, no file uploads, no daily limits, no watermarks.",
   keywords: [
     "free online tools",
     "pdf merger",
@@ -24,7 +24,7 @@ export const metadata = {
   openGraph: {
     title: "QuickZeta — Free Online Tools, No Uploads, No Logins",
     description:
-      "44 free document, image, and business tools that run entirely in your browser. Nothing is ever uploaded to a server.",
+      "44 free document, image and business tools that run in your browser. Your files are never uploaded.",
     url: "https://quickzeta.com",
     siteName: "QuickZeta",
     type: "website",
@@ -32,7 +32,7 @@ export const metadata = {
   twitter: {
     card: "summary",
     title: "QuickZeta",
-    description: "44 free tools that run entirely in your browser. No uploads, no logins, no logs.",
+    description: "44 free tools that run in your browser. No file uploads, no logins.",
   },
   icons: {
     icon: [

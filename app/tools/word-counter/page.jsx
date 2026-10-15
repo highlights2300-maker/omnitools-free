@@ -30,11 +30,19 @@ const FAQS = [
   },
   {
     q: "How is reading time actually estimated?",
-    a: "It's based on an average adult silent-reading speed, commonly cited as roughly 200–250 words per minute. It's a genuine estimate, not a precise measurement — dense technical text reads slower than casual prose, so treat it as a rough guide rather than an exact figure.",
+    a: "This tool divides the word count by 200 words per minute, a commonly used average for adult silent reading. It also shows speaking time at 130 words per minute. Both are estimates: dense technical text reads slower than casual prose, so treat them as a rough guide.",
   },
   {
     q: "How do I convert a word count into reading time?",
-    a: "Divide the word count by an average reading speed — roughly 200–225 words per minute for most adult readers — to get the reading time in minutes. This tool does that calculation automatically and shows it live alongside the word count as you type, so there's no need to work it out by hand.",
+    a: "Divide the word count by an average reading speed, such as 200 words per minute, to get minutes. For example, 1,000 words is about 5 minutes. This tool does the sum for you as you type, and shows seconds for very short texts.",
+  },
+  {
+    q: "How are characters counted?",
+    a: "Each visible character counts once, including letters with accents and emoji (some counters count an emoji as two). \"Characters\" includes spaces and line breaks; \"No spaces\" leaves out all whitespace.",
+  },
+  {
+    q: "Which character limits does it show?",
+    a: "A side panel shows how many characters you have left for an X post (280), one SMS segment (160), and the usual guideline lengths for a meta description (about 160) and a page title (about 60). The two search-result numbers are guidelines, not hard limits, and platforms change their rules, so check the current limit before you publish.",
   },
   {
     q: "Is my text sent anywhere?",
@@ -69,8 +77,10 @@ export default function WordCounterPage() {
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <p className="mt-2">
-              Paste or type your text into the box — word count, character count, sentence count, and
-              estimated reading time all update live as you go.
+              Paste or type your text into the box. Words, characters (with and without spaces),
+              sentences, paragraphs and reading time update as you type. Below the counts you will find
+              the characters left for common limits, and the words you repeat most often, which helps
+              when an essay or article leans on the same word too much. "Clear text" empties the box.
             </p>
           </section>
 
@@ -91,7 +101,7 @@ export default function WordCounterPage() {
                 <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Advantages</p>
                 <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
                   <li>Updates live as you type, no button to press</li>
-                  <li>Tracks words, characters, sentences, and reading time together</li>
+                  <li>Shows characters left for common limits and the most repeated words</li>
                 </ul>
               </div>
               <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
@@ -108,7 +118,7 @@ export default function WordCounterPage() {
             <h2 className="text-lg font-semibold text-slate-100">Where the reading time estimate comes from</h2>
             <p className="mt-2">
               Reading time is calculated from an average adult silent-reading speed, typically cited
-              somewhere around 200–250 words per minute. It's a genuine, widely used estimate rather than
+              around 200 words per minute, which is the figure this tool uses. It's a genuine, widely used estimate rather than
               a precise measurement of any individual reader — dense, technical, or unfamiliar text tends
               to read noticeably slower than casual conversational writing, so treat the figure as a
               helpful ballpark rather than an exact number.

@@ -37,6 +37,10 @@ const FAQS = [
     a: "Beautify adds indentation and line breaks for readability. Minify strips all unnecessary whitespace to produce the smallest possible file size — what you'd want before actually sending JSON over a network or shipping it in production.",
   },
   {
+    q: "Does \"Sort keys A–Z\" change my data?",
+    a: "It only changes the order of keys inside objects. Items inside arrays keep their order, and no values change. JSON objects are unordered by definition, but if another program depends on key order, leave this off.",
+  },
+  {
     q: "Why does my JSON say invalid when it looks fine to me?",
     a: "JSON's rules are stricter than they look. A trailing comma after the last item, single quotes instead of double quotes, an unquoted object key, or a missing closing brace are the most common causes — all things that are easy to miss scanning by eye but that a parser catches instantly.",
   },
@@ -67,9 +71,9 @@ export default function JsonFormatterPage() {
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>Paste your JSON — valid or invalid, either way you'll see immediate feedback.</li>
-              <li>Beautify or minify, picking indentation width if beautifying.</li>
-              <li>Copy the result with one click.</li>
+              <li>Paste your JSON. It is checked as you type, and an error shows the line and column to look at. "Try a broken example" loads JSON with a trailing comma and single quotes so you can see how errors look.</li>
+              <li>Beautify or minify, choosing 2 or 4 spaces of indentation. Tick "Sort keys A–Z" if you want the keys of every object in alphabetical order.</li>
+              <li>Copy the result, or download it as a .json file.</li>
             </ol>
           </section>
 
@@ -107,14 +111,15 @@ export default function JsonFormatterPage() {
                 <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
                   <li>Uses the browser's own standards-compliant parser</li>
                   <li>Instant — no size limit that requires an upload</li>
-                  <li>Safe for sensitive data, since nothing leaves your device</li>
+                  <li>QuickZeta does not upload what you paste, so it suits data you would not post online</li>
                 </ul>
               </div>
               <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">
                 <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Limitations</p>
                 <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
                   <li>Doesn't validate against a specific JSON Schema, only JSON syntax itself</li>
-                  <li>Error messages reflect the browser's parser wording, not custom explanations</li>
+                  <li>Error messages use your browser's wording, with a line and column added; the fix is up to you</li>
+                  <li>Whole numbers with more than 15 digits are rounded when the JSON is rewritten (the tool warns you when this happens)</li>
                   <li>Extremely large JSON documents may feel sluggish in an in-browser textarea</li>
                 </ul>
               </div>

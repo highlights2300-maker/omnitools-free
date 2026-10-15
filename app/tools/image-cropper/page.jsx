@@ -77,10 +77,59 @@ export default function ImageCropperPage() {
           <section>
             <h2 className="text-lg font-semibold text-slate-100">Using it</h2>
             <ol className="mt-2 list-decimal space-y-2 pl-5">
-              <li>Upload the image you want to crop or resize.</li>
+              <li>Choose the image you want to crop. It opens in your browser; QuickZeta does not receive it.</li>
               <li>Pick a ratio (Free, 1:1, 4:5, 3:2, 4:3, 16:9, 9:16 or a custom one), then drag the photo to position it and use zoom to frame it. Rotate it if it's sideways.</li>
               <li>Optionally set the exact output width and height, choose JPG, PNG or WebP, and download.</li>
             </ol>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">What size you get: three worked examples</h2>
+            <p className="mt-2">
+              With a ratio selected, the crop box is the largest area of that shape that fits inside your
+              photo. Take a 4000 × 3000 px landscape photo:
+            </p>
+            <ul className="mt-2 list-disc space-y-1.5 pl-5">
+              <li>
+                <strong className="text-slate-200">1:1 (square):</strong> a 3000 × 3000 px square. Drag
+                the photo to choose which part of the width is kept.
+              </li>
+              <li>
+                <strong className="text-slate-200">16:9 (wide):</strong> the full 4000 px width with a
+                height of 2250 px.
+              </li>
+              <li>
+                <strong className="text-slate-200">4:5 (portrait):</strong> a 2400 × 3000 px crop.
+              </li>
+            </ul>
+            <p className="mt-2">
+              These are the largest sizes. Type a smaller width (for example 1080) and the height follows
+              the ratio, so the photo is scaled down rather than stretched. Zoom in to frame a tighter area;
+              the crop gets smaller and the output keeps the same ratio.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-slate-100">Supported formats</h2>
+            <ul className="mt-2 list-disc space-y-1.5 pl-5">
+              <li>
+                <strong className="text-slate-200">Open:</strong> any image your browser can display.
+                JPG, PNG and WebP work everywhere. Other types, such as HEIC from some phones, depend on
+                your browser; if one won't open, convert it first with the{" "}
+                <Link href="/tools/image-format-converter" className="text-amber-400 underline underline-offset-2">
+                  Image Format Converter
+                </Link>
+                .
+              </li>
+              <li>
+                <strong className="text-slate-200">Save as:</strong> JPG, PNG or WebP. PNG and WebP keep
+                transparent areas. JPG cannot, so transparent areas turn white.
+              </li>
+              <li>
+                <strong className="text-slate-200">Limits:</strong> the output can be up to 16,384 px on
+                a side (and 100 megapixels in total). Larger requests show a message instead of failing.
+              </li>
+            </ul>
           </section>
 
           <section>

@@ -6096,8 +6096,8 @@ export default function Page() {
               <a href="/terms" className="hover:text-slate-300">Terms</a>
               <a href="/contact" className="hover:text-slate-300">Contact</a>
             </nav>
-            QuickZeta — no accounts, no file uploads, no tracking. Everything above runs on your
-            own device.
+            QuickZeta — no accounts and no file uploads. Your files and text stay on your own
+            device.
           </footer>
         </main>
 

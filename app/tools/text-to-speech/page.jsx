@@ -30,7 +30,7 @@ const FAQS = [
   },
   {
     q: "Do you upload my text to a server?",
-    a: "No. This uses your browser's own built-in speech synthesis feature, the same technology behind screen readers on your device.",
+    a: "QuickZeta never receives your text. The speech comes from your browser's built-in speech feature, and QuickZeta does not process the audio. Most voices run on your device, but some browsers also offer online voices (for example, some Chrome and Edge voices) that may send text to the browser maker's speech service. Each voice in the list is labelled \"on this device\" or \"online voice\", so choose an on-device voice if the text is private.",
   },
   {
     q: "Why do the available voices differ between my devices?",
@@ -56,9 +56,11 @@ export default function TextToSpeechPage() {
               Speech powered by your own device
             </h2>
             <p className="mt-2">
-              Rather than sending text to a server to generate audio, this tool uses a feature already
-              built into your browser — the same technology behind screen readers. Speech starts
-              instantly, with no upload or processing delay.
+              Rather than sending text to QuickZeta to generate audio, this tool uses a feature already
+              built into your browser — the same technology behind screen readers. Voices marked "on
+              this device" are generated locally. Voices marked "online voice" are provided by your
+              browser's own service and may send the text there, so pick an on-device voice for
+              anything private.
             </p>
           </section>
 
@@ -88,7 +90,7 @@ export default function TextToSpeechPage() {
                 <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-slate-300">
                   <li>Instant — no server round-trip needed to start speaking</li>
                   <li>Adjustable speed and pitch</li>
-                  <li>Works offline once the page has loaded</li>
+                  <li>On-device voices keep working without a connection once the page has loaded</li>
                 </ul>
               </div>
               <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">

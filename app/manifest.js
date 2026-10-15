@@ -3,7 +3,7 @@ export default function manifest() {
     name: "QuickZeta — Free Browser-Based Tools",
     short_name: "QuickZeta",
     description:
-      "35+ free tools for PDFs, images, and everyday business documents. No uploads, no login, no logs — everything runs on your own device.",
+      "44 free tools for PDFs, images, and everyday business documents. No file uploads and no login — your files stay on your own device.",
     start_url: "/",
     display: "standalone",
     background_color: "#020617",
